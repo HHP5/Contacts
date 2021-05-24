@@ -8,7 +8,7 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+	var coordinator: MainCoordinator?
 	var window: UIWindow?
 	
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -17,12 +17,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		
 		window = UIWindow(windowScene: windowScene)
 		
+		let navBar = UINavigationController()
+		coordinator = MainCoordinator(navigationController: navBar)
+		coordinator?.start()
+		
 		window?.overrideUserInterfaceStyle = .light
 
 		window?.makeKeyAndVisible()
-		let viewController = ViewController()
-		
-		let navBar = UINavigationController(rootViewController: viewController)
 		window?.rootViewController = navBar
+	}
+	
+	func sceneDidEnterBackground(_ scene: UIScene) {
+		(UIApplication.shared.delegate as? AppDelegate)?.saveContext()
 	}
 }
