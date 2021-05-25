@@ -16,6 +16,8 @@
 		49420C75265A3A8900AFBB6C /* MainListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C74265A3A8900AFBB6C /* MainListView.swift */; };
 		49420C78265A3F4100AFBB6C /* NameList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C77265A3F4100AFBB6C /* NameList.swift */; };
 		49420C7B265B8F9400AFBB6C /* MainListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C7A265B8F9400AFBB6C /* MainListViewModel.swift */; };
+		49420C8F265BD13100AFBB6C /* Constans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C8E265BD13100AFBB6C /* Constans.swift */; };
+		49420C92265BD1CA00AFBB6C /* MainListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C91265BD1CA00AFBB6C /* MainListViewModelType.swift */; };
 		D0157E0D7E463A575E904874 /* Pods_Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA3F7125F080FDDC25679962 /* Pods_Contacts.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +33,8 @@
 		49420C74265A3A8900AFBB6C /* MainListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListView.swift; sourceTree = "<group>"; };
 		49420C77265A3F4100AFBB6C /* NameList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameList.swift; sourceTree = "<group>"; };
 		49420C7A265B8F9400AFBB6C /* MainListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListViewModel.swift; sourceTree = "<group>"; };
+		49420C8E265BD13100AFBB6C /* Constans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constans.swift; sourceTree = "<group>"; };
+		49420C91265BD1CA00AFBB6C /* MainListViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListViewModelType.swift; sourceTree = "<group>"; };
 		907270F644592661DB49DC26 /* Pods-Contacts.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contacts.debug.xcconfig"; path = "Target Support Files/Pods-Contacts/Pods-Contacts.debug.xcconfig"; sourceTree = "<group>"; };
 		C1F3E209B5C62F03D09B922C /* Pods-Contacts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contacts.release.xcconfig"; path = "Target Support Files/Pods-Contacts/Pods-Contacts.release.xcconfig"; sourceTree = "<group>"; };
 		DA3F7125F080FDDC25679962 /* Pods_Contacts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Contacts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +85,7 @@
 				49420C59265A23B900AFBB6C /* AppDelegate.swift */,
 				49420C5B265A23B900AFBB6C /* SceneDelegate.swift */,
 				49420C71265A378700AFBB6C /* Coordinator.swift */,
+				49420C90265BD1BB00AFBB6C /* Protocols */,
 				49420C76265A3F3300AFBB6C /* Model */,
 				49420C79265B8F7C00AFBB6C /* ViewModel */,
 				49420C73265A3A7700AFBB6C /* View */,
@@ -103,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				49420C62265A23B900AFBB6C /* Contacts.xcdatamodeld */,
+				49420C8E265BD13100AFBB6C /* Constans.swift */,
 				49420C77265A3F4100AFBB6C /* NameList.swift */,
 			);
 			path = Model;
@@ -114,6 +120,14 @@
 				49420C7A265B8F9400AFBB6C /* MainListViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		49420C90265BD1BB00AFBB6C /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				49420C91265BD1CA00AFBB6C /* MainListViewModelType.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		EB6CAE48DD4D54CC1FFFAE02 /* Frameworks */ = {
@@ -257,10 +271,12 @@
 			files = (
 				49420C64265A23B900AFBB6C /* Contacts.xcdatamodeld in Sources */,
 				49420C78265A3F4100AFBB6C /* NameList.swift in Sources */,
+				49420C8F265BD13100AFBB6C /* Constans.swift in Sources */,
 				49420C75265A3A8900AFBB6C /* MainListView.swift in Sources */,
 				49420C5E265A23B900AFBB6C /* MainListController.swift in Sources */,
 				49420C72265A378700AFBB6C /* Coordinator.swift in Sources */,
 				49420C5A265A23B900AFBB6C /* AppDelegate.swift in Sources */,
+				49420C92265BD1CA00AFBB6C /* MainListViewModelType.swift in Sources */,
 				49420C5C265A23B900AFBB6C /* SceneDelegate.swift in Sources */,
 				49420C7B265B8F9400AFBB6C /* MainListViewModel.swift in Sources */,
 			);

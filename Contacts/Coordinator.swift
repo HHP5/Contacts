@@ -15,16 +15,16 @@ protocol Coordinator {
 }
 class MainCoordinator: Coordinator {
 	var navigationController: UINavigationController
-	var childCoordinators:[Coordinator] = []
+	var childCoordinators: [Coordinator] = []
 	
 	init(navigationController: UINavigationController) {
 			self.navigationController = navigationController
 		}
 	
 	func start() {
-		let vc = MainListController(viewModel: MainListViewModel())
-		vc.coordinator = self
-		navigationController.pushViewController(vc, animated: false)
+		let viewController = MainListController(viewModel: MainListViewModel())
+		viewController.coordinator = self
+		navigationController.pushViewController(viewController, animated: false)
 	}
 	
 }

@@ -9,19 +9,17 @@ import UIKit
 import SnapKit
 
 class MainListView: UIView {
-	let identifier = "cell"
 	// MARK: - IBOutlets (всегда приватные)
 	let table: UITableView = {
 		let table = UITableView()
+		table.register(UITableViewCell.self, forCellReuseIdentifier: Constans.identifierForCell)
 		return table
 	}()
 	// MARK: - Init
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		table.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
 		setupTable()
-		
 	}
 	
 	required init?(coder: NSCoder) {
@@ -36,6 +34,5 @@ class MainListView: UIView {
 		table.snp.makeConstraints { make in
 			make.edges.equalToSuperview()
 		}
-		
 	}
 }

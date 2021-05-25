@@ -7,18 +7,8 @@
 
 import UIKit
 
-protocol MainListViewModelType {
-	var numberOfSections: Int {get}
-	var sectionIndexTitles: [String]? {get}
-	var names: [Person] {get}
-	func numberOfRowsInSection(in section: Int) -> Int
-	func titleForHeaderInSection(in section: Int) -> String?
-	func sectionForSectionIndexTitle(for index: Int) -> Int
-	func cellForRow(at indexPath: IndexPath) -> String?
-}
-
 class MainListViewModel: MainListViewModelType {
-	
+	// MARK: - Properties
 	var numberOfSections: Int {
 		return collation.sectionTitles.count
 	}
@@ -27,22 +17,23 @@ class MainListViewModel: MainListViewModelType {
 		return collation.sectionIndexTitles
 	}
 	
-	var names: [Person] {
-		model.loadNameList()
-		if model.persons.isEmpty {
-			model.createNameList()
-		}
-		return model.persons
+	private var contactList: [Person] = []
+	
+	private var fullContactList: [Person] {
+		self.contactList = model.getContactList()
+		return model.getContactList()
 	}
 	
 	private var model = NameList()
 	private let collation = UILocalizedIndexedCollation.current()
 	private var sections: [[Person]] = []
-	
+	// MARK: - Init
+
 	init() {
-		self.setupSection()
+		self.setupSection(with: fullContactList)
 	}
-	
+	// MARK: - Public Methods
+
 	func titleForHeaderInSection(in section: Int) -> String? {
 		return collation.sectionTitles[section]
 	}
@@ -64,13 +55,28 @@ class MainListViewModel: MainListViewModelType {
 		return result
 	}
 	
-	private func setupSection() {
-		let selector: Selector = Selector(("lastName"))
+	func search(for text: String) {
+		let result: [Person] = fullContactList.filter { contact in
+			let byFirstName = contact.firstName?.lowercased().contains(text) ?? false
+			let byLastName = contact.lastName?.lowercased().contains(text) ?? false
+			return byLastName || byFirstName
+		}
+		setupSection(with: result)
+	}
+	
+	func cancelSearch() {
+		setupSection(with: fullContactList)
+	}
+	// MARK: - Private Methods
+
+	private func setupSection(with contactList: [Person]) {
+		let selector: Selector = Selector(Constans.selectorForSection)
 		self.sections = [[Person]](repeating: [], count: collation.sectionTitles.count)
 		
-		for name in names {
+		for name in contactList {
 			let sectionNumber = collation.section(for: name, collationStringSelector: selector)
 			sections[sectionNumber].append(name)
 		}
 	}
+
 }
