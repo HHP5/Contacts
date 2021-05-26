@@ -9,16 +9,20 @@ import SnapKit
 
 class MainListController: UIViewController, UISearchControllerDelegate {
 	// MARK: - Properties
-	var viewModel: MainListViewModelType
 	weak var coordinator: MainCoordinator?
+
+	var viewModel: MainListViewModelType
 	let screenView = MainListView()
+	
 	private let searchController: UISearchController = {
 		let searchController = UISearchController(searchResultsController: nil)
 		searchController.obscuresBackgroundDuringPresentation = false
 		searchController.searchBar.placeholder = "Search"
 		searchController.searchBar.backgroundColor = .clear
 		searchController.searchBar.tintColor = .black
-		
+		searchController.hidesNavigationBarDuringPresentation = false
+		searchController.searchBar.barStyle = .default
+		searchController.definesPresentationContext = true
 		return searchController
 	}()
 	
@@ -27,12 +31,10 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 	// MARK: - Init
 	
 	init(viewModel: MainListViewModelType) {
-		
 		self.viewModel = viewModel
-		
 		super.init(nibName: nil, bundle: nil)
-				
 	}
+	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -43,7 +45,6 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 		super.viewDidLoad()
 		view.backgroundColor = #colorLiteral(red: 0.8146950603, green: 0.8098530769, blue: 0.8184176087, alpha: 1)
 		
-		searchController.delegate = self
 		searchController.searchBar.delegate = self
 		searchController.searchResultsUpdater = self
 		
@@ -59,7 +60,7 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 	
 	// MARK: - Actions (@ojbc + @IBActions)
 	@objc private func plusPressed() {
-		
+		navigationController?.pushViewController(AddNewContactPageController(), animated: true)
 	}
 	// MARK: - Private Methods
 	
@@ -114,7 +115,7 @@ extension MainListController: UITableViewDataSource, UITableViewDelegate {
 	
 }
 
-// MARK: - UISearchBarDelegate
+// MARK: - UISearchResultsUpdating
 
 extension MainListController: UISearchResultsUpdating {
 	func updateSearchResults(for searchController: UISearchController) {
@@ -127,9 +128,9 @@ extension MainListController: UISearchResultsUpdating {
 		}
 		screenView.table.reloadData()
 	}
-	
 }
 
+// MARK: - UISearchBarDelegate
 
 extension MainListController: UISearchBarDelegate {
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
