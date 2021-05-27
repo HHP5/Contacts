@@ -8,59 +8,81 @@
 import UIKit
 import SnapKit
 
-class AddNewContactPageController: UIViewController, UINavigationControllerDelegate {
+class ContactPageController: UIViewController, UINavigationControllerDelegate {
+	// MARK: - Properties
+	
 	var ringtoneModel: RingtoneViewModel
-	let screenView = AddNewContactPageView()
+	
 	private var imagePicker: UIImagePickerController?
-	init() {
+	private let screenView: ContactPageView
+	// MARK: - Init
+	
+	init(type: TypeOfDetailPage) {
 		self.ringtoneModel = RingtoneViewModel()
+		self.screenView = ContactPageView(type: type)
 		super.init(nibName: nil, bundle: nil)
+		
+		switch type {
+		case .new:
+			setupNavigationBarForNewContact()
+		case .existing:
+			setupNavigationBarForExistingContact()
+		}
 	}
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	// MARK: - Lifecycle
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		view.backgroundColor = .white
-        setupNavigationBar()
+		
 		setupView()
 		setupDelegates()
 		setupImagePicker()
-    }
+	}
+	// MARK: - Actions (@ojbc + @IBActions)
 	
 	@objc private func donePressed() {
-		//сохранение нового контакта
+		// сохранение нового контакта
 		self.navigationController?.popViewController(animated: true)
 	}
+	
+	@objc private func editPressed() {
+		// сохранение нового контакта
+		self.navigationController?.popViewController(animated: true)
+	}
+	
+	// MARK: - Private Methods
 	
 	private func setupView() {
 		view.addSubview(screenView)
 		screenView.snp.makeConstraints { $0.edges.equalToSuperview() }
 	}
 	
-	private func setupNavigationBar() {
-		navigationController?.navigationBar.topItem?.backButtonTitle = "Cancel"
-		navigationController?.navigationBar.prefersLargeTitles = true
+	private func setupNavigationBarForNewContact() {
+		navigationController?.navigationItem.leftBarButtonItem?.title = "Cancel"
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
-
+	}
+	
+	private func setupNavigationBarForExistingContact() {
+		navigationController?.navigationBar.topItem?.backButtonTitle = "Contacts"
+		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editPressed))
 	}
 	
 	private func setupDelegates() {
 		screenView.textFields.forEach { $0.delegate = self }
-
+		
 		screenView.notesDelegate?.delegate = self
 		screenView.phoneNumberDelegate?.delegate = self
 		
 		screenView.ringtonePickerDelegate?.delegate = self
 		screenView.ringtonePickerDelegate?.dataSource = self
 		
-//		screenView.ringtone.viewModel = self
-		
 		screenView.profileImageDelegate = self
-		
-		
 	}
 	
 	private func setupImagePicker() {
@@ -75,15 +97,15 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 }
 // MARK: - UITextViewDelegate
 
-extension AddNewContactPageController: UITextViewDelegate {
+extension ContactPageController: UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
 		print(textView.text)
-//		newContact.toPersonalInfo?.notes = textView.text
+		//		newContact.toPersonalInfo?.notes = textView.text
 	}
 }
 // MARK: - UITextFieldDelegate
 
-extension AddNewContactPageController: UITextFieldDelegate {
+extension ContactPageController: UITextFieldDelegate {
 	
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		if let selectedTextFieldIndex = screenView.textFields.firstIndex(of: textField),
@@ -103,12 +125,12 @@ extension AddNewContactPageController: UITextFieldDelegate {
 			switch type {
 			case .familyName:
 				lastName = textField.text
-//				newContact.lastName = textField.text
+			//				newContact.lastName = textField.text
 			case .name:
 				firstName = textField.text
-//				newContact.firstName = textField.text
+			//				newContact.firstName = textField.text
 			case .telephoneNumber:
-//				newContact.toPersonalInfo?.phone = textField.text
+				//				newContact.toPersonalInfo?.phone = textField.text
 				phoneNumber = textField.text
 			default:
 				return
@@ -118,7 +140,7 @@ extension AddNewContactPageController: UITextFieldDelegate {
 }
 // MARK: - TextFieldButtonPressedDelegate
 
-extension AddNewContactPageController: TextFieldButtonPressedDelegate {
+extension ContactPageController: TextFieldButtonPressedDelegate {
 	func didPressButton(button: TextFieldButton) {
 		print(#function)
 		switch button {
@@ -132,7 +154,7 @@ extension AddNewContactPageController: TextFieldButtonPressedDelegate {
 }
 // MARK: - UIPickerViewDelegate, UIPickerViewDataSource
 
-extension AddNewContactPageController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension ContactPageController: UIPickerViewDelegate, UIPickerViewDataSource {
 	func numberOfComponents(in pickerView: UIPickerView) -> Int {
 		return 1
 	}
@@ -153,16 +175,20 @@ extension AddNewContactPageController: UIPickerViewDelegate, UIPickerViewDataSou
 
 // MARK: - ProfileImageDelegate
 
-extension AddNewContactPageController: ProfileImageDelegate, UIImagePickerControllerDelegate {
+extension ContactPageController: ProfileImageDelegate, UIImagePickerControllerDelegate {
 	
 	func imagePressed() {
 		let alert = UIAlertController(title: "Выберите фото", message: nil, preferredStyle: .actionSheet)
-		alert.addAction(UIAlertAction(title: "Из галереи", style: .default, handler: { [weak self] _ in
-			guard let self = self else { return }
-			self.present(self.imagePicker!, animated: true, completion: nil)
-		}))
-		alert.addAction(UIAlertAction(title: "Сделать фото", style: .default, handler: nil))
-		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		let fromGallery = UIAlertAction(title: "Из галереи", style: .default, handler: { [weak self] _ in
+			guard let self = self, let picker = self.imagePicker  else { return }
+			self.present(picker, animated: true, completion: nil)
+		})
+		let makePhoto = UIAlertAction(title: "Сделать фото", style: .default, handler: nil)
+		let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+		
+		alert.addAction(fromGallery)
+		alert.addAction(makePhoto)
+		alert.addAction(cancel)
 		self.present(alert, animated: true, completion: nil)
 	}
 	
@@ -171,7 +197,7 @@ extension AddNewContactPageController: ProfileImageDelegate, UIImagePickerContro
 		if let userPickedImage = info[.originalImage] as? UIImage {
 			screenView.setImage(image: userPickedImage)
 		}
-		imagePicker!.dismiss(animated: true, completion: nil)
+		picker.dismiss(animated: true, completion: nil)
 	}
-
+	
 }

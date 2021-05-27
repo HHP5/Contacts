@@ -60,7 +60,7 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 	
 	// MARK: - Actions (@ojbc + @IBActions)
 	@objc private func plusPressed() {
-		navigationController?.pushViewController(AddNewContactPageController(), animated: true)
+		self.navigationController?.pushViewController(ContactPageController(type: .new), animated: true)
 	}
 	// MARK: - Private Methods
 	

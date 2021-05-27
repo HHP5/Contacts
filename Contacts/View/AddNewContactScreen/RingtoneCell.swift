@@ -49,7 +49,7 @@ class RingtoneCell: UIView {
 		self.addSubview(stack)
 		stack.snp.makeConstraints { make in
 			make.top.bottom.equalToSuperview().inset(3)
-			make.leading.equalToSuperview().inset(10)
+			make.leading.equalToSuperview()
 		}
 		
 		self.addSubview(image)

@@ -10,7 +10,7 @@ import SnapKit
 protocol ProfileImageDelegate: class {
 	func imagePressed()
 }
-class AddNewContactPageView: UIView {
+class ContactPageView: UIView {
 	
 	var textFields: [UITextField] {
 		return [firstName.textField, lastName.textField, phoneNumber.textField]
@@ -22,51 +22,76 @@ class AddNewContactPageView: UIView {
 	weak var profileImageDelegate: ProfileImageDelegate?
 	// MARK: - IBOutlets (всегда приватные)
 	
+	private let typeOfPage: TypeOfDetailPage
 	private let firstName = TextField(type: .default, textField: .firstName)
 	private let lastName = TextField(type: .default, textField: .lastName)
-
+	
 	private let profileImage: UIImageView = {
 		let imageView = UIImageView(frame: .zero)
-//		imageView.image = UIImage(systemName: "plus")
 		imageView.sizeToFit()
 		imageView.clipsToBounds = true
 		imageView.layer.borderWidth = 1
 		imageView.layer.borderColor = UIColor.gray.cgColor
 		imageView.isUserInteractionEnabled = true
+		imageView.snp.makeConstraints {$0.width.height.equalTo(Constans.heightOfCell(type: .fullName) * 2)}
+		imageView.layer.cornerRadius = CGFloat((Constans.heightOfCell(type: .fullName) ))
 		return imageView
 	}()
 	
-	private lazy var nameStack: UIStackView = {
+	private lazy var nameStackForNewContact: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [firstName, lastName])
-		firstName.snp.makeConstraints {$0.height.equalTo(Constans.heightOfCell(type: .fullName))}
-		stack.spacing = 10
-		
+		stack.spacing = 20
 		stack.axis = .vertical
 		stack.distribution = .fill
 		return stack
 	}()
 	
-	private lazy var topStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [profileImage, nameStack])
-		firstName.snp.makeConstraints {$0.height.equalTo(Constans.heightOfCell(type: .fullName))}
+	private lazy var topStackForNewContact: UIStackView = {
+		let stack = UIStackView(arrangedSubviews: [profileImage, nameStackForNewContact])
 		stack.spacing = 20
 		stack.axis = .horizontal
 		stack.distribution = .fill
 		
 		return stack
 	}()
-	
+
 	private let phoneNumber = TextField(type: .phonePad, textField: .phone)
+	private let phoneNumberLabel: UILabel = {
+		let label = UILabel()
+		label.text = "Phone"
+		return label
+	}()
+	private lazy var phoneNumberStack: UIStackView = {
+		let stack = UIStackView(arrangedSubviews: [phoneNumberLabel, phoneNumber])
+		stack.spacing = 10
+		stack.axis = .vertical
+		stack.distribution = .fill
+		return stack
+	}()
+	
 	private let ringtone = RingtoneCell()
+	
+	private let notesLabel: UILabel = {
+		let label = UILabel()
+		label.text = "Notes"
+		return label
+	}()
 	private let notes = TextView()
 	
+	private lazy var notesStack: UIStackView = {
+		let stack = UIStackView(arrangedSubviews: [notesLabel, notes])
+		stack.spacing = 10
+		stack.axis = .vertical
+		stack.distribution = .fill
+		return stack
+	}()
+	
 	private lazy var detailStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [phoneNumber, ringtone, notes])
+		let stack = UIStackView(arrangedSubviews: [phoneNumberStack, ringtone, notesStack])
 		stack.arrangedSubviews.forEach { $0.snp.makeConstraints {$0.height.equalTo(Constans.heightOfCell(type: .detail))} }
 		stack.spacing = 10
 		stack.axis = .vertical
 		stack.distribution = .fill
-		
 		return stack
 	}()
 	
@@ -77,10 +102,17 @@ class AddNewContactPageView: UIView {
 	
 	// MARK: - Init
 
-	override init(frame: CGRect) {
-		super.init(frame: frame)
+	init(type: TypeOfDetailPage) {
+		self.typeOfPage = type
+		super.init(frame: .zero)
 		self.backgroundColor = .white
-		self.setupStack()
+		
+		switch type {
+		case .new:
+			self.setupForNewContact()
+		case .existing:
+			self.setupForExistingContact()
+		}
 		self.setupDetailStack()
 		self.setupPicker()
 		self.setupDelegates()
@@ -108,25 +140,54 @@ class AddNewContactPageView: UIView {
 		profileImage.image = image
 	}
 	
-	private func setupStack() {
-		self.addSubview(topStack)
+	private func setupForNewContact() {
+		self.addSubview(topStackForNewContact)
 
-		topStack.snp.makeConstraints { make in
+		topStackForNewContact.snp.makeConstraints { make in
 			make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
-			make.height.equalTo(Constans.heightOfCell(type: .fullName) * 2 + 10)
 			make.trailing.equalToSuperview().inset(20)
 			make.leading.equalToSuperview().offset(20)
 		}
+	}
+	
+	private func setupForExistingContact() {
+
+		self.addSubview(profileImage)
+		self.addSubview(firstName)
+		self.addSubview(lastName)
 		
-		profileImage.snp.makeConstraints {$0.height.width.equalTo(nameStack.snp.height)}
-		profileImage.layer.cornerRadius = CGFloat((Constans.heightOfCell(type: .fullName) + 5))
+		profileImage.snp.makeConstraints { make in
+			make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
+			make.centerX.equalToSuperview()
+		}
+
+		firstName.snp.makeConstraints { make in
+			make.top.equalTo(profileImage.snp.bottom).offset(20)
+			make.leading.equalToSuperview().offset(20)
+			make.trailing.equalTo(self.snp.centerX)
+			make.height.equalTo(Constans.heightOfCell(type: .fullName))
+
+		}
+		
+		lastName.snp.makeConstraints { make in
+			make.top.equalTo(profileImage.snp.bottom).offset(20)
+			make.trailing.equalToSuperview().offset(-20)
+			make.leading.equalTo(self.snp.centerX)
+			make.height.equalTo(Constans.heightOfCell(type: .fullName))
+		}
 	}
 	
 	private func setupDetailStack() {
 		self.addSubview(detailStack)
-
+	
 		detailStack.snp.makeConstraints { make in
-			make.top.equalTo(topStack.snp.bottom).offset(20)
+			switch typeOfPage {
+			case .existing:
+				make.top.equalTo(firstName.snp.bottom).offset(20)
+			case .new:
+				phoneNumberLabel.isHidden = true
+				make.top.equalTo(topStackForNewContact.snp.bottom).offset(20)
+			}
 			make.trailing.equalToSuperview()
 			make.leading.equalToSuperview().offset(20)
 		}
