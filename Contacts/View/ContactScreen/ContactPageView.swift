@@ -163,12 +163,7 @@ class ContactPageView: UIView {
 	private func keyboardWillHide(notification: NSNotification) {
 		self.frame.origin.y = 0
 	}
-	
-	@objc
-	private func dismissKeyboard (_ sender: UITapGestureRecognizer) {
-		self.endEditing(true)
-	}
-	
+
 	// MARK: - Public Methods
 	
 	func setImage(image: UIImage) {
@@ -300,7 +295,7 @@ class ContactPageView: UIView {
 											   name: UIResponder.keyboardWillHideNotification,
 											   object: nil)
 		
-		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
+		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing(_:)))
 		tapGesture.cancelsTouchesInView = false
 		self.addGestureRecognizer(tapGesture)
 	}

@@ -21,7 +21,7 @@ class MainListViewModel: MainListViewModelType {
 	
 	private var fullContactList: [Person] = []
 	
-	private var model = NameList()
+	private var model = ContactList()
 	private let collation = UILocalizedIndexedCollation.current()
 	private var sections: [[Person]] = []
 	// MARK: - Init

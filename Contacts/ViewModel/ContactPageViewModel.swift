@@ -9,7 +9,7 @@ import UIKit
 
 class ContactPageViewModel: ContactPageViewModelType {
 	private var contact: Person?
-	private var model = NameList()
+	private var model = ContactList()
 	
 	var firstName: String? {
 		return contact?.firstName

@@ -14,7 +14,7 @@
 		49420C66265A23BA00AFBB6C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49420C65265A23BA00AFBB6C /* Assets.xcassets */; };
 		49420C72265A378700AFBB6C /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C71265A378700AFBB6C /* Coordinator.swift */; };
 		49420C75265A3A8900AFBB6C /* MainListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C74265A3A8900AFBB6C /* MainListView.swift */; };
-		49420C78265A3F4100AFBB6C /* NameList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C77265A3F4100AFBB6C /* NameList.swift */; };
+		49420C78265A3F4100AFBB6C /* ContactList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C77265A3F4100AFBB6C /* ContactList.swift */; };
 		49420C7B265B8F9400AFBB6C /* MainListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C7A265B8F9400AFBB6C /* MainListViewModel.swift */; };
 		49420C8F265BD13100AFBB6C /* Constans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C8E265BD13100AFBB6C /* Constans.swift */; };
 		49420C92265BD1CA00AFBB6C /* MainListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C91265BD1CA00AFBB6C /* MainListViewModelType.swift */; };
@@ -49,7 +49,7 @@
 		49420C6A265A23BA00AFBB6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49420C71265A378700AFBB6C /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		49420C74265A3A8900AFBB6C /* MainListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListView.swift; sourceTree = "<group>"; };
-		49420C77265A3F4100AFBB6C /* NameList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameList.swift; sourceTree = "<group>"; };
+		49420C77265A3F4100AFBB6C /* ContactList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactList.swift; sourceTree = "<group>"; };
 		49420C7A265B8F9400AFBB6C /* MainListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListViewModel.swift; sourceTree = "<group>"; };
 		49420C8E265BD13100AFBB6C /* Constans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constans.swift; sourceTree = "<group>"; };
 		49420C91265BD1CA00AFBB6C /* MainListViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListViewModelType.swift; sourceTree = "<group>"; };
@@ -147,7 +147,7 @@
 			children = (
 				49420C62265A23B900AFBB6C /* Contacts.xcdatamodeld */,
 				49420C8E265BD13100AFBB6C /* Constans.swift */,
-				49420C77265A3F4100AFBB6C /* NameList.swift */,
+				49420C77265A3F4100AFBB6C /* ContactList.swift */,
 				49420CA5265CFEBF00AFBB6C /* PersonalInfoType.swift */,
 				49420CB5265E3B8F00AFBB6C /* TextFieldType.swift */,
 				49420CB9265E539400AFBB6C /* TextFieldButton.swift */,
@@ -345,7 +345,7 @@
 				494AE8952661097B00741FE5 /* ContactPageViewModel.swift in Sources */,
 				49420C64265A23B900AFBB6C /* Contacts.xcdatamodeld in Sources */,
 				49420CA6265CFEBF00AFBB6C /* PersonalInfoType.swift in Sources */,
-				49420C78265A3F4100AFBB6C /* NameList.swift in Sources */,
+				49420C78265A3F4100AFBB6C /* ContactList.swift in Sources */,
 				49420C8F265BD13100AFBB6C /* Constans.swift in Sources */,
 				49420C75265A3A8900AFBB6C /* MainListView.swift in Sources */,
 				494AE893265F8B3C00741FE5 /* TypeOfDetailPage.swift in Sources */,

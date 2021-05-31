@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-struct NameList {
+struct ContactList {
 	var persons: [Person] = []
 	var context = (UIApplication.shared.delegate as? AppDelegate)!.persistentContainer.viewContext
 	
