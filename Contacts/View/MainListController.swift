@@ -25,9 +25,7 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 		searchController.definesPresentationContext = true
 		return searchController
 	}()
-	
-	// MARK: - IBOutlets (всегда приватные)
-	
+		
 	// MARK: - Init
 	
 	init(viewModel: MainListViewModelType) {
@@ -54,13 +52,25 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 		setupNavigationBar()
 		setupView()
 		
-		//		print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+//		print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
 	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		viewModel.reloadData()
+		screenView.table.reloadData()
+		
+	}
+	
 	// MARK: - Public Methods
 	
 	// MARK: - Actions (@ojbc + @IBActions)
-	@objc private func plusPressed() {
-		self.navigationController?.pushViewController(ContactPageController(type: .new), animated: true)
+	@objc
+	private func plusPressed() {
+		let destinationVC = ContactPageController(type: .new)
+		destinationVC.viewModel = viewModel.emptyContact()
+		self.navigationController?.pushViewController(destinationVC, animated: true)
 	}
 	// MARK: - Private Methods
 	
@@ -111,6 +121,15 @@ extension MainListController: UITableViewDataSource, UITableViewDelegate {
 		let cell = tableView.dequeueReusableCell(withIdentifier: Constans.identifierForCell, for: indexPath)
 		cell.textLabel?.text = viewModel.cellForRow(at: indexPath)
 		return cell
+	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let contact = viewModel.didSelectRowAt(indexPath)
+		let destinationVC = ContactPageController(type: .existing)
+		destinationVC.viewModel = contact
+		self.navigationController?.pushViewController(destinationVC, animated: true)
+		
+		tableView.deselectRow(at: indexPath, animated: true)
 	}
 	
 }

@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20E241" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Person" representedClassName=".Person" syncable="YES" codeGenerationType="class">
         <attribute name="firstName" optional="YES" attributeType="String"/>
-        <attribute name="lastName" attributeType="String"/>
-        <relationship name="toPersonalInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PersonalInfo" inverseName="toPerson" inverseEntity="PersonalInfo"/>
-    </entity>
-    <entity name="PersonalInfo" representedClassName=".PersonalData" syncable="YES" codeGenerationType="class">
-        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="lastName" optional="YES" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="phone" optional="YES" attributeType="String"/>
         <attribute name="ringtone" optional="YES" attributeType="String"/>
-        <relationship name="toPerson" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="toPersonalInfo" inverseEntity="Person"/>
     </entity>
     <elements>
-        <element name="Person" positionX="-38.17877197265625" positionY="-69.27169799804688" width="128" height="88"/>
-        <element name="PersonalInfo" positionX="321.423095703125" positionY="-46.68099975585938" width="128" height="118"/>
+        <element name="Person" positionX="-38.17877197265625" positionY="-69.27169799804688" width="128" height="119"/>
     </elements>
 </model>

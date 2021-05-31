@@ -1,9 +1,9 @@
-////
-////  AddNewContactPageViewModel.swift
-////  Contact
-////
-////  Created by Екатерина Григорьева on 25.05.2021.
-////
+//
+//  AddNewContactPageViewModel.swift
+//  Contact
+//
+//  Created by Екатерина Григорьева on 25.05.2021.
+//
 //
 import UIKit
 protocol RingtoneViewModelType {
@@ -11,8 +11,6 @@ protocol RingtoneViewModelType {
 	func row(at row: Int) -> String?
 }
 class RingtoneViewModel: RingtoneViewModelType {
-	
-//	let model = Ringtone()
 	var numberOfComponents: Int
 	
 	init() {

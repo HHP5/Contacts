@@ -31,6 +31,7 @@
 		49420CBC265E760C00AFBB6C /* Ringtone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420CBB265E760C00AFBB6C /* Ringtone.swift */; };
 		49420CBE265E8B0800AFBB6C /* RingtoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420CBD265E8B0800AFBB6C /* RingtoneCell.swift */; };
 		494AE893265F8B3C00741FE5 /* TypeOfDetailPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494AE892265F8B3C00741FE5 /* TypeOfDetailPage.swift */; };
+		494AE8952661097B00741FE5 /* ContactPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494AE8942661097B00741FE5 /* ContactPageViewModel.swift */; };
 		D0157E0D7E463A575E904874 /* Pods_Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA3F7125F080FDDC25679962 /* Pods_Contacts.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		49420CBB265E760C00AFBB6C /* Ringtone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ringtone.swift; sourceTree = "<group>"; };
 		49420CBD265E8B0800AFBB6C /* RingtoneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingtoneCell.swift; sourceTree = "<group>"; };
 		494AE892265F8B3C00741FE5 /* TypeOfDetailPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeOfDetailPage.swift; sourceTree = "<group>"; };
+		494AE8942661097B00741FE5 /* ContactPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPageViewModel.swift; sourceTree = "<group>"; };
 		907270F644592661DB49DC26 /* Pods-Contacts.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contacts.debug.xcconfig"; path = "Target Support Files/Pods-Contacts/Pods-Contacts.debug.xcconfig"; sourceTree = "<group>"; };
 		C1F3E209B5C62F03D09B922C /* Pods-Contacts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contacts.release.xcconfig"; path = "Target Support Files/Pods-Contacts/Pods-Contacts.release.xcconfig"; sourceTree = "<group>"; };
 		DA3F7125F080FDDC25679962 /* Pods_Contacts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Contacts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,7 +114,6 @@
 				49420C5B265A23B900AFBB6C /* SceneDelegate.swift */,
 				49420C71265A378700AFBB6C /* Coordinator.swift */,
 				49420CAE265E312900AFBB6C /* Extension */,
-				49420C90265BD1BB00AFBB6C /* Protocols */,
 				49420C76265A3F3300AFBB6C /* Model */,
 				49420C79265B8F7C00AFBB6C /* ViewModel */,
 				49420C73265A3A7700AFBB6C /* View */,
@@ -127,7 +128,7 @@
 			children = (
 				49420C5D265A23B900AFBB6C /* MainListController.swift */,
 				49420C74265A3A8900AFBB6C /* MainListView.swift */,
-				49420CA7265D024300AFBB6C /* AddNewContactScreen */,
+				49420CA7265D024300AFBB6C /* ContactScreen */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -140,6 +141,7 @@
 				49420C77265A3F4100AFBB6C /* NameList.swift */,
 				49420CA5265CFEBF00AFBB6C /* PersonalInfoType.swift */,
 				49420CB5265E3B8F00AFBB6C /* TextFieldType.swift */,
+				49420C90265BD1BB00AFBB6C /* Protocols */,
 				49420CB9265E539400AFBB6C /* TextFieldButton.swift */,
 				49420CBB265E760C00AFBB6C /* Ringtone.swift */,
 				494AE892265F8B3C00741FE5 /* TypeOfDetailPage.swift */,
@@ -152,6 +154,7 @@
 			children = (
 				49420C7A265B8F9400AFBB6C /* MainListViewModel.swift */,
 				49420CAC265D46F200AFBB6C /* RingtoneViewModel.swift */,
+				494AE8942661097B00741FE5 /* ContactPageViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -165,7 +168,7 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		49420CA7265D024300AFBB6C /* AddNewContactScreen */ = {
+		49420CA7265D024300AFBB6C /* ContactScreen */ = {
 			isa = PBXGroup;
 			children = (
 				49420C9B265CD6C900AFBB6C /* ContactPageController.swift */,
@@ -174,7 +177,7 @@
 				49420CB1265E33AD00AFBB6C /* TextField.swift */,
 				49420CBD265E8B0800AFBB6C /* RingtoneCell.swift */,
 			);
-			path = AddNewContactScreen;
+			path = ContactScreen;
 			sourceTree = "<group>";
 		};
 		49420CAE265E312900AFBB6C /* Extension */ = {
@@ -326,6 +329,7 @@
 			files = (
 				49420C9E265CD6E700AFBB6C /* ContactPageView.swift in Sources */,
 				49420CBA265E539400AFBB6C /* TextFieldButton.swift in Sources */,
+				494AE8952661097B00741FE5 /* ContactPageViewModel.swift in Sources */,
 				49420C64265A23B900AFBB6C /* Contacts.xcdatamodeld in Sources */,
 				49420CA6265CFEBF00AFBB6C /* PersonalInfoType.swift in Sources */,
 				49420C78265A3F4100AFBB6C /* NameList.swift in Sources */,

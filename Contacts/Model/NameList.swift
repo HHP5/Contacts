@@ -20,29 +20,30 @@ struct NameList {
 		return persons
 	}
 	
-	func savePerson() {
+	func save() {
 		do {
 			try context.save()
 		} catch {
-			print("Error saving context \(error)")
+			context.rollback()
+			let nserror = error as NSError
+			fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
 		}
 	}
 	
 	mutating private func createNameList() {
-
-		createPerson(firstName: "Thomas", lastName: "Anderson")
-		createPerson(firstName: "Milton", lastName: "Aaron")
-		createPerson(firstName: "Reid", lastName: "Alex")
-		createPerson(firstName: "Will", lastName: "Baarada")
-		createPerson(firstName: "Bruce", lastName: "Ballard")
-		createPerson(firstName: "Pauline", lastName: "Banister")
-		createPerson(firstName: "Michael", lastName: "Barlow")
-		createPerson(firstName: "Holden", lastName: "Colfield")
-		createPerson(firstName: "Dr.", lastName: "Cox")
+		updateContact(firstName: "Thomas", lastName: "Anderson")
+		updateContact(firstName: "Milton", lastName: "Aaron")
+		updateContact(firstName: "Reid", lastName: "Alex")
+		updateContact(firstName: "Will", lastName: "Baarada")
+		updateContact(firstName: "Bruce", lastName: "Ballard")
+		updateContact(firstName: "Pauline", lastName: "Banister")
+		updateContact(firstName: "Michael", lastName: "Barlow")
+		updateContact(firstName: "Holden", lastName: "Colfield")
+		updateContact(firstName: "Dr.", lastName: "Cox")
 	}
 	
 	mutating private func loadNameList(with request: NSFetchRequest<Person> = Person.fetchRequest()) {
-
+		
 		let sortDescriptor = NSSortDescriptor(key: "lastName", ascending: true)
 		request.sortDescriptors = [sortDescriptor]
 		
@@ -52,14 +53,63 @@ struct NameList {
 			print("Error fetching data from context \(error)")
 		}
 	}
-
-	mutating private func createPerson(firstName: String, lastName: String ) {
-
-		let person = Person(context: self.context)
+	
+	mutating func updateContact(person: Person? = nil,
+								firstName: String? = nil,
+								lastName: String? = nil,
+								phone: String? = nil,
+								ringtone: String? = nil,
+								notes: String? = nil, image: Data? = nil) {
+		
+		if person == nil {
+			let newPerson = Person(context: self.context)
+			saveContact(for: newPerson,
+						firstName: firstName,
+						lastName: lastName,
+						phone: phone,
+						ringtone: ringtone,
+						notes: notes,
+						image: image)
+		} else {
+			saveContact(for: person!,
+						firstName: firstName,
+						lastName: lastName,
+						phone: phone,
+						ringtone: ringtone,
+						notes: notes,
+						image: image)
+		}
+		
+	}
+	
+	func deleteAllData() {
+		
+		let reqVar = NSFetchRequest<NSFetchRequestResult>(entityName: "Person")
+		let delAllReqVar = NSBatchDeleteRequest(fetchRequest: reqVar)
+		do {
+			try context.execute(delAllReqVar)
+		} catch {
+			print(error)
+		}
+	}
+	
+	func deleteObject(_ object: NSManagedObject) {
+		context.delete(object)
+		save()
+	}
+	
+	private mutating func saveContact(for person: Person, firstName: String? = nil, lastName: String? = nil, phone: String? = nil, ringtone: String? = nil, notes: String? = nil, image: Data? = nil) {
+		
 		person.firstName = firstName
 		person.lastName = lastName
-
-		persons.append(person)
-		savePerson()
+		person.notes = notes
+		person.phone = phone
+		person.ringtone = ringtone
+		person.image = image
+		
+		if !persons.contains(person) {
+			persons.append(person)
+		}
+		save()
 	}
 }

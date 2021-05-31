@@ -19,10 +19,7 @@ class MainListViewModel: MainListViewModelType {
 	
 	private var contactList: [Person] = []
 	
-	private var fullContactList: [Person] {
-		self.contactList = model.getContactList()
-		return model.getContactList()
-	}
+	private var fullContactList: [Person] = []
 	
 	private var model = NameList()
 	private let collation = UILocalizedIndexedCollation.current()
@@ -30,7 +27,11 @@ class MainListViewModel: MainListViewModelType {
 	// MARK: - Init
 
 	init() {
+		self.fullContactList = model.getContactList()
+		self.contactList = self.fullContactList
 		self.setupSection(with: fullContactList)
+		
+//		self.model.deleteAllData()
 	}
 	// MARK: - Public Methods
 
@@ -67,6 +68,21 @@ class MainListViewModel: MainListViewModelType {
 	func cancelSearch() {
 		setupSection(with: fullContactList)
 	}
+	
+	func didSelectRowAt(_ indexPath: IndexPath) -> ContactPageViewModelType? {
+		let section = sections[indexPath.section]
+		let contact = section[indexPath.row]
+		return ContactPageViewModel(contact: contact)
+	}
+	
+	func emptyContact() -> ContactPageViewModelType? {
+		return ContactPageViewModel(contact: nil)
+	}
+	
+	func reloadData() {
+		self.fullContactList = model.getContactList()
+		self.setupSection(with: fullContactList)
+	}
 	// MARK: - Private Methods
 
 	private func setupSection(with contactList: [Person]) {
@@ -78,5 +94,4 @@ class MainListViewModel: MainListViewModelType {
 			sections[sectionNumber].append(name)
 		}
 	}
-
 }

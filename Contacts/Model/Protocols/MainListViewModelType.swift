@@ -16,4 +16,7 @@ protocol MainListViewModelType {
 	func cellForRow(at indexPath: IndexPath) -> String?
 	func search(for text: String)
 	func cancelSearch()
+	func didSelectRowAt(_ indexPath: IndexPath) -> ContactPageViewModelType?
+	func emptyContact() -> ContactPageViewModelType?
+	func reloadData()
 }

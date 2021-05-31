@@ -18,7 +18,7 @@ class TextField: UIView {
 		self.type = textField
 		super.init(frame: .zero)
 		setupTextView()
-		
+
 	}
 	
 	required init?(coder: NSCoder) {
@@ -36,7 +36,7 @@ class TextField: UIView {
 		textField.keyboardType = keyboardType
 		
 		textField.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: .medium)
-		self.drawLine()
+
 		switch type {
 		case .firstName:
 			textField.textContentType = .name
@@ -45,6 +45,7 @@ class TextField: UIView {
 		case .phone:
 			textField.textContentType = .telephoneNumber
 			textField.inputAccessoryView = setToolBar()
+			self.drawLine()
 		}
 		textField.returnKeyType = UIReturnKeyType.next
 	}

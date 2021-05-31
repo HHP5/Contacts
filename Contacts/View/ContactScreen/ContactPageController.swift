@@ -1,0 +1,309 @@
+//
+//  DetailContactInfoController.swift
+//  Contact
+//
+//  Created by Екатерина Григорьева on 25.05.2021.
+//
+
+import UIKit
+import SnapKit
+
+class ContactPageController: UIViewController, UINavigationControllerDelegate {
+	// MARK: - Properties
+	var viewModel: ContactPageViewModelType? {
+		willSet(viewModel) {
+			guard let viewModel = viewModel else { return }
+			self.handleViewModel(viewModel)
+		}
+	}
+	
+	private var ringtoneModel: RingtoneViewModel
+	
+	private var imagePicker: UIImagePickerController?
+	private let screenView: ContactPageView
+	
+	private var firstName: String?
+	private var lastName: String?
+	private var phoneNumber: String?
+	private var ringtone: String?
+	private var notes: String?
+	private var image: Data?
+	
+	private var type: TypeOfDetailPage
+	private var isDonePressed: Bool = false
+	
+	// MARK: - Init
+	
+	init(type: TypeOfDetailPage) {
+		self.type = type
+		self.ringtoneModel = RingtoneViewModel()
+		self.screenView = ContactPageView(type: type)
+		super.init(nibName: nil, bundle: nil)
+		
+		switch type {
+		case .new:
+			self.setupNavigationBarForNewContact()
+		case .existing:
+			self.setupNavigationBarForExistingContact()
+			self.makeUserInteractionEnabled(condition: false)
+		}
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	// MARK: - Lifecycle
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		view.backgroundColor = .white
+		
+		setupView()
+		setupDelegates()
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		self.isDonePressed = false
+	}
+	// MARK: - Actions (@ojbc + @IBActions)
+	
+	@objc
+	private func donePressed() {
+		guard let viewModel = viewModel else { return }
+		screenView.endEditing(true)
+		
+		switch type {
+		case .new:
+			if !isDonePressed {
+				viewModel.saveNewContact(firstName: self.firstName,
+										 lastName: self.lastName,
+										 phone: self.phoneNumber,
+										 ringtone: self.ringtone,
+										 notes: self.notes,
+										 image: self.image)
+				self.isDonePressed = true
+			}
+		case .existing:
+			viewModel.updateContact(firstName: self.firstName,
+									lastName: self.lastName,
+									phone: self.phoneNumber,
+									ringtone: self.ringtone,
+									notes: self.notes,
+									image: self.image)
+			self.existingContactConfiguration()
+		}
+	}
+	
+	@objc
+	private func editPressed() {
+		self.makeUserInteractionEnabled(condition: true)
+		self.setupNavigationBarForNewContact()
+	}
+	
+	@objc private func goBack() {
+		switch type {
+		case .existing:
+			self.existingContactConfiguration()
+		case .new:
+			self.navigationController?.popViewController(animated: true)
+		}
+	}
+	
+	// MARK: - Private Methods
+	
+	private func existingContactConfiguration() {
+		self.makeUserInteractionEnabled(condition: false)
+		self.setupNavigationBarForExistingContact()
+	}
+	
+	private func handleViewModel(_ viewModel: ContactPageViewModelType) {
+		screenView.textFields.firstName.text = viewModel.firstName
+		screenView.textFields.lastName.text = viewModel.lastName
+		screenView.textFields.phoneNumber.text = viewModel.phoneNumber
+		screenView.notesDelegate?.text = viewModel.notes
+		if let ringtone = viewModel.ringtone {
+			screenView.ringtoneDelegate?.setName(ringtone)
+		}
+		if let image = viewModel.image {
+			screenView.setImage(image: image)
+		}
+	}
+	
+	private func setupView() {
+		view.addSubview(screenView)
+		screenView.snp.makeConstraints { $0.edges.equalToSuperview() }
+	}
+	
+	private func setupNavigationBarForNewContact() {
+		self.navigationItem.hidesBackButton = true
+		let backItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(goBack))
+		navigationItem.leftBarButtonItem = backItem
+		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
+	}
+	
+	private func setupNavigationBarForExistingContact() {
+		self.navigationItem.leftBarButtonItem = nil
+		self.navigationItem.hidesBackButton = false
+		self.navigationItem.backBarButtonItem?.title = "Contact"
+		self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit,
+																 target: self,
+																 action: #selector(editPressed))
+	}
+	
+	private func setupDelegates() {
+		[screenView.textFields.0, screenView.textFields.1, screenView.textFields.2].forEach { $0.delegate = self }
+		
+		screenView.notesDelegate?.delegate = self
+		screenView.phoneNumberDelegate?.delegate = self
+		
+		screenView.ringtonePickerDelegate?.delegate = self
+		screenView.ringtonePickerDelegate?.dataSource = self
+		
+		screenView.profileImageDelegate = self
+		
+		screenView.deleteButtonDelegate = self
+	}
+	
+	private func makeUserInteractionEnabled(condition: Bool) {
+		self.screenView.ringtoneDelegate?.isUserInteractionEnabled = condition
+		self.screenView.ringtonePickerDelegate?.isUserInteractionEnabled = condition
+		[screenView.textFields.0, screenView.textFields.1, screenView.textFields.2].forEach { $0.isUserInteractionEnabled = condition }
+		self.imagePicker?.isEditing = condition
+		self.screenView.notesDelegate?.isUserInteractionEnabled = condition
+		
+		screenView.deleteButtonShowing(condition: condition)
+	}
+	
+}
+// MARK: - UITextViewDelegate
+
+extension ContactPageController: UITextViewDelegate {
+	func textViewDidChange(_ textView: UITextView) {
+		if let text = textView.text {
+			self.notes = text
+		}
+	}
+	
+	func textViewDidBeginEditing(_ textView: UITextView) {
+		screenView.notesPressed()
+	}
+
+}
+// MARK: - UITextFieldDelegate
+
+extension ContactPageController: UITextFieldDelegate {
+	// для перехода на след textField
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		let textFields = [screenView.textFields.0, screenView.textFields.1, screenView.textFields.2]
+		if let selectedTextFieldIndex = textFields.firstIndex(of: textField),
+		   selectedTextFieldIndex < textFields.count - 1 {
+			textFields[selectedTextFieldIndex + 1].becomeFirstResponder()
+		} else {
+			textField.resignFirstResponder()
+		}
+		return true
+	}
+	
+	func textFieldDidEndEditing(_ textField: UITextField) {
+		
+		if let type = textField.textContentType {
+			switch type {
+			case .familyName:
+				self.lastName = textField.text
+			case .name:
+				self.firstName = textField.text
+			case .telephoneNumber:
+				self.phoneNumber = textField.text
+			default:
+				return
+			}
+		}
+	}	
+}
+// MARK: - TextFieldButtonPressedDelegate
+
+extension ContactPageController: TextFieldButtonPressedDelegate {
+	func didPressButton(button: TextFieldButton) {
+		switch button {
+		case .done:
+			// или тут нужно еще раз сохранять?
+			screenView.endEditing(true)
+		case .next:
+			screenView.ringtonePickerDelegate?.isHidden = false
+		}
+	}
+}
+// MARK: - UIPickerViewDelegate, UIPickerViewDataSource
+
+extension ContactPageController: UIPickerViewDelegate, UIPickerViewDataSource {
+	func numberOfComponents(in pickerView: UIPickerView) -> Int {
+		return 1
+	}
+	
+	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+		return ringtoneModel.numberOfComponents
+	}
+	
+	func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+		return ringtoneModel.row(at: row)
+	}
+	
+	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+		screenView.ringtoneDelegate?.setName(ringtoneModel.row(at: row))
+		self.ringtone = ringtoneModel.row(at: row)
+		screenView.hideRingtone()
+	}
+}
+
+// MARK: - ProfileImageDelegate
+
+extension ContactPageController: ProfileImageDelegate, UIImagePickerControllerDelegate {
+	
+	func imagePressed() {
+		let alert = UIAlertController(title: "Photo", message: nil, preferredStyle: .actionSheet)
+		let fromGallery = UIAlertAction(title: "Choose photo", style: .default, handler: { [weak self] _ in
+			self?.setupImagePicker(for: .photoLibrary)
+		})
+		let makePhoto = UIAlertAction(title: "Take photo", style: .default, handler: { [weak self] _ in
+			self?.setupImagePicker(for: .camera)
+		})
+		let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+		
+		alert.addAction(fromGallery)
+		alert.addAction(makePhoto)
+		alert.addAction(cancel)
+		self.present(alert, animated: true, completion: nil)
+	}
+	
+	func setupImagePicker(for type: UIImagePickerController.SourceType) {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			self.imagePicker = UIImagePickerController()
+			if let picker = self.imagePicker {
+				picker.delegate = self
+				picker.sourceType = type
+				self.present(picker, animated: true, completion: nil)
+			}
+		}
+	}
+	
+	func imagePickerController(_ picker: UIImagePickerController,
+							   didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+		if let userPickedImage = info[.originalImage] as? UIImage {
+			self.image = userPickedImage.jpegData(compressionQuality: 0.5)
+			screenView.setImage(image: userPickedImage)
+		}
+		picker.dismiss(animated: true, completion: nil)
+	}
+	
+}
+
+extension ContactPageController: DeleteButtonDelegate {
+	func pressed() {
+		viewModel?.deleteContact()
+		self.navigationController?.popViewController(animated: true)
+	}
+}
