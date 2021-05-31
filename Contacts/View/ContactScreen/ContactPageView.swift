@@ -8,12 +8,6 @@
 import UIKit
 import SnapKit
 
-protocol DeleteButtonDelegate: class {
-	func pressed()
-}
-protocol ProfileImageDelegate: class {
-	func imagePressed()
-}
 class ContactPageView: UIView {
 	var textFields: (firstName: UITextField, lastName: UITextField, phoneNumber: UITextField) {
 		return (firstName: firstName.textField, lastName: lastName.textField, phoneNumber: phoneNumber.textField)

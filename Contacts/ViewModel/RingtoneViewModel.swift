@@ -6,10 +6,7 @@
 //
 //
 import UIKit
-protocol RingtoneViewModelType {
-	var numberOfComponents: Int {get set}
-	func row(at row: Int) -> String?
-}
+
 class RingtoneViewModel: RingtoneViewModelType {
 	var numberOfComponents: Int
 	

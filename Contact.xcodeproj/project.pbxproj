@@ -32,6 +32,10 @@
 		49420CBE265E8B0800AFBB6C /* RingtoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420CBD265E8B0800AFBB6C /* RingtoneCell.swift */; };
 		494AE893265F8B3C00741FE5 /* TypeOfDetailPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494AE892265F8B3C00741FE5 /* TypeOfDetailPage.swift */; };
 		494AE8952661097B00741FE5 /* ContactPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494AE8942661097B00741FE5 /* ContactPageViewModel.swift */; };
+		49A05AB42664D33800DB2DE4 /* ContactPageViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05AB32664D33800DB2DE4 /* ContactPageViewModelType.swift */; };
+		49A05AB62664D35300DB2DE4 /* RingtoneViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05AB52664D35300DB2DE4 /* RingtoneViewModelType.swift */; };
+		49A05AB82664D36E00DB2DE4 /* DeleteButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05AB72664D36E00DB2DE4 /* DeleteButtonDelegate.swift */; };
+		49A05ABA2664D37E00DB2DE4 /* ProfileImageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05AB92664D37D00DB2DE4 /* ProfileImageDelegate.swift */; };
 		D0157E0D7E463A575E904874 /* Pods_Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA3F7125F080FDDC25679962 /* Pods_Contacts.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +67,10 @@
 		49420CBD265E8B0800AFBB6C /* RingtoneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingtoneCell.swift; sourceTree = "<group>"; };
 		494AE892265F8B3C00741FE5 /* TypeOfDetailPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeOfDetailPage.swift; sourceTree = "<group>"; };
 		494AE8942661097B00741FE5 /* ContactPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPageViewModel.swift; sourceTree = "<group>"; };
+		49A05AB32664D33800DB2DE4 /* ContactPageViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPageViewModelType.swift; sourceTree = "<group>"; };
+		49A05AB52664D35300DB2DE4 /* RingtoneViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingtoneViewModelType.swift; sourceTree = "<group>"; };
+		49A05AB72664D36E00DB2DE4 /* DeleteButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButtonDelegate.swift; sourceTree = "<group>"; };
+		49A05AB92664D37D00DB2DE4 /* ProfileImageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageDelegate.swift; sourceTree = "<group>"; };
 		907270F644592661DB49DC26 /* Pods-Contacts.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contacts.debug.xcconfig"; path = "Target Support Files/Pods-Contacts/Pods-Contacts.debug.xcconfig"; sourceTree = "<group>"; };
 		C1F3E209B5C62F03D09B922C /* Pods-Contacts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contacts.release.xcconfig"; path = "Target Support Files/Pods-Contacts/Pods-Contacts.release.xcconfig"; sourceTree = "<group>"; };
 		DA3F7125F080FDDC25679962 /* Pods_Contacts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Contacts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +121,7 @@
 				49420C59265A23B900AFBB6C /* AppDelegate.swift */,
 				49420C5B265A23B900AFBB6C /* SceneDelegate.swift */,
 				49420C71265A378700AFBB6C /* Coordinator.swift */,
+				49420C90265BD1BB00AFBB6C /* Protocols */,
 				49420CAE265E312900AFBB6C /* Extension */,
 				49420C76265A3F3300AFBB6C /* Model */,
 				49420C79265B8F7C00AFBB6C /* ViewModel */,
@@ -141,7 +150,6 @@
 				49420C77265A3F4100AFBB6C /* NameList.swift */,
 				49420CA5265CFEBF00AFBB6C /* PersonalInfoType.swift */,
 				49420CB5265E3B8F00AFBB6C /* TextFieldType.swift */,
-				49420C90265BD1BB00AFBB6C /* Protocols */,
 				49420CB9265E539400AFBB6C /* TextFieldButton.swift */,
 				49420CBB265E760C00AFBB6C /* Ringtone.swift */,
 				494AE892265F8B3C00741FE5 /* TypeOfDetailPage.swift */,
@@ -164,6 +172,10 @@
 			children = (
 				49420C91265BD1CA00AFBB6C /* MainListViewModelType.swift */,
 				49420CB7265E538100AFBB6C /* TextFieldButtonPressedDelegate.swift */,
+				49A05AB32664D33800DB2DE4 /* ContactPageViewModelType.swift */,
+				49A05AB52664D35300DB2DE4 /* RingtoneViewModelType.swift */,
+				49A05AB72664D36E00DB2DE4 /* DeleteButtonDelegate.swift */,
+				49A05AB92664D37D00DB2DE4 /* ProfileImageDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -327,6 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49A05ABA2664D37E00DB2DE4 /* ProfileImageDelegate.swift in Sources */,
 				49420C9E265CD6E700AFBB6C /* ContactPageView.swift in Sources */,
 				49420CBA265E539400AFBB6C /* TextFieldButton.swift in Sources */,
 				494AE8952661097B00741FE5 /* ContactPageViewModel.swift in Sources */,
@@ -336,6 +349,7 @@
 				49420C8F265BD13100AFBB6C /* Constans.swift in Sources */,
 				49420C75265A3A8900AFBB6C /* MainListView.swift in Sources */,
 				494AE893265F8B3C00741FE5 /* TypeOfDetailPage.swift in Sources */,
+				49A05AB82664D36E00DB2DE4 /* DeleteButtonDelegate.swift in Sources */,
 				49420CB2265E33AD00AFBB6C /* TextField.swift in Sources */,
 				49420C5E265A23B900AFBB6C /* MainListController.swift in Sources */,
 				49420C72265A378700AFBB6C /* Coordinator.swift in Sources */,
@@ -349,6 +363,8 @@
 				49420C5C265A23B900AFBB6C /* SceneDelegate.swift in Sources */,
 				49420CAD265D46F200AFBB6C /* RingtoneViewModel.swift in Sources */,
 				49420CB0265E314C00AFBB6C /* DrawLineUnderView.swift in Sources */,
+				49A05AB62664D35300DB2DE4 /* RingtoneViewModelType.swift in Sources */,
+				49A05AB42664D33800DB2DE4 /* ContactPageViewModelType.swift in Sources */,
 				49420C7B265B8F9400AFBB6C /* MainListViewModel.swift in Sources */,
 				49420CBC265E760C00AFBB6C /* Ringtone.swift in Sources */,
 			);
