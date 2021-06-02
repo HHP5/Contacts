@@ -19,6 +19,11 @@ class ContactPageViewModel: ContactPageViewModelType {
 		return contact?.lastName
 	}
 	
+	var fullName: String {
+		let result = "\(String(describing: self.firstName ?? "")) \(String(describing: self.lastName ?? ""))"
+		return result
+	}
+	
 	var phoneNumber: String? {
 		return contact?.phone
 	}

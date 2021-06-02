@@ -10,6 +10,7 @@ import UIKit
 protocol ContactPageViewModelType {
 	var firstName: String? {get}
 	var lastName: String? {get}
+	var fullName: String {get}
 	var phoneNumber: String? {get}
 	var notes: String? {get}
 	var ringtone: String? {get}

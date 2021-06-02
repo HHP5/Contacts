@@ -56,7 +56,7 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 		setupNavigationBar()
 		setupTable()
 		
-//		print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+		print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -72,7 +72,7 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 	// MARK: - Actions (@ojbc + @IBActions)
 	@objc
 	private func plusPressed() {
-		let destinationVC = ContactPageController(type: .new)
+		let destinationVC = AddNewContactPageController()
 		destinationVC.viewModel = viewModel.emptyContact()
 		self.navigationController?.pushViewController(destinationVC, animated: true)
 	}
@@ -129,7 +129,7 @@ extension MainListController: UITableViewDataSource, UITableViewDelegate {
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let contact = viewModel.didSelectRowAt(indexPath)
-		let destinationVC = ContactPageController(type: .existing)
+		let destinationVC = ExistingContactPageController()
 		destinationVC.viewModel = contact
 		self.navigationController?.pushViewController(destinationVC, animated: true)
 		

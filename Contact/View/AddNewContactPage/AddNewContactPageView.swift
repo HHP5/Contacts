@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ContactPageView: UIView {
+class AddNewContactPageView: UIView {
 	var textFields: (firstName: UITextField, lastName: UITextField, phoneNumber: UITextField) {
 		return (firstName: firstName.textField, lastName: lastName.textField, phoneNumber: phoneNumberTextField.textField)
 	}
@@ -18,10 +18,9 @@ class ContactPageView: UIView {
 	weak var ringtone: RingtoneCell?
 	weak var ringtonePicker: UIPickerView?
 	weak var contactImage: ContactImageDelegate?
-	weak var deleteContactButton: DeleteButtonDelegate?
+
 	// MARK: - IBOutlets (всегда приватные)
 	
-	private let typeOfPage: TypeOfDetailPage
 	private let firstName = TextField(type: .default, textField: .firstName)
 	private let lastName = TextField(type: .default, textField: .lastName)
 	
@@ -51,7 +50,6 @@ class ContactPageView: UIView {
 		stack.spacing = 20
 		stack.axis = .horizontal
 		stack.distribution = .fill
-		
 		return stack
 	}()
 	
@@ -100,32 +98,13 @@ class ContactPageView: UIView {
 		return picker
 	}()
 	
-	private let deleteButton: UIButton = {
-		let button = UIButton(frame: .zero)
-		button.setTitle("Delete", for: .normal)
-		button.setTitleColor(.white, for: .normal)
-		button.backgroundColor = .red
-		button.layer.borderWidth = 1
-		button.layer.borderColor = UIColor.black.cgColor
-		button.layer.cornerRadius = 5
-		button.clipsToBounds = true
-		return button
-	}()
-	
 	// MARK: - Init
 	
-	init(type: TypeOfDetailPage) {
-		self.typeOfPage = type
+	init() {
 		super.init(frame: .zero)
 		self.backgroundColor = .white
 		
-		switch type {
-		case .new:
-			self.setupForNewContact()
-		case .existing:
-			self.setupForExistingContact()
-			self.setupDeleteButton()
-		}
+		self.setupForNewContact()
 		self.setupDetailStack()
 		self.setupPicker()
 		self.setupDelegates()
@@ -134,14 +113,13 @@ class ContactPageView: UIView {
 		
 		self.keyboardSetting()
 		
-		self.deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
 	}
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	// MARK: - Actions (@ojbc + @IBActions)
+	// MARK: - Actions 
 	
 	@objc
 	private func profileImageTapped(sender: UITapGestureRecognizer) {
@@ -151,13 +129,7 @@ class ContactPageView: UIView {
 	@objc
 	private func ringtoneTapped(sender: UITapGestureRecognizer) {
 		self.endEditing(true)
-		deleteButton.isHidden = true
 		ringtonePickerView.isHidden = false
-	}
-	
-	@objc
-	private func deleteButtonPressed() {
-		self.deleteContactButton?.pressed()
 	}
 	
 	@objc
@@ -178,11 +150,7 @@ class ContactPageView: UIView {
 	func notesPressed() {
 		self.frame.origin.y -= notesTextView.frame.maxY * 2
 	}
-	
-	func deleteButtonShowing(condition: Bool) {
-		deleteButton.isHidden = condition
-	}
-	
+
 	// MARK: - Private Methods
 	
 	private func setupForNewContact() {
@@ -195,58 +163,15 @@ class ContactPageView: UIView {
 		}
 	}
 	
-	private func setupForExistingContact() {
-		
-		let newView = UIView()
-		newView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-		self.addSubview(newView)
-		
-		newView.snp.makeConstraints { make in
-			make.top.leading.trailing.equalToSuperview()
-		}
-		
-		newView.addSubview(profileImage)
-		
-		profileImage.snp.makeConstraints { make in
-			make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
-			make.centerX.equalToSuperview()
-		}
-		
-		let stack: UIStackView = {
-			let stack = UIStackView(arrangedSubviews: [firstName, lastName])
-			stack.axis = .horizontal
-			stack.distribution = .fillEqually
-			stack.spacing = 10
-			firstName.textField.textAlignment = .right
-			lastName.textField.textAlignment = .left
-			[firstName, lastName].forEach { $0.textField.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .medium) }
-			return stack
-		}()
-		
-		newView.addSubview(stack)
-		
-		stack.snp.makeConstraints { make in
-			make.top.equalTo(profileImage.snp.bottom).offset(20)
-			make.height.equalTo(Constans.heightOfCell(type: .fullName))
-			make.leading.trailing.equalToSuperview().inset(20)
-		}
-		newView.snp.makeConstraints { $0.bottom.equalTo(stack.snp.bottom) }
-	}
-	
 	private func setupDetailStack() {
 		self.addSubview(detailStack)
 		
 		detailStack.snp.makeConstraints { make in
-			switch typeOfPage {
-			case .existing:
-				make.top.equalTo(firstName.snp.bottom).offset(20)
-			case .new:
-				phoneNumberLabel.isHidden = true
-				make.top.equalTo(topStackForNewContact.snp.bottom).offset(20)
-			}
+			make.top.equalTo(topStackForNewContact.snp.bottom).offset(20)
 			make.trailing.equalToSuperview()
 			make.leading.equalToSuperview().offset(20)
 		}
+		phoneNumberLabel.isHidden = true
 	}
 	
 	private func setupPicker() {
@@ -259,19 +184,7 @@ class ContactPageView: UIView {
 		
 		ringtonePickerView.isHidden = true
 	}
-	
-	private func setupDeleteButton() {
-		self.addSubview(deleteButton)
-		
-		deleteButton.snp.makeConstraints { make in
-			make.centerX.equalToSuperview()
-			make.bottom.equalToSuperview().inset(50)
-			make.width.equalTo(100)
-			make.height.equalTo(50)
-		}
-		
-	}
-	
+
 	private func setupDelegates() {
 		self.phoneNumber = phoneNumberTextField
 		self.notes = notesTextView.textView

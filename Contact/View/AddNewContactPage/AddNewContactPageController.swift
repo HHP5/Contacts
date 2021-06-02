@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ContactPageController: UIViewController, UINavigationControllerDelegate {
+class AddNewContactPageController: UIViewController, UINavigationControllerDelegate {
 	// MARK: - Properties
 	var viewModel: ContactPageViewModelType? {
 		willSet(viewModel) {
@@ -20,7 +20,7 @@ class ContactPageController: UIViewController, UINavigationControllerDelegate {
 	private var ringtoneModel: RingtoneViewModel
 	
 	private var imagePicker: UIImagePickerController?
-	private let screenView: ContactPageView
+	private let screenView: AddNewContactPageView
 	
 	private var firstName: String?
 	private var lastName: String?
@@ -29,24 +29,17 @@ class ContactPageController: UIViewController, UINavigationControllerDelegate {
 	private var notes: String?
 	private var image: Data?
 	
-	private var type: TypeOfDetailPage
 	private var isDonePressed: Bool = false
 	
 	// MARK: - Init
 	
-	init(type: TypeOfDetailPage) {
-		self.type = type
+	init() {
 		self.ringtoneModel = RingtoneViewModel()
-		self.screenView = ContactPageView(type: type)
+		self.screenView = AddNewContactPageView()
 		super.init(nibName: nil, bundle: nil)
-		
-		switch type {
-		case .new:
-			self.setupNavigationBarForNewContact()
-		case .existing:
-			self.setupNavigationBarForExistingContact()
-			self.makeUserInteractionEnabled(condition: false)
-		}
+
+		self.setupNavigationBarForNewContact()
+	
 	}
 	
 	required init?(coder: NSCoder) {
@@ -75,8 +68,8 @@ class ContactPageController: UIViewController, UINavigationControllerDelegate {
 		guard let viewModel = viewModel else { return }
 		screenView.endEditing(true)
 		
-		switch type {
-		case .new:
+//		switch type {
+//		case .new:
 			if !isDonePressed {
 				viewModel.saveNewContact(firstName: self.firstName,
 										 lastName: self.lastName,
@@ -86,38 +79,22 @@ class ContactPageController: UIViewController, UINavigationControllerDelegate {
 										 image: self.image)
 				self.isDonePressed = true
 			}
-		case .existing:
-			viewModel.updateContact(firstName: self.firstName,
-									lastName: self.lastName,
-									phone: self.phoneNumber,
-									ringtone: self.ringtone,
-									notes: self.notes,
-									image: self.image)
-			self.existingContactConfiguration()
-		}
+//		case .existing:
+//			viewModel.updateContact(firstName: self.firstName,
+//									lastName: self.lastName,
+//									phone: self.phoneNumber,
+//									ringtone: self.ringtone,
+//									notes: self.notes,
+//									image: self.image)
+//			self.existingContactConfiguration()
+//		}
 	}
-	
-	@objc
-	private func editPressed() {
-		self.makeUserInteractionEnabled(condition: true)
-		self.setupNavigationBarForNewContact()
-	}
-	
+
 	@objc private func goBack() {
-		switch type {
-		case .existing:
-			self.existingContactConfiguration()
-		case .new:
 			self.navigationController?.popViewController(animated: true)
-		}
 	}
 	
 	// MARK: - Private Methods
-	
-	private func existingContactConfiguration() {
-		self.makeUserInteractionEnabled(condition: false)
-		self.setupNavigationBarForExistingContact()
-	}
 	
 	private func handleViewModel(_ viewModel: ContactPageViewModelType) {
 		screenView.textFields.firstName.text = viewModel.firstName
@@ -143,16 +120,7 @@ class ContactPageController: UIViewController, UINavigationControllerDelegate {
 		navigationItem.leftBarButtonItem = backItem
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
 	}
-	
-	private func setupNavigationBarForExistingContact() {
-		self.navigationItem.leftBarButtonItem = nil
-		self.navigationItem.hidesBackButton = false
-		self.navigationItem.backBarButtonItem?.title = "Contact"
-		self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit,
-																 target: self,
-																 action: #selector(editPressed))
-	}
-	
+
 	private func setupDelegates() {
 		[screenView.textFields.0, screenView.textFields.1, screenView.textFields.2].forEach { $0.delegate = self }
 		
@@ -164,23 +132,13 @@ class ContactPageController: UIViewController, UINavigationControllerDelegate {
 		
 		screenView.contactImage = self
 		
-		screenView.deleteContactButton = self
 	}
 	
-	private func makeUserInteractionEnabled(condition: Bool) {
-		self.screenView.ringtone?.isUserInteractionEnabled = condition
-		self.screenView.ringtonePicker?.isUserInteractionEnabled = condition
-		[screenView.textFields.0, screenView.textFields.1, screenView.textFields.2].forEach { $0.isUserInteractionEnabled = condition }
-		self.imagePicker?.isEditing = condition
-		self.screenView.notes?.isUserInteractionEnabled = condition
-		
-		screenView.deleteButtonShowing(condition: condition)
-	}
-	
+
 }
 // MARK: - UITextViewDelegate
 
-extension ContactPageController: UITextViewDelegate {
+extension AddNewContactPageController: UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
 		if let text = textView.text {
 			self.notes = text
@@ -194,7 +152,7 @@ extension ContactPageController: UITextViewDelegate {
 }
 // MARK: - UITextFieldDelegate
 
-extension ContactPageController: UITextFieldDelegate {
+extension AddNewContactPageController: UITextFieldDelegate {
 	// для перехода на след textField
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		let textFields = [screenView.textFields.0, screenView.textFields.1, screenView.textFields.2]
@@ -225,7 +183,7 @@ extension ContactPageController: UITextFieldDelegate {
 }
 // MARK: - TextFieldButtonPressedDelegate
 
-extension ContactPageController: TextFieldButtonPressedDelegate {
+extension AddNewContactPageController: TextFieldButtonPressedDelegate {
 	func didPressButton(button: TextFieldButton) {
 		switch button {
 		case .done:
@@ -238,7 +196,7 @@ extension ContactPageController: TextFieldButtonPressedDelegate {
 }
 // MARK: - UIPickerViewDelegate, UIPickerViewDataSource
 
-extension ContactPageController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension AddNewContactPageController: UIPickerViewDelegate, UIPickerViewDataSource {
 	func numberOfComponents(in pickerView: UIPickerView) -> Int {
 		return 1
 	}
@@ -260,7 +218,7 @@ extension ContactPageController: UIPickerViewDelegate, UIPickerViewDataSource {
 
 // MARK: - ProfileImageDelegate
 
-extension ContactPageController: ContactImageDelegate, UIImagePickerControllerDelegate {
+extension AddNewContactPageController: ContactImageDelegate, UIImagePickerControllerDelegate {
 	
 	func press() {
 		let alert = UIAlertController(title: "Photo", message: nil, preferredStyle: .actionSheet)
@@ -298,13 +256,4 @@ extension ContactPageController: ContactImageDelegate, UIImagePickerControllerDe
 		}
 		picker.dismiss(animated: true, completion: nil)
 	}
-	
-}
-
-extension ContactPageController: DeleteButtonDelegate {
-	func pressed() {
-		viewModel?.deleteContact()
-		self.navigationController?.popViewController(animated: true)
-	}
-	
 }
