@@ -54,6 +54,7 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 		
 		setupView()
 		setupDelegates()
+		
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -65,13 +66,10 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 	
 	@objc
 	private func donePressed() {
-		guard let viewModel = viewModel else { return }
 		screenView.endEditing(true)
-		
-//		switch type {
-//		case .new:
+		if viewModel == nil {
 			if !isDonePressed {
-				viewModel.saveNewContact(firstName: self.firstName,
+				viewModel?.saveNewContact(firstName: self.firstName,
 										 lastName: self.lastName,
 										 phone: self.phoneNumber,
 										 ringtone: self.ringtone,
@@ -79,15 +77,14 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 										 image: self.image)
 				self.isDonePressed = true
 			}
-//		case .existing:
-//			viewModel.updateContact(firstName: self.firstName,
-//									lastName: self.lastName,
-//									phone: self.phoneNumber,
-//									ringtone: self.ringtone,
-//									notes: self.notes,
-//									image: self.image)
-//			self.existingContactConfiguration()
-//		}
+		} else {
+			viewModel?.updateContact(firstName: self.firstName,
+									lastName: self.lastName,
+									phone: self.phoneNumber,
+									ringtone: self.ringtone,
+									notes: self.notes,
+									image: self.image)
+		}
 	}
 
 	@objc private func goBack() {

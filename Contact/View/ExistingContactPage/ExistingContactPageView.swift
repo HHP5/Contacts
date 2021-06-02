@@ -103,6 +103,8 @@ class ExistingContactPageView: UIView {
 		self.deleteContactButton?.pressed()
 	}
 	
+	// MARK: - Public Method
+	
 	func setupModel(viewModel: ContactPageViewModelType) {
 		
 		name.textField.text = viewModel.fullName
@@ -115,7 +117,9 @@ class ExistingContactPageView: UIView {
 			self.profileImage.image = image
 		}
 	}
+	
 	// MARK: - Private Methods
+	
 	private func setupView() {
 		
 		let newView = UIView()

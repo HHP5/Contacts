@@ -112,4 +112,14 @@ struct ContactList {
 		}
 		save()
 	}
+	
+	func getUpdatedInformation(for contact: Person) -> Person? {
+		var result: Person?
+		persons.forEach { person in
+			if person == contact {
+				result = person
+			}
+		}
+		return result
+	}
 }

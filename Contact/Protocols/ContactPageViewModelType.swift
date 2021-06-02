@@ -18,4 +18,5 @@ protocol ContactPageViewModelType {
 	func saveNewContact(firstName: String?, lastName: String?, phone: String?, ringtone: String?, notes: String?, image: Data?)
 	func deleteContact()
 	func updateContact(firstName: String?, lastName: String?, phone: String?, ringtone: String?, notes: String?, image: Data?)
+	func reloadData()
 }

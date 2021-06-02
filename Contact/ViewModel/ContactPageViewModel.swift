@@ -64,4 +64,9 @@ class ContactPageViewModel: ContactPageViewModelType {
 							notes: notes ?? contact.notes,
 							image: image ?? contact.image)
 	}
+	
+	func reloadData() {
+		guard let contact = contact else { return }
+		self.contact = model.getUpdatedInformation(for: contact)
+	}
 }

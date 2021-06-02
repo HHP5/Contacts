@@ -8,12 +8,7 @@
 import UIKit
 
 class ExistingContactPageController: UIViewController {
-	var viewModel: ContactPageViewModelType? {
-		willSet(viewModel) {
-			guard let viewModel = viewModel else { return }
-			self.screenView.setupModel(viewModel: viewModel)
-		}
-	}
+	var viewModel: ContactPageViewModelType?
 	
 	var screenView = ExistingContactPageView()
 	
@@ -23,6 +18,13 @@ class ExistingContactPageController: UIViewController {
 		self.setupNavigationBar()
 		self.screenView.deleteContactButton = self
     }
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		guard let viewModel = viewModel else { return }
+		self.screenView.setupModel(viewModel: viewModel)
+	}
     
 	override func loadView() {
 		self.view = screenView
@@ -41,7 +43,6 @@ class ExistingContactPageController: UIViewController {
 		destinationVC.viewModel = viewModel
 		self.navigationController?.pushViewController(destinationVC, animated: true)
 	}
-
 }
 
 extension ExistingContactPageController: DeleteButtonDelegate {
