@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol ProfileImageDelegate: class {
-	func imagePressed()
+protocol ContactImageDelegate: class {
+	func press()
 }

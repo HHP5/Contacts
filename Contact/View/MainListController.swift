@@ -11,8 +11,12 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 	// MARK: - Properties
 	weak var coordinator: MainCoordinator?
 
-	var viewModel: MainListViewModelType
-	let screenView = MainListView()
+	private var viewModel: MainListViewModelType
+	private let table: UITableView = {
+		let table = UITableView()
+		table.register(UITableViewCell.self, forCellReuseIdentifier: Constans.identifierForCell)
+		return table
+	}()
 	
 	private let searchController: UISearchController = {
 		let searchController = UISearchController(searchResultsController: nil)
@@ -45,12 +49,12 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 		
 		searchController.searchBar.delegate = self
 		searchController.searchResultsUpdater = self
-		
-		screenView.table.delegate = self
-		screenView.table.dataSource = self
+	
+		table.delegate = self
+		table.dataSource = self
 		
 		setupNavigationBar()
-		setupView()
+		setupTable()
 		
 //		print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
 	}
@@ -59,7 +63,7 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 		super.viewWillAppear(animated)
 		
 		viewModel.reloadData()
-		screenView.table.reloadData()
+		table.reloadData()
 		
 	}
 	
@@ -84,10 +88,10 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 		navigationItem.searchController = searchController
 	}
 	
-	private func setupView() {
-		view.addSubview(screenView)
+	private func setupTable() {
+		view.addSubview(table)
 		
-		screenView.snp.makeConstraints { make in
+		table.snp.makeConstraints { make in
 			make.bottom.trailing.leading.equalToSuperview()
 			make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
 		}
@@ -145,7 +149,7 @@ extension MainListController: UISearchResultsUpdating {
 				viewModel.cancelSearch()
 			}
 		}
-		screenView.table.reloadData()
+		table.reloadData()
 	}
 }
 

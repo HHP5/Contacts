@@ -10,15 +10,15 @@ import SnapKit
 
 class ContactPageView: UIView {
 	var textFields: (firstName: UITextField, lastName: UITextField, phoneNumber: UITextField) {
-		return (firstName: firstName.textField, lastName: lastName.textField, phoneNumber: phoneNumber.textField)
+		return (firstName: firstName.textField, lastName: lastName.textField, phoneNumber: phoneNumberTextField.textField)
 	}
 	
-	weak var phoneNumberDelegate: TextField?
-	weak var notesDelegate: UITextView?
-	weak var ringtoneDelegate: RingtoneCell?
-	weak var ringtonePickerDelegate: UIPickerView?
-	weak var profileImageDelegate: ProfileImageDelegate?
-	weak var deleteButtonDelegate: DeleteButtonDelegate?
+	weak var phoneNumber: TextField?
+	weak var notes: UITextView?
+	weak var ringtone: RingtoneCell?
+	weak var ringtonePicker: UIPickerView?
+	weak var contactImage: ContactImageDelegate?
+	weak var deleteContactButton: DeleteButtonDelegate?
 	// MARK: - IBOutlets (всегда приватные)
 	
 	private let typeOfPage: TypeOfDetailPage
@@ -55,31 +55,31 @@ class ContactPageView: UIView {
 		return stack
 	}()
 	
-	private let phoneNumber = TextField(type: .phonePad, textField: .phone)
+	private let phoneNumberTextField = TextField(type: .phonePad, textField: .phone)
 	private let phoneNumberLabel: UILabel = {
 		let label = UILabel()
 		label.text = "Phone"
 		return label
 	}()
 	private lazy var phoneNumberStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [phoneNumberLabel, phoneNumber])
+		let stack = UIStackView(arrangedSubviews: [phoneNumberLabel, phoneNumberTextField])
 		stack.spacing = 10
 		stack.axis = .vertical
 		stack.distribution = .fill
 		return stack
 	}()
 	
-	private let ringtone = RingtoneCell()
+	private let ringtoneCell = RingtoneCell()
 	
 	private let notesLabel: UILabel = {
 		let label = UILabel()
 		label.text = "Notes"
 		return label
 	}()
-	private let notes = TextView()
+	private let notesTextView = TextView()
 	
 	private lazy var notesStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [notesLabel, notes])
+		let stack = UIStackView(arrangedSubviews: [notesLabel, notesTextView])
 		stack.spacing = 10
 		stack.axis = .vertical
 		stack.distribution = .fill
@@ -87,7 +87,7 @@ class ContactPageView: UIView {
 	}()
 	
 	private lazy var detailStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [phoneNumberStack, ringtone, notesStack])
+		let stack = UIStackView(arrangedSubviews: [phoneNumberStack, ringtoneCell, notesStack])
 		stack.arrangedSubviews.forEach { $0.snp.makeConstraints {$0.height.equalTo(Constans.heightOfCell(type: .detail))} }
 		stack.spacing = 10
 		stack.axis = .vertical
@@ -95,19 +95,18 @@ class ContactPageView: UIView {
 		return stack
 	}()
 	
-	private let ringtonePicker: UIPickerView = {
+	private let ringtonePickerView: UIPickerView = {
 		let picker = UIPickerView(frame: .zero)
 		return picker
 	}()
 	
-	private let deleteButton:UIButton = {
+	private let deleteButton: UIButton = {
 		let button = UIButton(frame: .zero)
 		button.setTitle("Delete", for: .normal)
 		button.setTitleColor(.white, for: .normal)
 		button.backgroundColor = .red
 		button.layer.borderWidth = 1
 		button.layer.borderColor = UIColor.black.cgColor
-		button.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
 		button.layer.cornerRadius = 5
 		button.clipsToBounds = true
 		return button
@@ -134,6 +133,8 @@ class ContactPageView: UIView {
 		self.addGestureRecognizerToRingtoneCell()
 		
 		self.keyboardSetting()
+		
+		self.deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
 	}
 	
 	required init?(coder: NSCoder) {
@@ -144,19 +145,19 @@ class ContactPageView: UIView {
 	
 	@objc
 	private func profileImageTapped(sender: UITapGestureRecognizer) {
-		self.profileImageDelegate?.imagePressed()
+		self.contactImage?.press()
 	}
 	
 	@objc
 	private func ringtoneTapped(sender: UITapGestureRecognizer) {
 		self.endEditing(true)
 		deleteButton.isHidden = true
-		ringtonePicker.isHidden = false
+		ringtonePickerView.isHidden = false
 	}
 	
 	@objc
 	private func deleteButtonPressed() {
-		self.deleteButtonDelegate?.pressed()
+		self.deleteContactButton?.pressed()
 	}
 	
 	@objc
@@ -171,11 +172,11 @@ class ContactPageView: UIView {
 	}
 	
 	func hideRingtone() {
-		self.ringtonePicker.isHidden = true
+		self.ringtonePickerView.isHidden = true
 	}
 	
 	func notesPressed() {
-		self.frame.origin.y -= notes.frame.maxY * 2
+		self.frame.origin.y -= notesTextView.frame.maxY * 2
 	}
 	
 	func deleteButtonShowing(condition: Bool) {
@@ -249,14 +250,14 @@ class ContactPageView: UIView {
 	}
 	
 	private func setupPicker() {
-		self.addSubview(ringtonePicker)
+		self.addSubview(ringtonePickerView)
 		
-		ringtonePicker.snp.makeConstraints { make in
+		ringtonePickerView.snp.makeConstraints { make in
 			make.top.equalTo(detailStack.snp.bottom).offset(10)
 			make.bottom.left.right.equalToSuperview()
 		}
 		
-		ringtonePicker.isHidden = true
+		ringtonePickerView.isHidden = true
 	}
 	
 	private func setupDeleteButton() {
@@ -272,10 +273,10 @@ class ContactPageView: UIView {
 	}
 	
 	private func setupDelegates() {
-		self.phoneNumberDelegate = phoneNumber
-		self.notesDelegate = notes.textView
-		self.ringtoneDelegate = ringtone
-		self.ringtonePickerDelegate = ringtonePicker
+		self.phoneNumber = phoneNumberTextField
+		self.notes = notesTextView.textView
+		self.ringtone = ringtoneCell
+		self.ringtonePicker = ringtonePickerView
 	}
 	
 	private func addGestureRecognizerToProfileImage() {
@@ -285,7 +286,7 @@ class ContactPageView: UIView {
 	
 	private func addGestureRecognizerToRingtoneCell() {
 		let tapRingtoneCell = UITapGestureRecognizer(target: self, action: #selector(ringtoneTapped))
-		ringtone.addGestureRecognizer(tapRingtoneCell)
+		ringtoneCell.addGestureRecognizer(tapRingtoneCell)
 	}
 	
 	private func keyboardSetting() {

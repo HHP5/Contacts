@@ -123,9 +123,9 @@ class ContactPageController: UIViewController, UINavigationControllerDelegate {
 		screenView.textFields.firstName.text = viewModel.firstName
 		screenView.textFields.lastName.text = viewModel.lastName
 		screenView.textFields.phoneNumber.text = viewModel.phoneNumber
-		screenView.notesDelegate?.text = viewModel.notes
+		screenView.notes?.text = viewModel.notes
 		if let ringtone = viewModel.ringtone {
-			screenView.ringtoneDelegate?.setName(ringtone)
+			screenView.ringtone?.setName(ringtone)
 		}
 		if let image = viewModel.image {
 			screenView.setImage(image: image)
@@ -156,23 +156,23 @@ class ContactPageController: UIViewController, UINavigationControllerDelegate {
 	private func setupDelegates() {
 		[screenView.textFields.0, screenView.textFields.1, screenView.textFields.2].forEach { $0.delegate = self }
 		
-		screenView.notesDelegate?.delegate = self
-		screenView.phoneNumberDelegate?.delegate = self
+		screenView.notes?.delegate = self
+		screenView.phoneNumber?.delegate = self
 		
-		screenView.ringtonePickerDelegate?.delegate = self
-		screenView.ringtonePickerDelegate?.dataSource = self
+		screenView.ringtonePicker?.delegate = self
+		screenView.ringtonePicker?.dataSource = self
 		
-		screenView.profileImageDelegate = self
+		screenView.contactImage = self
 		
-		screenView.deleteButtonDelegate = self
+		screenView.deleteContactButton = self
 	}
 	
 	private func makeUserInteractionEnabled(condition: Bool) {
-		self.screenView.ringtoneDelegate?.isUserInteractionEnabled = condition
-		self.screenView.ringtonePickerDelegate?.isUserInteractionEnabled = condition
+		self.screenView.ringtone?.isUserInteractionEnabled = condition
+		self.screenView.ringtonePicker?.isUserInteractionEnabled = condition
 		[screenView.textFields.0, screenView.textFields.1, screenView.textFields.2].forEach { $0.isUserInteractionEnabled = condition }
 		self.imagePicker?.isEditing = condition
-		self.screenView.notesDelegate?.isUserInteractionEnabled = condition
+		self.screenView.notes?.isUserInteractionEnabled = condition
 		
 		screenView.deleteButtonShowing(condition: condition)
 	}
@@ -232,7 +232,7 @@ extension ContactPageController: TextFieldButtonPressedDelegate {
 			// или тут нужно еще раз сохранять?
 			screenView.endEditing(true)
 		case .next:
-			screenView.ringtonePickerDelegate?.isHidden = false
+			screenView.ringtonePicker?.isHidden = false
 		}
 	}
 }
@@ -252,7 +252,7 @@ extension ContactPageController: UIPickerViewDelegate, UIPickerViewDataSource {
 	}
 	
 	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-		screenView.ringtoneDelegate?.setName(ringtoneModel.row(at: row))
+		screenView.ringtone?.setName(ringtoneModel.row(at: row))
 		self.ringtone = ringtoneModel.row(at: row)
 		screenView.hideRingtone()
 	}
@@ -260,9 +260,9 @@ extension ContactPageController: UIPickerViewDelegate, UIPickerViewDataSource {
 
 // MARK: - ProfileImageDelegate
 
-extension ContactPageController: ProfileImageDelegate, UIImagePickerControllerDelegate {
+extension ContactPageController: ContactImageDelegate, UIImagePickerControllerDelegate {
 	
-	func imagePressed() {
+	func press() {
 		let alert = UIAlertController(title: "Photo", message: nil, preferredStyle: .actionSheet)
 		let fromGallery = UIAlertAction(title: "Choose photo", style: .default, handler: { [weak self] _ in
 			self?.setupImagePicker(for: .photoLibrary)
@@ -306,4 +306,5 @@ extension ContactPageController: DeleteButtonDelegate {
 		viewModel?.deleteContact()
 		self.navigationController?.popViewController(animated: true)
 	}
+	
 }

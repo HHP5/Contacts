@@ -17,14 +17,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		
 		window = UIWindow(windowScene: windowScene)
 		
-		let navBar = UINavigationController()
-		coordinator = MainCoordinator(navigationController: navBar)
+		let navigation = UINavigationController()
+		coordinator = MainCoordinator(navigationController: navigation)
 		coordinator?.start()
 		
 		window?.overrideUserInterfaceStyle = .light
 
 		window?.makeKeyAndVisible()
-		window?.rootViewController = navBar
+		window?.rootViewController = navigation
 	}
 	
 	func sceneDidEnterBackground(_ scene: UIScene) {
