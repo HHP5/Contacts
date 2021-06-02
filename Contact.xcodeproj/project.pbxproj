@@ -136,6 +136,9 @@
 			isa = PBXGroup;
 			children = (
 				49420C5D265A23B900AFBB6C /* MainListController.swift */,
+				49420CA8265D139300AFBB6C /* TextView.swift */,
+				49420CB1265E33AD00AFBB6C /* TextField.swift */,
+				49420CBD265E8B0800AFBB6C /* RingtoneCell.swift */,
 				49A05B0B26678AAF00DB2DE4 /* ExistingContactPage */,
 				49420CA7265D024300AFBB6C /* AddNewContactPage */,
 			);
@@ -184,9 +187,6 @@
 			children = (
 				49420C9B265CD6C900AFBB6C /* AddNewContactPageController.swift */,
 				49420C9D265CD6E700AFBB6C /* AddNewContactPageView.swift */,
-				49420CA8265D139300AFBB6C /* TextView.swift */,
-				49420CB1265E33AD00AFBB6C /* TextField.swift */,
-				49420CBD265E8B0800AFBB6C /* RingtoneCell.swift */,
 			);
 			path = AddNewContactPage;
 			sourceTree = "<group>";

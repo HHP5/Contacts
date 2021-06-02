@@ -45,24 +45,20 @@ class ContactPageViewModel: ContactPageViewModelType {
 		self.contact = contact
 	}
 	
-	func saveNewContact(firstName: String?, lastName: String?, phone: String?, ringtone: String?, notes: String?, image: Data?) {
-		model.updateContact(firstName: firstName, lastName: lastName, phone: phone, ringtone: ringtone, notes: notes, image: image)
-	}
-	
 	func deleteContact() {
 		guard let person = contact else { return  }
 		model.deleteObject(person)
 	}
 	
 	func updateContact(firstName: String?, lastName: String?, phone: String?, ringtone: String?, notes: String?, image: Data?) {
-		guard let contact = contact else { return  }
-		model.updateContact(person: contact,
-							firstName: firstName ?? contact.firstName,
-							lastName: lastName ?? contact.lastName,
-							phone: phone ?? contact.phone,
-							ringtone: ringtone ?? contact.ringtone,
-							notes: notes ?? contact.notes,
-							image: image ?? contact.image)
+		
+		model.updateContact(person: contact ?? nil,
+							firstName: firstName ?? contact?.firstName,
+							lastName: lastName ?? contact?.lastName,
+							phone: phone ?? contact?.phone,
+							ringtone: ringtone ?? contact?.ringtone,
+							notes: notes ?? contact?.notes,
+							image: image ?? contact?.image)
 	}
 	
 	func reloadData() {

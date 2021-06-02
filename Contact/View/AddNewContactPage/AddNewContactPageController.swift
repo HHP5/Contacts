@@ -37,9 +37,9 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 		self.ringtoneModel = RingtoneViewModel()
 		self.screenView = AddNewContactPageView()
 		super.init(nibName: nil, bundle: nil)
-
+		
 		self.setupNavigationBarForNewContact()
-	
+		
 	}
 	
 	required init?(coder: NSCoder) {
@@ -67,28 +67,19 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 	@objc
 	private func donePressed() {
 		screenView.endEditing(true)
-		if viewModel == nil {
-			if !isDonePressed {
-				viewModel?.saveNewContact(firstName: self.firstName,
-										 lastName: self.lastName,
-										 phone: self.phoneNumber,
-										 ringtone: self.ringtone,
-										 notes: self.notes,
-										 image: self.image)
-				self.isDonePressed = true
-			}
-		} else {
+		if !isDonePressed {
 			viewModel?.updateContact(firstName: self.firstName,
-									lastName: self.lastName,
-									phone: self.phoneNumber,
-									ringtone: self.ringtone,
-									notes: self.notes,
-									image: self.image)
+									 lastName: self.lastName,
+									 phone: self.phoneNumber,
+									 ringtone: self.ringtone,
+									 notes: self.notes,
+									 image: self.image)
+			self.isDonePressed = true
 		}
 	}
-
+	
 	@objc private func goBack() {
-			self.navigationController?.popViewController(animated: true)
+		self.navigationController?.popViewController(animated: true)
 	}
 	
 	// MARK: - Private Methods
@@ -117,7 +108,7 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 		navigationItem.leftBarButtonItem = backItem
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
 	}
-
+	
 	private func setupDelegates() {
 		[screenView.textFields.0, screenView.textFields.1, screenView.textFields.2].forEach { $0.delegate = self }
 		
@@ -131,7 +122,6 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 		
 	}
 	
-
 }
 // MARK: - UITextViewDelegate
 
@@ -145,7 +135,7 @@ extension AddNewContactPageController: UITextViewDelegate {
 	func textViewDidBeginEditing(_ textView: UITextView) {
 		screenView.notesPressed()
 	}
-
+	
 }
 // MARK: - UITextFieldDelegate
 
