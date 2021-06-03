@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ExistingContactPageView: UIView {
 	
@@ -25,7 +26,7 @@ class ExistingContactPageView: UIView {
 		return imageView
 	}()
 	
-	private let phoneNumberTextField = TextField(type: .phonePad, textField: .phone)
+	private let phoneNumberTextField = TextView(type: .phone)
 	private let phoneNumberLabel: UILabel = {
 		let label = UILabel()
 		label.text = "Phone"
@@ -33,7 +34,7 @@ class ExistingContactPageView: UIView {
 	}()
 	private lazy var phoneNumberStack: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [phoneNumberLabel, phoneNumberTextField])
-		phoneNumberTextField.textField.isUserInteractionEnabled = false
+		phoneNumberTextField.textView.isUserInteractionEnabled = false
 		stack.spacing = 10
 		stack.axis = .vertical
 		stack.distribution = .fill
@@ -47,7 +48,7 @@ class ExistingContactPageView: UIView {
 		label.text = "Notes"
 		return label
 	}()
-	private let notesTextView = TextView()
+	private let notesTextView = TextView(type: .note)
 	
 	private lazy var notesStack: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [notesLabel, notesTextView])
@@ -61,6 +62,7 @@ class ExistingContactPageView: UIView {
 	private lazy var detailStack: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [phoneNumberStack, ringtoneCell, notesStack])
 		stack.arrangedSubviews.forEach { $0.snp.makeConstraints {$0.height.equalTo(Constans.heightOfCell(type: .detail))} }
+		ringtoneCell.makeUserUnenabled()
 		stack.spacing = 10
 		stack.axis = .vertical
 		stack.distribution = .fill
@@ -108,14 +110,12 @@ class ExistingContactPageView: UIView {
 	func setupModel(viewModel: ContactPageViewModelType) {
 		
 		name.textField.text = viewModel.fullName
-		phoneNumberTextField.textField.text = viewModel.phoneNumber
+		phoneNumberTextField.textView.text = viewModel.phoneNumber
 		notesTextView.textView.text = viewModel.notes
 		if let ringtone = viewModel.ringtone {
 			self.ringtoneCell.setName(ringtone)
 		}
-		if let image = viewModel.image {
-			self.profileImage.image = image
-		}
+		self.profileImage.image = viewModel.image == nil ? UIImage(named: "icon") : viewModel.image
 	}
 	
 	// MARK: - Private Methods
@@ -123,7 +123,7 @@ class ExistingContactPageView: UIView {
 	private func setupView() {
 		
 		let newView = UIView()
-		newView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+		newView.backgroundColor = #colorLiteral(red: 0.9843137255, green: 0.9803921569, blue: 1, alpha: 1)
 		self.addSubview(newView)
 		
 		newView.snp.makeConstraints { make in

@@ -9,12 +9,30 @@ import UIKit
 import SnapKit
 
 class TextView: UIView {
+	weak var textViewToolBar: ToolBarForKeyboard?
 	
 	let textView = UITextView()
-	
-	override init(frame: CGRect) {
-		super.init(frame: frame)
-		setupTextView()
+	private var type: TextViewType
+	private var accessoryView = ToolBarForKeyboard(type: .phone)
+
+	init(type: TextViewType) {
+		self.type = type
+		super.init(frame: .zero)
+		
+		self.setupTextView()
+		
+		switch type {
+		case .note:
+			textView.textContentType = .username
+		case .phone:
+			textView.textContentType = .telephoneNumber
+			textView.keyboardType = .phonePad
+			textView.textContentType = .telephoneNumber
+			textView.inputAccessoryView = accessoryView.setToolBar()
+			self.drawLine()
+		}
+		
+		self.textViewToolBar = accessoryView
 	}
 	
 	required init?(coder: NSCoder) {
@@ -28,9 +46,9 @@ class TextView: UIView {
 			make.top.leading.trailing.equalToSuperview()
 			make.bottom.equalToSuperview().offset(-5)
 		}
-
 		textView.isEditable = true
 		textView.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: .medium)
 		self.drawLine()
 	}
 }
+

@@ -25,7 +25,10 @@ class ContactPageViewModel: ContactPageViewModelType {
 	}
 	
 	var phoneNumber: String? {
-		return contact?.phone
+		if let phone = contact?.phone {
+			return phoneNumberFormat(with: "+X (XXX) XXX-XXXX", phone: phone)
+		}
+		return nil
 	}
 	
 	var notes: String? {
@@ -64,5 +67,23 @@ class ContactPageViewModel: ContactPageViewModelType {
 	func reloadData() {
 		guard let contact = contact else { return }
 		self.contact = model.getUpdatedInformation(for: contact)
+	}
+	
+	private func phoneNumberFormat(with mask: String, phone: String) -> String {
+		let numbers = phone.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
+		var result = ""
+		var index = numbers.startIndex 
+		
+		for char in mask where index < numbers.endIndex {
+			if char == "X" {
+				result.append(numbers[index])
+				
+				index = numbers.index(after: index)
+				
+			} else {
+				result.append(char)
+			}
+		}
+		return result
 	}
 }

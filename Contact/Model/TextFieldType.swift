@@ -10,5 +10,9 @@ import Foundation
 enum TextFieldType {
 	case firstName
 	case lastName
+}
+
+enum TextViewType {
+	case note
 	case phone
 }

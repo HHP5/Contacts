@@ -5,8 +5,8 @@
 //  Created by Екатерина Григорьева on 26.05.2021.
 //
 
-import Foundation
+import UIKit
 
-protocol TextFieldButtonPressedDelegate: class {
-	func didPressButton(button: TextFieldButton)
+protocol TextViewButtonPressedDelegate: class {
+	func didPressButton(button: TextViewButton, toolBarFor: ToolBarViewType)
 }

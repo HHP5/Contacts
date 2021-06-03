@@ -13,7 +13,7 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 	var viewModel: ContactPageViewModelType? {
 		willSet(viewModel) {
 			guard let viewModel = viewModel else { return }
-			self.handleViewModel(viewModel)
+			self.screenView.setupModel(viewModel: viewModel)
 		}
 	}
 	
@@ -84,19 +84,6 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 	
 	// MARK: - Private Methods
 	
-	private func handleViewModel(_ viewModel: ContactPageViewModelType) {
-		screenView.textFields.firstName.text = viewModel.firstName
-		screenView.textFields.lastName.text = viewModel.lastName
-		screenView.textFields.phoneNumber.text = viewModel.phoneNumber
-		screenView.notes?.text = viewModel.notes
-		if let ringtone = viewModel.ringtone {
-			screenView.ringtone?.setName(ringtone)
-		}
-		if let image = viewModel.image {
-			screenView.setImage(image: image)
-		}
-	}
-	
 	private func setupView() {
 		view.addSubview(screenView)
 		screenView.snp.makeConstraints { $0.edges.equalToSuperview() }
@@ -110,7 +97,7 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 	}
 	
 	private func setupDelegates() {
-		[screenView.textFields.0, screenView.textFields.1, screenView.textFields.2].forEach { $0.delegate = self }
+		[screenView.textFields.0, screenView.textFields.1].forEach { $0.delegate = self }
 		
 		screenView.notes?.delegate = self
 		screenView.phoneNumber?.delegate = self
@@ -119,7 +106,7 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 		screenView.ringtonePicker?.dataSource = self
 		
 		screenView.contactImage = self
-		
+				
 	}
 	
 }
@@ -127,13 +114,28 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 
 extension AddNewContactPageController: UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
-		if let text = textView.text {
-			self.notes = text
+		if let type = textView.textContentType {
+			switch type {
+			case .username:
+				self.notes = textView.text
+			case .telephoneNumber:
+				self.phoneNumber = textView.text
+			default:
+				return
+			}
 		}
+		
 	}
 	
 	func textViewDidBeginEditing(_ textView: UITextView) {
-		screenView.notesPressed()
+		if let type = textView.textContentType {
+			switch type {
+			case .username:
+				screenView.notesPressed()
+			default:
+				screenView.notesNotPressed()
+			}
+		}
 	}
 	
 }
@@ -142,12 +144,13 @@ extension AddNewContactPageController: UITextViewDelegate {
 extension AddNewContactPageController: UITextFieldDelegate {
 	// для перехода на след textField
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		let textFields = [screenView.textFields.0, screenView.textFields.1, screenView.textFields.2]
+		let textFields = [screenView.textFields.0, screenView.textFields.1]
 		if let selectedTextFieldIndex = textFields.firstIndex(of: textField),
 		   selectedTextFieldIndex < textFields.count - 1 {
 			textFields[selectedTextFieldIndex + 1].becomeFirstResponder()
 		} else {
 			textField.resignFirstResponder()
+			screenView.phoneNumber?.becomeFirstResponder()
 		}
 		return true
 	}
@@ -160,27 +163,13 @@ extension AddNewContactPageController: UITextFieldDelegate {
 				self.lastName = textField.text
 			case .name:
 				self.firstName = textField.text
-			case .telephoneNumber:
-				self.phoneNumber = textField.text
 			default:
 				return
 			}
 		}
 	}	
 }
-// MARK: - TextFieldButtonPressedDelegate
 
-extension AddNewContactPageController: TextFieldButtonPressedDelegate {
-	func didPressButton(button: TextFieldButton) {
-		switch button {
-		case .done:
-			// или тут нужно еще раз сохранять?
-			screenView.endEditing(true)
-		case .next:
-			screenView.ringtonePicker?.isHidden = false
-		}
-	}
-}
 // MARK: - UIPickerViewDelegate, UIPickerViewDataSource
 
 extension AddNewContactPageController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -197,9 +186,8 @@ extension AddNewContactPageController: UIPickerViewDelegate, UIPickerViewDataSou
 	}
 	
 	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-		screenView.ringtone?.setName(ringtoneModel.row(at: row))
+		screenView.setRingtone(ringtoneModel.row(at: row))
 		self.ringtone = ringtoneModel.row(at: row)
-		screenView.hideRingtone()
 	}
 }
 

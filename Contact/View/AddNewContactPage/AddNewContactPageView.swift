@@ -9,11 +9,12 @@ import UIKit
 import SnapKit
 
 class AddNewContactPageView: UIView {
-	var textFields: (firstName: UITextField, lastName: UITextField, phoneNumber: UITextField) {
-		return (firstName: firstName.textField, lastName: lastName.textField, phoneNumber: phoneNumberTextField.textField)
+	
+	var textFields: (firstName: UITextField, lastName: UITextField) {
+		return (firstName: firstName.textField, lastName: lastName.textField)
 	}
 	
-	weak var phoneNumber: TextField?
+	weak var phoneNumber: UITextView?
 	weak var notes: UITextView?
 	weak var ringtone: RingtoneCell?
 	weak var ringtonePicker: UIPickerView?
@@ -53,14 +54,14 @@ class AddNewContactPageView: UIView {
 		return stack
 	}()
 	
-	private let phoneNumberTextField = TextField(type: .phonePad, textField: .phone)
-	private let phoneNumberLabel: UILabel = {
+	private let phoneNumberTextView = TextView(type: .phone)
+	private let phoneLabel: UILabel = {
 		let label = UILabel()
-		label.text = "Phone"
+		label.text = " "
 		return label
 	}()
-	private lazy var phoneNumberStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [phoneNumberLabel, phoneNumberTextField])
+	private lazy var phoneStack: UIStackView = {
+		let stack = UIStackView(arrangedSubviews: [phoneLabel, phoneNumberTextView])
 		stack.spacing = 10
 		stack.axis = .vertical
 		stack.distribution = .fill
@@ -68,13 +69,14 @@ class AddNewContactPageView: UIView {
 	}()
 	
 	private let ringtoneCell = RingtoneCell()
-	
+
 	private let notesLabel: UILabel = {
 		let label = UILabel()
 		label.text = "Notes"
 		return label
 	}()
-	private let notesTextView = TextView()
+	
+	private let notesTextView = TextView(type: .note)
 	
 	private lazy var notesStack: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [notesLabel, notesTextView])
@@ -85,17 +87,12 @@ class AddNewContactPageView: UIView {
 	}()
 	
 	private lazy var detailStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [phoneNumberStack, ringtoneCell, notesStack])
+		let stack = UIStackView(arrangedSubviews: [phoneStack, ringtoneCell, notesStack])
 		stack.arrangedSubviews.forEach { $0.snp.makeConstraints {$0.height.equalTo(Constans.heightOfCell(type: .detail))} }
 		stack.spacing = 10
 		stack.axis = .vertical
 		stack.distribution = .fill
 		return stack
-	}()
-	
-	private let ringtonePickerView: UIPickerView = {
-		let picker = UIPickerView(frame: .zero)
-		return picker
 	}()
 	
 	// MARK: - Init
@@ -106,13 +103,12 @@ class AddNewContactPageView: UIView {
 		
 		self.setupForNewContact()
 		self.setupDetailStack()
-		self.setupPicker()
 		self.setupDelegates()
 		self.addGestureRecognizerToProfileImage()
 		self.addGestureRecognizerToRingtoneCell()
 		
 		self.keyboardSetting()
-		
+				
 	}
 	
 	required init?(coder: NSCoder) {
@@ -127,9 +123,9 @@ class AddNewContactPageView: UIView {
 	}
 	
 	@objc
-	private func ringtoneTapped(sender: UITapGestureRecognizer) {
+	private func triggerPickerView(sender: UITapGestureRecognizer) {
 		self.endEditing(true)
-		ringtonePickerView.isHidden = false
+		ringtoneCell.openPicker()
 	}
 	
 	@objc
@@ -139,16 +135,32 @@ class AddNewContactPageView: UIView {
 
 	// MARK: - Public Methods
 	
-	func setImage(image: UIImage) {
+	func setImage(image: UIImage?) {
 		profileImage.image = image
 	}
 	
-	func hideRingtone() {
-		self.ringtonePickerView.isHidden = true
+	func setRingtone(_ ringtone: String?) {
+		ringtoneCell.ringtone?.text = ringtone
 	}
 	
 	func notesPressed() {
-		self.frame.origin.y -= notesTextView.frame.maxY * 2
+		self.frame.origin.y -= notesTextView.frame.maxY
+	}
+	func notesNotPressed() {
+		self.frame.origin.y = 0
+	}
+	
+	func setupModel(viewModel: ContactPageViewModelType) {
+		
+		firstName.textField.text = viewModel.firstName
+		lastName.textField.text = viewModel.lastName
+		phoneNumberTextView.textView.text = viewModel.phoneNumber
+		notesTextView.textView.text = viewModel.notes
+		if let ringtone = viewModel.ringtone {
+			ringtoneCell.setName(ringtone)
+		}
+		self.profileImage.image = viewModel.image == nil ? UIImage(systemName: "icon") : viewModel.image
+	
 	}
 
 	// MARK: - Private Methods
@@ -171,35 +183,26 @@ class AddNewContactPageView: UIView {
 			make.trailing.equalToSuperview()
 			make.leading.equalToSuperview().offset(20)
 		}
-		phoneNumberLabel.isHidden = true
-	}
-	
-	private func setupPicker() {
-		self.addSubview(ringtonePickerView)
-		
-		ringtonePickerView.snp.makeConstraints { make in
-			make.top.equalTo(detailStack.snp.bottom).offset(10)
-			make.bottom.left.right.equalToSuperview()
-		}
-		
-		ringtonePickerView.isHidden = true
 	}
 
 	private func setupDelegates() {
-		self.phoneNumber = phoneNumberTextField
+		self.phoneNumber = phoneNumberTextView.textView
 		self.notes = notesTextView.textView
 		self.ringtone = ringtoneCell
-		self.ringtonePicker = ringtonePickerView
+		self.ringtonePicker = ringtoneCell.picker
+		
+		self.phoneNumberTextView.textViewToolBar?.toolBar = self
+		self.ringtoneCell.textViewToolBar?.toolBar = self
 	}
 	
 	private func addGestureRecognizerToProfileImage() {
 		let tapProfileImage = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
 		profileImage.addGestureRecognizer(tapProfileImage)
 	}
-	
+
 	private func addGestureRecognizerToRingtoneCell() {
-		let tapRingtoneCell = UITapGestureRecognizer(target: self, action: #selector(ringtoneTapped))
-		ringtoneCell.addGestureRecognizer(tapRingtoneCell)
+		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(triggerPickerView))
+		ringtoneCell.addGestureRecognizer(tapGesture)
 	}
 	
 	private func keyboardSetting() {
@@ -215,3 +218,20 @@ class AddNewContactPageView: UIView {
 	}
 	
 }
+
+extension AddNewContactPageView: TextViewButtonPressedDelegate {
+	func didPressButton(button: TextViewButton, toolBarFor: ToolBarViewType) {
+		switch button {
+		case .done:
+			self.endEditing(true)
+		case .next:
+			switch toolBarFor {
+			case .phone:
+				ringtoneCell.openPicker()
+			case .ringtone:
+				notes?.becomeFirstResponder()
+			}
+		}
+	}
+}
+	

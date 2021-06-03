@@ -10,7 +10,7 @@ import UIKit
 extension UIView {
 	func drawLine() {
 		let border = UIView()
-		border.backgroundColor = #colorLiteral(red: 0.2256762683, green: 0.2243411243, blue: 0.2267067134, alpha: 1)
+		border.backgroundColor = #colorLiteral(red: 0.7843137255, green: 0.7803921569, blue: 0.8, alpha: 1)
 	
 		self.addSubview(border)
 		border.snp.makeConstraints { make in

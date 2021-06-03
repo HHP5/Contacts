@@ -45,7 +45,7 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.backgroundColor = #colorLiteral(red: 0.8146950603, green: 0.8098530769, blue: 0.8184176087, alpha: 1)
+		view.backgroundColor = #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 0.82)
 		
 		searchController.searchBar.delegate = self
 		searchController.searchResultsUpdater = self

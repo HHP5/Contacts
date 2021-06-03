@@ -37,6 +37,8 @@
 		49A05ABA2664D37E00DB2DE4 /* ContactImageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05AB92664D37D00DB2DE4 /* ContactImageDelegate.swift */; };
 		49A05B0D26678ADC00DB2DE4 /* ExistingContactPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B0C26678ADC00DB2DE4 /* ExistingContactPageController.swift */; };
 		49A05B0F26678AF000DB2DE4 /* ExistingContactPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B0E26678AF000DB2DE4 /* ExistingContactPageView.swift */; };
+		49A05B112668BC3000DB2DE4 /* ToolBarForKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B102668BC3000DB2DE4 /* ToolBarForKeyboard.swift */; };
+		49A05B132668CBB800DB2DE4 /* ToolBarViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B122668CBB800DB2DE4 /* ToolBarViewType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +75,8 @@
 		49A05AB92664D37D00DB2DE4 /* ContactImageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactImageDelegate.swift; sourceTree = "<group>"; };
 		49A05B0C26678ADC00DB2DE4 /* ExistingContactPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingContactPageController.swift; sourceTree = "<group>"; };
 		49A05B0E26678AF000DB2DE4 /* ExistingContactPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingContactPageView.swift; sourceTree = "<group>"; };
+		49A05B102668BC3000DB2DE4 /* ToolBarForKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarForKeyboard.swift; sourceTree = "<group>"; };
+		49A05B122668CBB800DB2DE4 /* ToolBarViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarViewType.swift; sourceTree = "<group>"; };
 		D7D35C6AE022C10D182F948F /* Pods_Contact.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Contact.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -136,11 +140,11 @@
 			isa = PBXGroup;
 			children = (
 				49420C5D265A23B900AFBB6C /* MainListController.swift */,
-				49420CA8265D139300AFBB6C /* TextView.swift */,
-				49420CB1265E33AD00AFBB6C /* TextField.swift */,
-				49420CBD265E8B0800AFBB6C /* RingtoneCell.swift */,
 				49A05B0B26678AAF00DB2DE4 /* ExistingContactPage */,
 				49420CA7265D024300AFBB6C /* AddNewContactPage */,
+				49420CBD265E8B0800AFBB6C /* RingtoneCell.swift */,
+				49420CA8265D139300AFBB6C /* TextView.swift */,
+				49420CB1265E33AD00AFBB6C /* TextField.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -155,6 +159,8 @@
 				49420CB5265E3B8F00AFBB6C /* TextFieldType.swift */,
 				49420CB9265E539400AFBB6C /* TextFieldButton.swift */,
 				49420CBB265E760C00AFBB6C /* Ringtone.swift */,
+				49A05B102668BC3000DB2DE4 /* ToolBarForKeyboard.swift */,
+				49A05B122668CBB800DB2DE4 /* ToolBarViewType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -173,8 +179,8 @@
 			isa = PBXGroup;
 			children = (
 				49420C91265BD1CA00AFBB6C /* MainListViewModelType.swift */,
-				49420CB7265E538100AFBB6C /* TextFieldButtonPressedDelegate.swift */,
 				49A05AB32664D33800DB2DE4 /* ContactPageViewModelType.swift */,
+				49420CB7265E538100AFBB6C /* TextFieldButtonPressedDelegate.swift */,
 				49A05AB52664D35300DB2DE4 /* RingtoneViewModelType.swift */,
 				49A05AB72664D36E00DB2DE4 /* DeleteButtonDelegate.swift */,
 				49A05AB92664D37D00DB2DE4 /* ContactImageDelegate.swift */,
@@ -356,6 +362,7 @@
 				49420CA6265CFEBF00AFBB6C /* PersonalInfoType.swift in Sources */,
 				49420C78265A3F4100AFBB6C /* ContactList.swift in Sources */,
 				49420C8F265BD13100AFBB6C /* Constans.swift in Sources */,
+				49A05B112668BC3000DB2DE4 /* ToolBarForKeyboard.swift in Sources */,
 				49A05AB82664D36E00DB2DE4 /* DeleteButtonDelegate.swift in Sources */,
 				49420CB2265E33AD00AFBB6C /* TextField.swift in Sources */,
 				49420C5E265A23B900AFBB6C /* MainListController.swift in Sources */,
@@ -364,6 +371,7 @@
 				49420CA9265D139300AFBB6C /* TextView.swift in Sources */,
 				49420C9C265CD6C900AFBB6C /* AddNewContactPageController.swift in Sources */,
 				49420CBE265E8B0800AFBB6C /* RingtoneCell.swift in Sources */,
+				49A05B132668CBB800DB2DE4 /* ToolBarViewType.swift in Sources */,
 				49420C5A265A23B900AFBB6C /* AppDelegate.swift in Sources */,
 				49A05B0D26678ADC00DB2DE4 /* ExistingContactPageController.swift in Sources */,
 				49420C92265BD1CA00AFBB6C /* MainListViewModelType.swift in Sources */,

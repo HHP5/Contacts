@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TextFieldButton: String {
+enum TextViewButton: String {
 	case done = "Done"
 	case next = "Next"
 }
