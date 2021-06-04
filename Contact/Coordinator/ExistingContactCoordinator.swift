@@ -27,8 +27,7 @@ class ExistingContactCoordinator: Coordinator {
 		let viewModel = ContactPageViewModel(contact: contact)
 		viewModel.existCoordinator = self
 		let viewController = ExistingContactPageController(viewModel: viewModel)
-		navigationController.viewControllers.append(viewController)
-
+		navigationController.pushViewController(viewController, animated: true)
 	}
 	
 	private func navigationToEditingPage() {

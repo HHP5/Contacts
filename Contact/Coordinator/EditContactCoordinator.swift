@@ -27,7 +27,7 @@ class EditingContactCoordinator: Coordinator {
 		let viewModel = ContactPageViewModel(contact: contact)
 		viewModel.editCoordinator = self
 		let viewController = EditingContactViewContoller(viewModel: viewModel)
-		navigationController.viewControllers.append(viewController)
+		navigationController.pushViewController(viewController, animated: true)
 	}
 	
 	func finish() {
