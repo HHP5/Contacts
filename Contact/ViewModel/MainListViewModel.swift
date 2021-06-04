@@ -9,6 +9,9 @@ import UIKit
 
 class MainListViewModel: MainListViewModelType {
 	// MARK: - Properties
+	weak var coordinator: MainCoordinatorDelegate?
+//	weak var coordinator: MainCoordinator?
+	
 	var numberOfSections: Int {
 		return collation.sectionTitles.count
 	}
@@ -69,14 +72,14 @@ class MainListViewModel: MainListViewModelType {
 		setupSection(with: fullContactList)
 	}
 	
-	func didSelectRowAt(_ indexPath: IndexPath) -> ContactPageViewModelType? {
+	func didSelectContact(at indexPath: IndexPath) {
 		let section = sections[indexPath.section]
 		let contact = section[indexPath.row]
-		return ContactPageViewModel(contact: contact)
+		coordinator?.contactsListViewModel(didSelect: contact, type: .existing)
 	}
-	
-	func emptyContact() -> ContactPageViewModelType? {
-		return ContactPageViewModel(contact: nil)
+
+	func emptyContact() {
+		coordinator?.contactsListViewModel(didSelect: nil, type: .editing)
 	}
 	
 	func reloadData() {
@@ -86,7 +89,7 @@ class MainListViewModel: MainListViewModelType {
 	// MARK: - Private Methods
 
 	private func setupSection(with contactList: [Person]) {
-		let selector: Selector = Selector(Constans.selectorForSection)
+		let selector: Selector = Selector(Constant.selectorForSection)
 		self.sections = [[Person]](repeating: [], count: collation.sectionTitles.count)
 		
 		for name in contactList {

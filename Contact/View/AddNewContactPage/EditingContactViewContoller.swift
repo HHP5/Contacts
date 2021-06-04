@@ -8,14 +8,9 @@
 import UIKit
 import SnapKit
 
-class AddNewContactPageController: UIViewController, UINavigationControllerDelegate {
+class EditingContactViewContoller: UIViewController, UINavigationControllerDelegate {
 	// MARK: - Properties
-	var viewModel: ContactPageViewModelType? {
-		willSet(viewModel) {
-			guard let viewModel = viewModel else { return }
-			self.screenView.setupModel(viewModel: viewModel)
-		}
-	}
+	var viewModel: ContactPageViewModelType
 	
 	private var ringtoneModel: RingtoneViewModel
 	
@@ -33,11 +28,13 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 	
 	// MARK: - Init
 	
-	init() {
+	init(viewModel: ContactPageViewModelType) {
+		self.viewModel = viewModel
 		self.ringtoneModel = RingtoneViewModel()
 		self.screenView = AddNewContactPageView()
 		super.init(nibName: nil, bundle: nil)
 		
+		self.screenView.setupModel(viewModel: viewModel)
 		self.setupNavigationBarForNewContact()
 		
 	}
@@ -68,7 +65,7 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 	private func donePressed() {
 		screenView.endEditing(true)
 		if !isDonePressed {
-			viewModel?.updateContact(firstName: self.firstName,
+			viewModel.updateContact(firstName: self.firstName,
 									 lastName: self.lastName,
 									 phone: self.phoneNumber,
 									 ringtone: self.ringtone,
@@ -79,7 +76,7 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 	}
 	
 	@objc private func goBack() {
-		self.navigationController?.popViewController(animated: true)
+		viewModel.goBack()
 	}
 	
 	// MARK: - Private Methods
@@ -112,7 +109,7 @@ class AddNewContactPageController: UIViewController, UINavigationControllerDeleg
 }
 // MARK: - UITextViewDelegate
 
-extension AddNewContactPageController: UITextViewDelegate {
+extension EditingContactViewContoller: UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
 		if let type = textView.textContentType {
 			switch type {
@@ -141,7 +138,7 @@ extension AddNewContactPageController: UITextViewDelegate {
 }
 // MARK: - UITextFieldDelegate
 
-extension AddNewContactPageController: UITextFieldDelegate {
+extension EditingContactViewContoller: UITextFieldDelegate {
 	// для перехода на след textField
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		let textFields = [screenView.textFields.0, screenView.textFields.1]
@@ -172,7 +169,7 @@ extension AddNewContactPageController: UITextFieldDelegate {
 
 // MARK: - UIPickerViewDelegate, UIPickerViewDataSource
 
-extension AddNewContactPageController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension EditingContactViewContoller: UIPickerViewDelegate, UIPickerViewDataSource {
 	func numberOfComponents(in pickerView: UIPickerView) -> Int {
 		return 1
 	}
@@ -193,7 +190,7 @@ extension AddNewContactPageController: UIPickerViewDelegate, UIPickerViewDataSou
 
 // MARK: - ProfileImageDelegate
 
-extension AddNewContactPageController: ContactImageDelegate, UIImagePickerControllerDelegate {
+extension EditingContactViewContoller: ContactImageDelegate, UIImagePickerControllerDelegate {
 	
 	func press() {
 		let alert = UIAlertController(title: "Photo", message: nil, preferredStyle: .actionSheet)

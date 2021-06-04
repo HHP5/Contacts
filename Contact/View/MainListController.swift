@@ -9,12 +9,12 @@ import SnapKit
 
 class MainListController: UIViewController, UISearchControllerDelegate {
 	// MARK: - Properties
-	weak var coordinator: MainCoordinator?
+//	weak var coordinator: MainCoordinator?
 
 	private var viewModel: MainListViewModelType
 	private let table: UITableView = {
 		let table = UITableView()
-		table.register(UITableViewCell.self, forCellReuseIdentifier: Constans.identifierForCell)
+		table.register(UITableViewCell.self, forCellReuseIdentifier: Constant.identifierForCell)
 		return table
 	}()
 	
@@ -72,9 +72,7 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 	// MARK: - Actions (@ojbc + @IBActions)
 	@objc
 	private func plusPressed() {
-		let destinationVC = AddNewContactPageController()
-		destinationVC.viewModel = viewModel.emptyContact()
-		self.navigationController?.pushViewController(destinationVC, animated: true)
+		viewModel.emptyContact()
 	}
 	// MARK: - Private Methods
 	
@@ -122,17 +120,13 @@ extension MainListController: UITableViewDataSource, UITableViewDelegate {
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: Constans.identifierForCell, for: indexPath)
+		let cell = tableView.dequeueReusableCell(withIdentifier: Constant.identifierForCell, for: indexPath)
 		cell.textLabel?.text = viewModel.cellForRow(at: indexPath)
 		return cell
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let contact = viewModel.didSelectRowAt(indexPath)
-		let destinationVC = ExistingContactPageController()
-		destinationVC.viewModel = contact
-		self.navigationController?.pushViewController(destinationVC, animated: true)
-		
+		viewModel.didSelectContact(at: indexPath)
 		tableView.deselectRow(at: indexPath, animated: true)
 	}
 	

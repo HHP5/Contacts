@@ -8,6 +8,9 @@
 import UIKit
 
 class ContactPageViewModel: ContactPageViewModelType {
+	weak var existCoordinator: ExistContactCoordinatorDelegate?
+	weak var editCoordinator: EditContactCoordinatorDelegate?
+	
 	private var contact: Person?
 	private var model = ContactList()
 	
@@ -51,6 +54,11 @@ class ContactPageViewModel: ContactPageViewModelType {
 	func deleteContact() {
 		guard let person = contact else { return  }
 		model.deleteObject(person)
+		goBack()
+	}
+	
+	func goBack() {
+		editCoordinator?.back()
 	}
 	
 	func updateContact(firstName: String?, lastName: String?, phone: String?, ringtone: String?, notes: String?, image: Data?) {
@@ -62,11 +70,17 @@ class ContactPageViewModel: ContactPageViewModelType {
 							ringtone: ringtone ?? contact?.ringtone,
 							notes: notes ?? contact?.notes,
 							image: image ?? contact?.image)
+		
+		editCoordinator?.back()
 	}
 	
 	func reloadData() {
 		guard let contact = contact else { return }
 		self.contact = model.getUpdatedInformation(for: contact)
+	}
+	
+	func editContact() {
+		existCoordinator?.edit(contact: contact)
 	}
 	
 	private func phoneNumberFormat(with mask: String, phone: String) -> String {

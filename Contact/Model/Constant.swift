@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Constans {
+struct Constant {
 	static let selectorForSection = "lastName"
 	static let identifierForCell = "cell"
 	static func heightOfCell(type: PersonalInfoType) -> Int {

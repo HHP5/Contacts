@@ -21,8 +21,8 @@ class ExistingContactPageView: UIView {
 		imageView.layer.borderWidth = 1
 		imageView.layer.borderColor = UIColor.gray.cgColor
 		imageView.isUserInteractionEnabled = true
-		imageView.snp.makeConstraints {$0.width.height.equalTo(Constans.heightOfCell(type: .fullName) * 2)}
-		imageView.layer.cornerRadius = CGFloat((Constans.heightOfCell(type: .fullName) ))
+		imageView.snp.makeConstraints {$0.width.height.equalTo(Constant.heightOfCell(type: .fullName) * 2)}
+		imageView.layer.cornerRadius = CGFloat((Constant.heightOfCell(type: .fullName) ))
 		return imageView
 	}()
 	
@@ -61,7 +61,7 @@ class ExistingContactPageView: UIView {
 	
 	private lazy var detailStack: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [phoneNumberStack, ringtoneCell, notesStack])
-		stack.arrangedSubviews.forEach { $0.snp.makeConstraints {$0.height.equalTo(Constans.heightOfCell(type: .detail))} }
+		stack.arrangedSubviews.forEach { $0.snp.makeConstraints {$0.height.equalTo(Constant.heightOfCell(type: .detail))} }
 		ringtoneCell.makeUserUnenabled()
 		stack.spacing = 10
 		stack.axis = .vertical
@@ -141,7 +141,7 @@ class ExistingContactPageView: UIView {
 		
 		name.snp.makeConstraints { make in
 			make.top.equalTo(profileImage.snp.bottom).offset(20)
-			make.height.equalTo(Constans.heightOfCell(type: .fullName))
+			make.height.equalTo(Constant.heightOfCell(type: .fullName))
 			make.leading.trailing.equalToSuperview().inset(20)
 		}
 		name.textField.textAlignment = .center

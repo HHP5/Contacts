@@ -8,23 +8,16 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-	var coordinator: MainCoordinator?
+	var coordinator: SceneCoordinator?
 	var window: UIWindow?
 	
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-
+		
 		guard let windowScene = (scene as? UIWindowScene) else { return }
-		
 		window = UIWindow(windowScene: windowScene)
-		
-		let navigation = UINavigationController()
-		coordinator = MainCoordinator(navigationController: navigation)
+		guard let window = window else { return }
+		coordinator = SceneCoordinator(window: window)
 		coordinator?.start()
-		
-		window?.overrideUserInterfaceStyle = .light
-
-		window?.makeKeyAndVisible()
-		window?.rootViewController = navigation
 	}
 	
 	func sceneDidEnterBackground(_ scene: UIScene) {

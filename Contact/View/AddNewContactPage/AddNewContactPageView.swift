@@ -32,8 +32,8 @@ class AddNewContactPageView: UIView {
 		imageView.layer.borderWidth = 1
 		imageView.layer.borderColor = UIColor.gray.cgColor
 		imageView.isUserInteractionEnabled = true
-		imageView.snp.makeConstraints {$0.width.height.equalTo(Constans.heightOfCell(type: .fullName) * 2)}
-		imageView.layer.cornerRadius = CGFloat((Constans.heightOfCell(type: .fullName) ))
+		imageView.snp.makeConstraints {$0.width.height.equalTo(Constant.heightOfCell(type: .fullName) * 2)}
+		imageView.layer.cornerRadius = CGFloat((Constant.heightOfCell(type: .fullName) ))
 		return imageView
 	}()
 	
@@ -88,7 +88,7 @@ class AddNewContactPageView: UIView {
 	
 	private lazy var detailStack: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [phoneStack, ringtoneCell, notesStack])
-		stack.arrangedSubviews.forEach { $0.snp.makeConstraints {$0.height.equalTo(Constans.heightOfCell(type: .detail))} }
+		stack.arrangedSubviews.forEach { $0.snp.makeConstraints {$0.height.equalTo(Constant.heightOfCell(type: .detail))} }
 		stack.spacing = 10
 		stack.axis = .vertical
 		stack.distribution = .fill

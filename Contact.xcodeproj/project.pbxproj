@@ -13,12 +13,12 @@
 		49420C5E265A23B900AFBB6C /* MainListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C5D265A23B900AFBB6C /* MainListController.swift */; };
 		49420C64265A23B900AFBB6C /* Contacts.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 49420C62265A23B900AFBB6C /* Contacts.xcdatamodeld */; };
 		49420C66265A23BA00AFBB6C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49420C65265A23BA00AFBB6C /* Assets.xcassets */; };
-		49420C72265A378700AFBB6C /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C71265A378700AFBB6C /* Coordinator.swift */; };
+		49420C72265A378700AFBB6C /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C71265A378700AFBB6C /* MainCoordinator.swift */; };
 		49420C78265A3F4100AFBB6C /* ContactList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C77265A3F4100AFBB6C /* ContactList.swift */; };
 		49420C7B265B8F9400AFBB6C /* MainListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C7A265B8F9400AFBB6C /* MainListViewModel.swift */; };
-		49420C8F265BD13100AFBB6C /* Constans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C8E265BD13100AFBB6C /* Constans.swift */; };
+		49420C8F265BD13100AFBB6C /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C8E265BD13100AFBB6C /* Constant.swift */; };
 		49420C92265BD1CA00AFBB6C /* MainListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C91265BD1CA00AFBB6C /* MainListViewModelType.swift */; };
-		49420C9C265CD6C900AFBB6C /* AddNewContactPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C9B265CD6C900AFBB6C /* AddNewContactPageController.swift */; };
+		49420C9C265CD6C900AFBB6C /* EditingContactViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C9B265CD6C900AFBB6C /* EditingContactViewContoller.swift */; };
 		49420C9E265CD6E700AFBB6C /* AddNewContactPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C9D265CD6E700AFBB6C /* AddNewContactPageView.swift */; };
 		49420CA6265CFEBF00AFBB6C /* PersonalInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420CA5265CFEBF00AFBB6C /* PersonalInfoType.swift */; };
 		49420CA9265D139300AFBB6C /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420CA8265D139300AFBB6C /* TextView.swift */; };
@@ -39,6 +39,14 @@
 		49A05B0F26678AF000DB2DE4 /* ExistingContactPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B0E26678AF000DB2DE4 /* ExistingContactPageView.swift */; };
 		49A05B112668BC3000DB2DE4 /* ToolBarForKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B102668BC3000DB2DE4 /* ToolBarForKeyboard.swift */; };
 		49A05B132668CBB800DB2DE4 /* ToolBarViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B122668CBB800DB2DE4 /* ToolBarViewType.swift */; };
+		49A05B15266A435300DB2DE4 /* ContactDetailPageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B14266A435300DB2DE4 /* ContactDetailPageType.swift */; };
+		49A05B26266A86A900DB2DE4 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B25266A86A900DB2DE4 /* Coordinator.swift */; };
+		49A05B28266A86C700DB2DE4 /* ExistingContactCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B27266A86C700DB2DE4 /* ExistingContactCoordinator.swift */; };
+		49A05B2A266A86EB00DB2DE4 /* ExistContactCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B29266A86EB00DB2DE4 /* ExistContactCoordinatorDelegate.swift */; };
+		49A05B2C266A870700DB2DE4 /* EditContactCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B2B266A870700DB2DE4 /* EditContactCoordinatorDelegate.swift */; };
+		49A05B2E266A874900DB2DE4 /* EditContactCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B2D266A874900DB2DE4 /* EditContactCoordinator.swift */; };
+		49A05B30266A878400DB2DE4 /* MainCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B2F266A878400DB2DE4 /* MainCoordinatorDelegate.swift */; };
+		49A05B32266A87AC00DB2DE4 /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B31266A87AC00DB2DE4 /* SceneCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,12 +59,12 @@
 		49420C63265A23B900AFBB6C /* Contacts.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Contacts.xcdatamodel; sourceTree = "<group>"; };
 		49420C65265A23BA00AFBB6C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49420C6A265A23BA00AFBB6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		49420C71265A378700AFBB6C /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		49420C71265A378700AFBB6C /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		49420C77265A3F4100AFBB6C /* ContactList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactList.swift; sourceTree = "<group>"; };
 		49420C7A265B8F9400AFBB6C /* MainListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListViewModel.swift; sourceTree = "<group>"; };
-		49420C8E265BD13100AFBB6C /* Constans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constans.swift; sourceTree = "<group>"; };
+		49420C8E265BD13100AFBB6C /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		49420C91265BD1CA00AFBB6C /* MainListViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListViewModelType.swift; sourceTree = "<group>"; };
-		49420C9B265CD6C900AFBB6C /* AddNewContactPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewContactPageController.swift; sourceTree = "<group>"; };
+		49420C9B265CD6C900AFBB6C /* EditingContactViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingContactViewContoller.swift; sourceTree = "<group>"; };
 		49420C9D265CD6E700AFBB6C /* AddNewContactPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewContactPageView.swift; sourceTree = "<group>"; };
 		49420CA5265CFEBF00AFBB6C /* PersonalInfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoType.swift; sourceTree = "<group>"; };
 		49420CA8265D139300AFBB6C /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
@@ -77,6 +85,14 @@
 		49A05B0E26678AF000DB2DE4 /* ExistingContactPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingContactPageView.swift; sourceTree = "<group>"; };
 		49A05B102668BC3000DB2DE4 /* ToolBarForKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarForKeyboard.swift; sourceTree = "<group>"; };
 		49A05B122668CBB800DB2DE4 /* ToolBarViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarViewType.swift; sourceTree = "<group>"; };
+		49A05B14266A435300DB2DE4 /* ContactDetailPageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailPageType.swift; sourceTree = "<group>"; };
+		49A05B25266A86A900DB2DE4 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		49A05B27266A86C700DB2DE4 /* ExistingContactCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingContactCoordinator.swift; sourceTree = "<group>"; };
+		49A05B29266A86EB00DB2DE4 /* ExistContactCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistContactCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		49A05B2B266A870700DB2DE4 /* EditContactCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditContactCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		49A05B2D266A874900DB2DE4 /* EditContactCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditContactCoordinator.swift; sourceTree = "<group>"; };
+		49A05B2F266A878400DB2DE4 /* MainCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		49A05B31266A87AC00DB2DE4 /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
 		D7D35C6AE022C10D182F948F /* Pods_Contact.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Contact.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -124,7 +140,7 @@
 			children = (
 				49420C59265A23B900AFBB6C /* AppDelegate.swift */,
 				49420C5B265A23B900AFBB6C /* SceneDelegate.swift */,
-				49420C71265A378700AFBB6C /* Coordinator.swift */,
+				49A05B16266A669F00DB2DE4 /* Coordinator */,
 				49420C90265BD1BB00AFBB6C /* Protocols */,
 				49420CAE265E312900AFBB6C /* Extension */,
 				49420C76265A3F3300AFBB6C /* Model */,
@@ -153,9 +169,10 @@
 			isa = PBXGroup;
 			children = (
 				49420C62265A23B900AFBB6C /* Contacts.xcdatamodeld */,
-				49420C8E265BD13100AFBB6C /* Constans.swift */,
+				49420C8E265BD13100AFBB6C /* Constant.swift */,
 				49420C77265A3F4100AFBB6C /* ContactList.swift */,
 				49420CA5265CFEBF00AFBB6C /* PersonalInfoType.swift */,
+				49A05B14266A435300DB2DE4 /* ContactDetailPageType.swift */,
 				49420CB5265E3B8F00AFBB6C /* TextFieldType.swift */,
 				49420CB9265E539400AFBB6C /* TextFieldButton.swift */,
 				49420CBB265E760C00AFBB6C /* Ringtone.swift */,
@@ -191,7 +208,7 @@
 		49420CA7265D024300AFBB6C /* AddNewContactPage */ = {
 			isa = PBXGroup;
 			children = (
-				49420C9B265CD6C900AFBB6C /* AddNewContactPageController.swift */,
+				49420C9B265CD6C900AFBB6C /* EditingContactViewContoller.swift */,
 				49420C9D265CD6E700AFBB6C /* AddNewContactPageView.swift */,
 			);
 			path = AddNewContactPage;
@@ -212,6 +229,21 @@
 				49A05B0E26678AF000DB2DE4 /* ExistingContactPageView.swift */,
 			);
 			path = ExistingContactPage;
+			sourceTree = "<group>";
+		};
+		49A05B16266A669F00DB2DE4 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				49A05B25266A86A900DB2DE4 /* Coordinator.swift */,
+				49A05B31266A87AC00DB2DE4 /* SceneCoordinator.swift */,
+				49A05B2F266A878400DB2DE4 /* MainCoordinatorDelegate.swift */,
+				49420C71265A378700AFBB6C /* MainCoordinator.swift */,
+				49A05B29266A86EB00DB2DE4 /* ExistContactCoordinatorDelegate.swift */,
+				49A05B27266A86C700DB2DE4 /* ExistingContactCoordinator.swift */,
+				49A05B2B266A870700DB2DE4 /* EditContactCoordinatorDelegate.swift */,
+				49A05B2D266A874900DB2DE4 /* EditContactCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		66AE72041672A8D24A53A816 /* Frameworks */ = {
@@ -360,24 +392,32 @@
 				49420C64265A23B900AFBB6C /* Contacts.xcdatamodeld in Sources */,
 				49A05B0F26678AF000DB2DE4 /* ExistingContactPageView.swift in Sources */,
 				49420CA6265CFEBF00AFBB6C /* PersonalInfoType.swift in Sources */,
+				49A05B32266A87AC00DB2DE4 /* SceneCoordinator.swift in Sources */,
 				49420C78265A3F4100AFBB6C /* ContactList.swift in Sources */,
-				49420C8F265BD13100AFBB6C /* Constans.swift in Sources */,
+				49420C8F265BD13100AFBB6C /* Constant.swift in Sources */,
 				49A05B112668BC3000DB2DE4 /* ToolBarForKeyboard.swift in Sources */,
 				49A05AB82664D36E00DB2DE4 /* DeleteButtonDelegate.swift in Sources */,
 				49420CB2265E33AD00AFBB6C /* TextField.swift in Sources */,
 				49420C5E265A23B900AFBB6C /* MainListController.swift in Sources */,
-				49420C72265A378700AFBB6C /* Coordinator.swift in Sources */,
+				49A05B2E266A874900DB2DE4 /* EditContactCoordinator.swift in Sources */,
+				49420C72265A378700AFBB6C /* MainCoordinator.swift in Sources */,
 				49420CB8265E538100AFBB6C /* TextFieldButtonPressedDelegate.swift in Sources */,
 				49420CA9265D139300AFBB6C /* TextView.swift in Sources */,
-				49420C9C265CD6C900AFBB6C /* AddNewContactPageController.swift in Sources */,
+				49A05B26266A86A900DB2DE4 /* Coordinator.swift in Sources */,
+				49420C9C265CD6C900AFBB6C /* EditingContactViewContoller.swift in Sources */,
+				49A05B2C266A870700DB2DE4 /* EditContactCoordinatorDelegate.swift in Sources */,
 				49420CBE265E8B0800AFBB6C /* RingtoneCell.swift in Sources */,
 				49A05B132668CBB800DB2DE4 /* ToolBarViewType.swift in Sources */,
 				49420C5A265A23B900AFBB6C /* AppDelegate.swift in Sources */,
 				49A05B0D26678ADC00DB2DE4 /* ExistingContactPageController.swift in Sources */,
 				49420C92265BD1CA00AFBB6C /* MainListViewModelType.swift in Sources */,
+				49A05B28266A86C700DB2DE4 /* ExistingContactCoordinator.swift in Sources */,
+				49A05B15266A435300DB2DE4 /* ContactDetailPageType.swift in Sources */,
 				49420CB6265E3B8F00AFBB6C /* TextFieldType.swift in Sources */,
 				49420C5C265A23B900AFBB6C /* SceneDelegate.swift in Sources */,
+				49A05B2A266A86EB00DB2DE4 /* ExistContactCoordinatorDelegate.swift in Sources */,
 				49420CAD265D46F200AFBB6C /* RingtoneViewModel.swift in Sources */,
+				49A05B30266A878400DB2DE4 /* MainCoordinatorDelegate.swift in Sources */,
 				49420CB0265E314C00AFBB6C /* UIView+LineUnder.swift in Sources */,
 				49A05AB62664D35300DB2DE4 /* RingtoneViewModelType.swift in Sources */,
 				49A05AB42664D33800DB2DE4 /* ContactPageViewModelType.swift in Sources */,

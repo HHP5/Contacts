@@ -8,9 +8,19 @@
 import UIKit
 
 class ExistingContactPageController: UIViewController {
-	var viewModel: ContactPageViewModelType?
+	var viewModel: ContactPageViewModelType
 	
 	var screenView = ExistingContactPageView()
+	
+	init(viewModel: ContactPageViewModelType) {
+		self.viewModel = viewModel
+		
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,8 +31,7 @@ class ExistingContactPageController: UIViewController {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		
-		guard let viewModel = viewModel else { return }
+
 		self.screenView.setupModel(viewModel: viewModel)
 	}
     
@@ -39,15 +48,12 @@ class ExistingContactPageController: UIViewController {
 	
 	@objc
 	private func editPressed() {
-		let destinationVC = AddNewContactPageController()
-		destinationVC.viewModel = viewModel
-		self.navigationController?.pushViewController(destinationVC, animated: true)
+		viewModel.editContact()
 	}
 }
 
 extension ExistingContactPageController: DeleteButtonDelegate {
 	func pressed() {
-		viewModel?.deleteContact()
-		self.navigationController?.popViewController(animated: true)
+		viewModel.deleteContact()
 	}
 }
