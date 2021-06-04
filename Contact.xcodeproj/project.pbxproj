@@ -19,7 +19,7 @@
 		49420C8F265BD13100AFBB6C /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C8E265BD13100AFBB6C /* Constant.swift */; };
 		49420C92265BD1CA00AFBB6C /* MainListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C91265BD1CA00AFBB6C /* MainListViewModelType.swift */; };
 		49420C9C265CD6C900AFBB6C /* EditingContactViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C9B265CD6C900AFBB6C /* EditingContactViewContoller.swift */; };
-		49420C9E265CD6E700AFBB6C /* AddNewContactPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C9D265CD6E700AFBB6C /* AddNewContactPageView.swift */; };
+		49420C9E265CD6E700AFBB6C /* EditContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C9D265CD6E700AFBB6C /* EditContactView.swift */; };
 		49420CA6265CFEBF00AFBB6C /* PersonalInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420CA5265CFEBF00AFBB6C /* PersonalInfoType.swift */; };
 		49420CA9265D139300AFBB6C /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420CA8265D139300AFBB6C /* TextView.swift */; };
 		49420CAD265D46F200AFBB6C /* RingtoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420CAC265D46F200AFBB6C /* RingtoneViewModel.swift */; };
@@ -65,7 +65,7 @@
 		49420C8E265BD13100AFBB6C /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		49420C91265BD1CA00AFBB6C /* MainListViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListViewModelType.swift; sourceTree = "<group>"; };
 		49420C9B265CD6C900AFBB6C /* EditingContactViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingContactViewContoller.swift; sourceTree = "<group>"; };
-		49420C9D265CD6E700AFBB6C /* AddNewContactPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewContactPageView.swift; sourceTree = "<group>"; };
+		49420C9D265CD6E700AFBB6C /* EditContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditContactView.swift; sourceTree = "<group>"; };
 		49420CA5265CFEBF00AFBB6C /* PersonalInfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoType.swift; sourceTree = "<group>"; };
 		49420CA8265D139300AFBB6C /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		49420CAC265D46F200AFBB6C /* RingtoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingtoneViewModel.swift; sourceTree = "<group>"; };
@@ -209,7 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				49420C9B265CD6C900AFBB6C /* EditingContactViewContoller.swift */,
-				49420C9D265CD6E700AFBB6C /* AddNewContactPageView.swift */,
+				49420C9D265CD6E700AFBB6C /* EditContactView.swift */,
 			);
 			path = AddNewContactPage;
 			sourceTree = "<group>";
@@ -386,7 +386,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49A05ABA2664D37E00DB2DE4 /* ContactImageDelegate.swift in Sources */,
-				49420C9E265CD6E700AFBB6C /* AddNewContactPageView.swift in Sources */,
+				49420C9E265CD6E700AFBB6C /* EditContactView.swift in Sources */,
 				49420CBA265E539400AFBB6C /* TextFieldButton.swift in Sources */,
 				494AE8952661097B00741FE5 /* ContactPageViewModel.swift in Sources */,
 				49420C64265A23B900AFBB6C /* Contacts.xcdatamodeld in Sources */,

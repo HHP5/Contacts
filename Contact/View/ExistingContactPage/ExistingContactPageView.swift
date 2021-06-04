@@ -12,7 +12,7 @@ class ExistingContactPageView: UIView {
 	
 	weak var deleteContactButton: DeleteButtonDelegate?
 	
-	private let name = TextField(type: .default, textField: .firstName)
+	private let name = UILabel()
 	
 	private let profileImage: UIImageView = {
 		let imageView = UIImageView(frame: .zero)
@@ -109,7 +109,7 @@ class ExistingContactPageView: UIView {
 	
 	func setupModel(viewModel: ContactPageViewModelType) {
 		
-		name.textField.text = viewModel.fullName
+		name.text = viewModel.fullName
 		phoneNumberTextField.textView.text = viewModel.phoneNumber
 		notesTextView.textView.text = viewModel.notes
 		if let ringtone = viewModel.ringtone {
@@ -144,9 +144,11 @@ class ExistingContactPageView: UIView {
 			make.height.equalTo(Constant.heightOfCell(type: .fullName))
 			make.leading.trailing.equalToSuperview().inset(20)
 		}
-		name.textField.textAlignment = .center
-		name.textField.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .medium)
-		name.textField.isUserInteractionEnabled = false
+		name.textAlignment = .center
+		name.adjustsFontSizeToFitWidth = true
+		name.numberOfLines = 1
+		name.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .medium)
+		name.isUserInteractionEnabled = false
 		newView.snp.makeConstraints { $0.bottom.equalTo(name.snp.bottom) }
 	}
 	

@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class AddNewContactPageView: UIView {
+class EditContactView: UIView {
 	
 	var textFields: (firstName: UITextField, lastName: UITextField) {
 		return (firstName: firstName.textField, lastName: lastName.textField)
@@ -219,7 +219,7 @@ class AddNewContactPageView: UIView {
 	
 }
 
-extension AddNewContactPageView: TextViewButtonPressedDelegate {
+extension EditContactView: TextViewButtonPressedDelegate {
 	func didPressButton(button: TextViewButton, toolBarFor: ToolBarViewType) {
 		switch button {
 		case .done:

@@ -35,7 +35,6 @@ class ExistingContactCoordinator: Coordinator {
 		childCoordinators.append(coordinator)
 		coordinator.start()
 	}
-	
 }
 
 extension ExistingContactCoordinator: ExistContactCoordinatorDelegate {

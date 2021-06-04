@@ -15,7 +15,7 @@ class EditingContactViewContoller: UIViewController, UINavigationControllerDeleg
 	private var ringtoneModel: RingtoneViewModel
 	
 	private var imagePicker: UIImagePickerController?
-	private let screenView: AddNewContactPageView
+	private let screenView: EditContactView
 	
 	private var firstName: String?
 	private var lastName: String?
@@ -31,7 +31,7 @@ class EditingContactViewContoller: UIViewController, UINavigationControllerDeleg
 	init(viewModel: ContactPageViewModelType) {
 		self.viewModel = viewModel
 		self.ringtoneModel = RingtoneViewModel()
-		self.screenView = AddNewContactPageView()
+		self.screenView = EditContactView()
 		super.init(nibName: nil, bundle: nil)
 		
 		self.screenView.setupModel(viewModel: viewModel)
