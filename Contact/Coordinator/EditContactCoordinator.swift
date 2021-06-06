@@ -8,8 +8,7 @@
 import UIKit
 
 class EditingContactCoordinator: Coordinator {
-	var childCoordinators: [Coordinator] = []
-	
+
 	private var contact: Person?
 	var navigationController: UINavigationController
 	
@@ -36,7 +35,7 @@ class EditingContactCoordinator: Coordinator {
 }
 
 extension EditingContactCoordinator: EditContactCoordinatorDelegate {
-	func back() {
+	func backToPreviousScreen() {
 		finish()
 	}
 }

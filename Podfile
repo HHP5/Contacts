@@ -8,5 +8,6 @@ target 'Contact' do
   # Pods for Contact
   pod 'SwiftLint'
   pod 'SnapKit', '~> 5.0.0'
+  pod 'TPKeyboardAvoiding', '~> 1.3'
 
 end

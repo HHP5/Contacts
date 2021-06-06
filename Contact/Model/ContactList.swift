@@ -44,8 +44,9 @@ struct ContactList {
 	
 	mutating private func loadNameList(with request: NSFetchRequest<Person> = Person.fetchRequest()) {
 		
-		let sortDescriptor = NSSortDescriptor(key: "lastName", ascending: true)
-		request.sortDescriptors = [sortDescriptor]
+		let firstNameSortDescriptor = NSSortDescriptor(key: "firstName", ascending: true)
+		let lastNameSortDescriptor = NSSortDescriptor(key: "lastName", ascending: true)
+		request.sortDescriptors = [lastNameSortDescriptor, firstNameSortDescriptor]
 		
 		do {
 			persons = try context.fetch(request)

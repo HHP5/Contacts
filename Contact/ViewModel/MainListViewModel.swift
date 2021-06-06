@@ -10,7 +10,6 @@ import UIKit
 class MainListViewModel: MainListViewModelType {
 	// MARK: - Properties
 	weak var coordinator: MainCoordinatorDelegate?
-//	weak var coordinator: MainCoordinator?
 	
 	var numberOfSections: Int {
 		return collation.sectionTitles.count
@@ -53,9 +52,9 @@ class MainListViewModel: MainListViewModelType {
 	func cellForRow(at indexPath: IndexPath) -> String? {
 		var result: String?
 		let section = sections[indexPath.section]
-		if let firstName = section[indexPath.row].firstName, let lastName = section[indexPath.row].lastName {
-			result = "\(String(describing: firstName)) \(String(describing: lastName))"
-		}
+		let firstName = section[indexPath.row].firstName
+		let lastName = section[indexPath.row].lastName
+		result = "\(String(describing: firstName ?? "")) \(String(describing: lastName ?? ""))"
 		return result
 	}
 	

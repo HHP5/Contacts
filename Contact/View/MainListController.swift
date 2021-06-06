@@ -56,7 +56,7 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 		setupNavigationBar()
 		setupTable()
 		
-		print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+//		print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -84,6 +84,7 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 															target: self,
 															action: #selector(plusPressed))
 		navigationItem.searchController = searchController
+		navigationItem.hidesSearchBarWhenScrolling = true
 	}
 	
 	private func setupTable() {

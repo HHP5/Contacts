@@ -8,5 +8,5 @@
 import Foundation
 
 protocol EditContactCoordinatorDelegate: class {
-	func back()
+	func backToPreviousScreen()
 }

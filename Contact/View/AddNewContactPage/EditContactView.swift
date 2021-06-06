@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import TPKeyboardAvoiding
 
 class EditContactView: UIView {
 	
@@ -21,94 +22,31 @@ class EditContactView: UIView {
 	weak var contactImage: ContactImageDelegate?
 
 	// MARK: - IBOutlets (всегда приватные)
+	private let scroll: TPKeyboardAvoidingScrollView = {
+		let scroll = TPKeyboardAvoidingScrollView()
+		scroll.alwaysBounceVertical = true
+		scroll.alwaysBounceHorizontal = false
+		scroll.showsVerticalScrollIndicator = false
+		return scroll
+	}()
 	
 	private let firstName = TextField(type: .default, textField: .firstName)
 	private let lastName = TextField(type: .default, textField: .lastName)
-	
-	private let profileImage: UIImageView = {
-		let imageView = UIImageView(frame: .zero)
-		imageView.sizeToFit()
-		imageView.clipsToBounds = true
-		imageView.layer.borderWidth = 1
-		imageView.layer.borderColor = UIColor.gray.cgColor
-		imageView.isUserInteractionEnabled = true
-		imageView.snp.makeConstraints {$0.width.height.equalTo(Constant.heightOfCell(type: .fullName) * 2)}
-		imageView.layer.cornerRadius = CGFloat((Constant.heightOfCell(type: .fullName) ))
-		return imageView
-	}()
-	
-	private lazy var nameStackForNewContact: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [firstName, lastName])
-		stack.arrangedSubviews.forEach { $0.drawLine() }
-		stack.spacing = 20
-		stack.axis = .vertical
-		stack.distribution = .fill
-		return stack
-	}()
-	
-	private lazy var topStackForNewContact: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [profileImage, nameStackForNewContact])
-		stack.spacing = 20
-		stack.axis = .horizontal
-		stack.distribution = .fill
-		return stack
-	}()
-	
 	private let phoneNumberTextView = TextView(type: .phone)
-	private let phoneLabel: UILabel = {
-		let label = UILabel()
-		label.text = " "
-		return label
-	}()
-	private lazy var phoneStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [phoneLabel, phoneNumberTextView])
-		stack.spacing = 10
-		stack.axis = .vertical
-		stack.distribution = .fill
-		return stack
-	}()
-	
 	private let ringtoneCell = RingtoneCell()
-
-	private let notesLabel: UILabel = {
-		let label = UILabel()
-		label.text = "Notes"
-		return label
-	}()
-	
 	private let notesTextView = TextView(type: .note)
 	
-	private lazy var notesStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [notesLabel, notesTextView])
-		stack.spacing = 10
-		stack.axis = .vertical
-		stack.distribution = .fill
-		return stack
-	}()
-	
-	private lazy var detailStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [phoneStack, ringtoneCell, notesStack])
-		stack.arrangedSubviews.forEach { $0.snp.makeConstraints {$0.height.equalTo(Constant.heightOfCell(type: .detail))} }
-		stack.spacing = 10
-		stack.axis = .vertical
-		stack.distribution = .fill
-		return stack
-	}()
-	
+	private let profileImage = ProfileImage()
 	// MARK: - Init
 	
 	init() {
 		super.init(frame: .zero)
 		self.backgroundColor = .white
 		
-		self.setupForNewContact()
-		self.setupDetailStack()
+		self.setupStack()
 		self.setupDelegates()
 		self.addGestureRecognizerToProfileImage()
 		self.addGestureRecognizerToRingtoneCell()
-		
-		self.keyboardSetting()
-				
 	}
 	
 	required init?(coder: NSCoder) {
@@ -127,27 +65,15 @@ class EditContactView: UIView {
 		self.endEditing(true)
 		ringtoneCell.openPicker()
 	}
-	
-	@objc
-	private func keyboardWillHide(notification: NSNotification) {
-		self.frame.origin.y = 0
-	}
 
 	// MARK: - Public Methods
 	
 	func setImage(image: UIImage?) {
-		profileImage.image = image
+		profileImage.image = image == nil ? UIImage(named: "icon") : image
 	}
 	
 	func setRingtone(_ ringtone: String?) {
 		ringtoneCell.ringtone?.text = ringtone
-	}
-	
-	func notesPressed() {
-		self.frame.origin.y -= notesTextView.frame.maxY
-	}
-	func notesNotPressed() {
-		self.frame.origin.y = 0
 	}
 	
 	func setupModel(viewModel: ContactPageViewModelType) {
@@ -159,32 +85,10 @@ class EditContactView: UIView {
 		if let ringtone = viewModel.ringtone {
 			ringtoneCell.setName(ringtone)
 		}
-		self.profileImage.image = viewModel.image == nil ? UIImage(systemName: "icon") : viewModel.image
-	
+		setImage(image: viewModel.image)
 	}
 
 	// MARK: - Private Methods
-	
-	private func setupForNewContact() {
-		self.addSubview(topStackForNewContact)
-		
-		topStackForNewContact.snp.makeConstraints { make in
-			make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
-			make.trailing.equalToSuperview().inset(20)
-			make.leading.equalToSuperview().offset(20)
-		}
-	}
-	
-	private func setupDetailStack() {
-		self.addSubview(detailStack)
-		
-		detailStack.snp.makeConstraints { make in
-			make.top.equalTo(topStackForNewContact.snp.bottom).offset(20)
-			make.trailing.equalToSuperview()
-			make.leading.equalToSuperview().offset(20)
-		}
-	}
-
 	private func setupDelegates() {
 		self.phoneNumber = phoneNumberTextView.textView
 		self.notes = notesTextView.textView
@@ -193,6 +97,48 @@ class EditContactView: UIView {
 		
 		self.phoneNumberTextView.textViewToolBar?.toolBar = self
 		self.ringtoneCell.textViewToolBar?.toolBar = self
+		
+		profileImage.isUserInteractionEnabled = true
+	}
+	
+	private func setupStack() {
+	
+		self.addSubview(scroll)
+		
+		scroll.snp.makeConstraints { $0.edges.equalToSuperview() }
+		
+		let nameStackForNewContact = Stack(arrangedSubviews: [firstName, lastName], axis: .vertical, spacing: 20, height: nil)
+		let topStackForNewContact = Stack(arrangedSubviews: [profileImage, nameStackForNewContact],
+										  axis: .horizontal, spacing: 20, height: nil)
+		nameStackForNewContact.arrangedSubviews.forEach {$0.drawLine()}
+		
+		scroll.addSubview(topStackForNewContact)
+
+		topStackForNewContact.snp.makeConstraints { make in
+			make.top.equalToSuperview()
+			make.width.equalTo(scroll).inset(20)
+			make.leading.equalToSuperview().offset(20)
+		}
+		
+		let phoneLabel = UILabel(); phoneLabel.text = " "
+		let phoneStack = Stack(arrangedSubviews: [phoneLabel, phoneNumberTextView], axis: .vertical, spacing: 10, height: nil)
+		let notesLabel = UILabel(); notesLabel.text = "Notes"
+		let notesStack = Stack(arrangedSubviews: [notesLabel, notesTextView], axis: .vertical, spacing: 10, height: nil)
+		
+		let stack = Stack(arrangedSubviews: [phoneStack, ringtoneCell, notesStack],
+						  axis: .vertical, spacing: 20.0,
+						  height: Constant.heightOfCell(type: .detail))
+
+		scroll.addSubview(stack)
+
+		stack.snp.makeConstraints { make in
+			make.top.equalTo(lastName.snp.bottom).offset(20)
+			make.leading.equalToSuperview().offset(20)
+			make.width.equalTo(scroll).inset(20)
+		}
+		
+		scroll.tpKeyboardAvoiding_findFirstResponderBeneathView(notesTextView)
+
 	}
 	
 	private func addGestureRecognizerToProfileImage() {
@@ -203,18 +149,6 @@ class EditContactView: UIView {
 	private func addGestureRecognizerToRingtoneCell() {
 		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(triggerPickerView))
 		ringtoneCell.addGestureRecognizer(tapGesture)
-	}
-	
-	private func keyboardSetting() {
-
-		NotificationCenter.default.addObserver(self,
-											   selector: #selector(keyboardWillHide(notification:)),
-											   name: UIResponder.keyboardWillHideNotification,
-											   object: nil)
-		
-		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing(_:)))
-		tapGesture.cancelsTouchesInView = false
-		self.addGestureRecognizer(tapGesture)
 	}
 	
 }

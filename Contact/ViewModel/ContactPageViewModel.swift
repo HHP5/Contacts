@@ -34,6 +34,13 @@ class ContactPageViewModel: ContactPageViewModelType {
 		return nil
 	}
 	
+	var phoneNumberLink: NSMutableAttributedString? {
+		guard let phone = phoneNumber else { return nil }
+		let attributedString = NSMutableAttributedString(string: phone)
+		attributedString.setAsLink(text: phone, linkURL: "tel://" + phone)
+		return attributedString
+	}
+	
 	var notes: String? {
 		return contact?.notes
 	}
@@ -54,11 +61,11 @@ class ContactPageViewModel: ContactPageViewModelType {
 	func deleteContact() {
 		guard let person = contact else { return  }
 		model.deleteObject(person)
-		goBack()
+		existCoordinator?.backToMainScreen()
 	}
 	
 	func goBack() {
-		editCoordinator?.back()
+		editCoordinator?.backToPreviousScreen()
 	}
 	
 	func updateContact(firstName: String?, lastName: String?, phone: String?, ringtone: String?, notes: String?, image: Data?) {
@@ -71,7 +78,7 @@ class ContactPageViewModel: ContactPageViewModelType {
 							notes: notes ?? contact?.notes,
 							image: image ?? contact?.image)
 		
-		editCoordinator?.back()
+		editCoordinator?.backToPreviousScreen()
 	}
 	
 	func reloadData() {

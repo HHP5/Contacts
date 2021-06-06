@@ -11,63 +11,33 @@ import SnapKit
 class ExistingContactPageView: UIView {
 	
 	weak var deleteContactButton: DeleteButtonDelegate?
-	
-	private let name = UILabel()
-	
-	private let profileImage: UIImageView = {
-		let imageView = UIImageView(frame: .zero)
-		imageView.sizeToFit()
-		imageView.clipsToBounds = true
-		imageView.layer.borderWidth = 1
-		imageView.layer.borderColor = UIColor.gray.cgColor
-		imageView.isUserInteractionEnabled = true
-		imageView.snp.makeConstraints {$0.width.height.equalTo(Constant.heightOfCell(type: .fullName) * 2)}
-		imageView.layer.cornerRadius = CGFloat((Constant.heightOfCell(type: .fullName) ))
-		return imageView
-	}()
-	
-	private let phoneNumberTextField = TextView(type: .phone)
-	private let phoneNumberLabel: UILabel = {
+
+	private let name: UILabel = {
 		let label = UILabel()
-		label.text = "Phone"
+		label.textAlignment = .center
+		label.adjustsFontSizeToFitWidth = true
+		label.numberOfLines = 1 // поменяла на UILabel только из-за этого свойства
+		label.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .medium)
 		return label
 	}()
-	private lazy var phoneNumberStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [phoneNumberLabel, phoneNumberTextField])
-		phoneNumberTextField.textView.isUserInteractionEnabled = false
-		stack.spacing = 10
-		stack.axis = .vertical
-		stack.distribution = .fill
-		return stack
-	}()
+	
+	private let profileImage = ProfileImage()
+
+	private let phoneNumberTextView = TextView(type: .phone)
+	private let phoneNumberLabel = UILabel()
+	private lazy var phoneNumberStack = Stack(arrangedSubviews: [phoneNumberLabel, phoneNumberTextView],
+											  axis: .vertical, spacing: 10, height: nil)
 	
 	private let ringtoneCell = RingtoneCell()
 	
-	private let notesLabel: UILabel = {
-		let label = UILabel()
-		label.text = "Notes"
-		return label
-	}()
+	private let notesLabel = UILabel()
 	private let notesTextView = TextView(type: .note)
 	
-	private lazy var notesStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [notesLabel, notesTextView])
-		notesTextView.textView.isUserInteractionEnabled = false
-		stack.spacing = 10
-		stack.axis = .vertical
-		stack.distribution = .fill
-		return stack
-	}()
-	
-	private lazy var detailStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [phoneNumberStack, ringtoneCell, notesStack])
-		stack.arrangedSubviews.forEach { $0.snp.makeConstraints {$0.height.equalTo(Constant.heightOfCell(type: .detail))} }
-		ringtoneCell.makeUserUnenabled()
-		stack.spacing = 10
-		stack.axis = .vertical
-		stack.distribution = .fill
-		return stack
-	}()
+	private lazy var notesStack = Stack(arrangedSubviews: [notesLabel, notesTextView],
+										axis: .vertical, spacing: 10, height: nil)
+	private lazy var detailStack = Stack(arrangedSubviews: [phoneNumberStack, ringtoneCell, notesStack],
+										 axis: .vertical, spacing: 10,
+										 height: Constant.heightOfCell(type: .detail))
 
 	private let deleteButton: UIButton = {
 		let button = UIButton(frame: .zero)
@@ -91,7 +61,13 @@ class ExistingContactPageView: UIView {
 		self.setupDeleteButton()
 		self.setupDetailStack()
 		self.deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
+		self.setupUserInteractionEnabledForElement()
 		
+		self.phoneNumberLabel.text = "Phone"
+		self.notesLabel.text = "Notes"
+		
+		self.tapGestureRecognizerOnPhoneNumber()
+				
 	}
 	
 	required init?(coder: NSCoder) {
@@ -105,12 +81,27 @@ class ExistingContactPageView: UIView {
 		self.deleteContactButton?.pressed()
 	}
 	
+	@objc
+	private func call() {
+		if let phoneNumber = phoneNumberTextView.textView.text {
+			if !phoneNumber.isEmpty {
+				let formatedNumber = phoneNumber.components(separatedBy: NSCharacterSet.decimalDigits.inverted).joined(separator: "")
+				let phoneUrl = "tel://\(formatedNumber)"
+				if let url = URL(string: phoneUrl) {
+					UIApplication.shared.open(url)
+				}
+			}
+		}
+	}
+	
 	// MARK: - Public Method
 	
 	func setupModel(viewModel: ContactPageViewModelType) {
 		
 		name.text = viewModel.fullName
-		phoneNumberTextField.textView.text = viewModel.phoneNumber
+		
+		phoneNumberTextView.textView.attributedText = viewModel.phoneNumberLink
+		
 		notesTextView.textView.text = viewModel.notes
 		if let ringtone = viewModel.ringtone {
 			self.ringtoneCell.setName(ringtone)
@@ -119,6 +110,14 @@ class ExistingContactPageView: UIView {
 	}
 	
 	// MARK: - Private Methods
+	
+	private func setupUserInteractionEnabledForElement() {
+		name.isUserInteractionEnabled = false
+		phoneNumberTextView.textView.isUserInteractionEnabled = false
+		notesTextView.textView.isUserInteractionEnabled = false
+		ringtoneCell.makeUserUnenabled()
+		profileImage.isUserInteractionEnabled = false
+	}
 	
 	private func setupView() {
 		
@@ -144,15 +143,11 @@ class ExistingContactPageView: UIView {
 			make.height.equalTo(Constant.heightOfCell(type: .fullName))
 			make.leading.trailing.equalToSuperview().inset(20)
 		}
-		name.textAlignment = .center
-		name.adjustsFontSizeToFitWidth = true
-		name.numberOfLines = 1
-		name.font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .medium)
-		name.isUserInteractionEnabled = false
 		newView.snp.makeConstraints { $0.bottom.equalTo(name.snp.bottom) }
 	}
 	
 	private func setupDetailStack() {
+		
 		self.addSubview(detailStack)
 		
 		detailStack.snp.makeConstraints { make in
@@ -171,5 +166,10 @@ class ExistingContactPageView: UIView {
 			make.width.equalTo(100)
 			make.height.equalTo(50)
 		}
+	}
+	
+	private func tapGestureRecognizerOnPhoneNumber() {
+		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(call))
+		phoneNumberTextView.addGestureRecognizer(tapGesture)
 	}
 }

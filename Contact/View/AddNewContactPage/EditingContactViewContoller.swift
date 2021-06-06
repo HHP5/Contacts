@@ -83,7 +83,10 @@ class EditingContactViewContoller: UIViewController, UINavigationControllerDeleg
 	
 	private func setupView() {
 		view.addSubview(screenView)
-		screenView.snp.makeConstraints { $0.edges.equalToSuperview() }
+		screenView.snp.makeConstraints { make in
+			make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+			make.bottom.trailing.leading.equalToSuperview()
+		}
 	}
 	
 	private func setupNavigationBarForNewContact() {
@@ -122,17 +125,6 @@ extension EditingContactViewContoller: UITextViewDelegate {
 			}
 		}
 		
-	}
-	
-	func textViewDidBeginEditing(_ textView: UITextView) {
-		if let type = textView.textContentType {
-			switch type {
-			case .username:
-				screenView.notesPressed()
-			default:
-				screenView.notesNotPressed()
-			}
-		}
 	}
 	
 }

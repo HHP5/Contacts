@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		034E45CAC87F6DEB1D58B90F /* Pods_Contact.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7D35C6AE022C10D182F948F /* Pods_Contact.framework */; };
+		49403716266B3C370090F4A9 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49403715266B3C370090F4A9 /* Stack.swift */; };
+		49403718266B5ADD0090F4A9 /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49403717266B5ADD0090F4A9 /* ProfileImage.swift */; };
 		49420C5A265A23B900AFBB6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C59265A23B900AFBB6C /* AppDelegate.swift */; };
 		49420C5C265A23B900AFBB6C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C5B265A23B900AFBB6C /* SceneDelegate.swift */; };
 		49420C5E265A23B900AFBB6C /* MainListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49420C5D265A23B900AFBB6C /* MainListController.swift */; };
@@ -47,11 +48,15 @@
 		49A05B2E266A874900DB2DE4 /* EditContactCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B2D266A874900DB2DE4 /* EditContactCoordinator.swift */; };
 		49A05B30266A878400DB2DE4 /* MainCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B2F266A878400DB2DE4 /* MainCoordinatorDelegate.swift */; };
 		49A05B32266A87AC00DB2DE4 /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05B31266A87AC00DB2DE4 /* SceneCoordinator.swift */; };
+		49DBA517266BB1A700F5F876 /* NSMutableAttributedString+setAsLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DBA516266BB1A700F5F876 /* NSMutableAttributedString+setAsLink.swift */; };
+		8165CE98B62CAE38AE26B42A /* Pods_Contact.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB96BA2928BA771FA2A5BE7 /* Pods_Contact.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0950DFE3B27684A218C4F6E9 /* Pods-Contact.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contact.debug.xcconfig"; path = "Target Support Files/Pods-Contact/Pods-Contact.debug.xcconfig"; sourceTree = "<group>"; };
-		2BF19CDC40AA8C3D0FD04058 /* Pods-Contact.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contact.release.xcconfig"; path = "Target Support Files/Pods-Contact/Pods-Contact.release.xcconfig"; sourceTree = "<group>"; };
+		21CB7660E2AEFF106E22DA8B /* Pods-Contact.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contact.debug.xcconfig"; path = "Target Support Files/Pods-Contact/Pods-Contact.debug.xcconfig"; sourceTree = "<group>"; };
+		3AB96BA2928BA771FA2A5BE7 /* Pods_Contact.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Contact.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49403715266B3C370090F4A9 /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		49403717266B5ADD0090F4A9 /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
 		49420C56265A23B900AFBB6C /* Contact.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Contact.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49420C59265A23B900AFBB6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49420C5B265A23B900AFBB6C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,7 +98,8 @@
 		49A05B2D266A874900DB2DE4 /* EditContactCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditContactCoordinator.swift; sourceTree = "<group>"; };
 		49A05B2F266A878400DB2DE4 /* MainCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		49A05B31266A87AC00DB2DE4 /* SceneCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
-		D7D35C6AE022C10D182F948F /* Pods_Contact.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Contact.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49DBA516266BB1A700F5F876 /* NSMutableAttributedString+setAsLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+setAsLink.swift"; sourceTree = "<group>"; };
+		91EB5097D43218FC7F522565 /* Pods-Contact.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contact.release.xcconfig"; path = "Target Support Files/Pods-Contact/Pods-Contact.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				034E45CAC87F6DEB1D58B90F /* Pods_Contact.framework in Frameworks */,
+				8165CE98B62CAE38AE26B42A /* Pods_Contact.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,8 +117,8 @@
 		3333B9A7E25E1B2CC0C1D17D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0950DFE3B27684A218C4F6E9 /* Pods-Contact.debug.xcconfig */,
-				2BF19CDC40AA8C3D0FD04058 /* Pods-Contact.release.xcconfig */,
+				21CB7660E2AEFF106E22DA8B /* Pods-Contact.debug.xcconfig */,
+				91EB5097D43218FC7F522565 /* Pods-Contact.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -123,7 +129,7 @@
 				49420C58265A23B900AFBB6C /* Contact */,
 				49420C57265A23B900AFBB6C /* Products */,
 				3333B9A7E25E1B2CC0C1D17D /* Pods */,
-				66AE72041672A8D24A53A816 /* Frameworks */,
+				BED8B267B800736283CBA99A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -161,6 +167,8 @@
 				49420CBD265E8B0800AFBB6C /* RingtoneCell.swift */,
 				49420CA8265D139300AFBB6C /* TextView.swift */,
 				49420CB1265E33AD00AFBB6C /* TextField.swift */,
+				49403715266B3C370090F4A9 /* Stack.swift */,
+				49403717266B5ADD0090F4A9 /* ProfileImage.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -218,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				49420CAF265E314C00AFBB6C /* UIView+LineUnder.swift */,
+				49DBA516266BB1A700F5F876 /* NSMutableAttributedString+setAsLink.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -246,10 +255,10 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
-		66AE72041672A8D24A53A816 /* Frameworks */ = {
+		BED8B267B800736283CBA99A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D7D35C6AE022C10D182F948F /* Pods_Contact.framework */,
+				3AB96BA2928BA771FA2A5BE7 /* Pods_Contact.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -261,12 +270,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 49420C6D265A23BA00AFBB6C /* Build configuration list for PBXNativeTarget "Contact" */;
 			buildPhases = (
-				453678B69C48B337F055D6E1 /* [CP] Check Pods Manifest.lock */,
+				FD44567C056181CD9D06AFD0 /* [CP] Check Pods Manifest.lock */,
 				49420C52265A23B800AFBB6C /* Sources */,
 				49420C53265A23B800AFBB6C /* Frameworks */,
 				49420C54265A23B800AFBB6C /* Resources */,
 				49420C70265A2AA300AFBB6C /* ShellScript */,
-				79BDD15FC643094D4ECC947E /* [CP] Embed Pods Frameworks */,
+				7FAD349ACE5551FFE5EDE048 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -321,7 +330,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		453678B69C48B337F055D6E1 /* [CP] Check Pods Manifest.lock */ = {
+		49420C70265A2AA300AFBB6C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		7FAD349ACE5551FFE5EDE048 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Contact/Pods-Contact-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Contact/Pods-Contact-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Contact/Pods-Contact-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FD44567C056181CD9D06AFD0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -343,41 +387,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		49420C70265A2AA300AFBB6C /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-		79BDD15FC643094D4ECC947E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Contact/Pods-Contact-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Contact/Pods-Contact-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Contact/Pods-Contact-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -386,6 +395,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49A05ABA2664D37E00DB2DE4 /* ContactImageDelegate.swift in Sources */,
+				49403716266B3C370090F4A9 /* Stack.swift in Sources */,
 				49420C9E265CD6E700AFBB6C /* EditContactView.swift in Sources */,
 				49420CBA265E539400AFBB6C /* TextFieldButton.swift in Sources */,
 				494AE8952661097B00741FE5 /* ContactPageViewModel.swift in Sources */,
@@ -394,6 +404,7 @@
 				49420CA6265CFEBF00AFBB6C /* PersonalInfoType.swift in Sources */,
 				49A05B32266A87AC00DB2DE4 /* SceneCoordinator.swift in Sources */,
 				49420C78265A3F4100AFBB6C /* ContactList.swift in Sources */,
+				49DBA517266BB1A700F5F876 /* NSMutableAttributedString+setAsLink.swift in Sources */,
 				49420C8F265BD13100AFBB6C /* Constant.swift in Sources */,
 				49A05B112668BC3000DB2DE4 /* ToolBarForKeyboard.swift in Sources */,
 				49A05AB82664D36E00DB2DE4 /* DeleteButtonDelegate.swift in Sources */,
@@ -417,6 +428,7 @@
 				49420C5C265A23B900AFBB6C /* SceneDelegate.swift in Sources */,
 				49A05B2A266A86EB00DB2DE4 /* ExistContactCoordinatorDelegate.swift in Sources */,
 				49420CAD265D46F200AFBB6C /* RingtoneViewModel.swift in Sources */,
+				49403718266B5ADD0090F4A9 /* ProfileImage.swift in Sources */,
 				49A05B30266A878400DB2DE4 /* MainCoordinatorDelegate.swift in Sources */,
 				49420CB0265E314C00AFBB6C /* UIView+LineUnder.swift in Sources */,
 				49A05AB62664D35300DB2DE4 /* RingtoneViewModelType.swift in Sources */,
@@ -547,7 +559,7 @@
 		};
 		49420C6E265A23BA00AFBB6C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0950DFE3B27684A218C4F6E9 /* Pods-Contact.debug.xcconfig */;
+			baseConfigurationReference = 21CB7660E2AEFF106E22DA8B /* Pods-Contact.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -567,7 +579,7 @@
 		};
 		49420C6F265A23BA00AFBB6C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2BF19CDC40AA8C3D0FD04058 /* Pods-Contact.release.xcconfig */;
+			baseConfigurationReference = 91EB5097D43218FC7F522565 /* Pods-Contact.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -27,6 +27,7 @@ class ExistingContactPageController: UIViewController {
 
 		self.setupNavigationBar()
 		self.screenView.deleteContactButton = self
+		
     }
 	
 	override func viewWillAppear(_ animated: Bool) {

@@ -9,4 +9,5 @@ import Foundation
 
 protocol ExistContactCoordinatorDelegate: class {
 	func edit(contact: Person?)
+	func backToMainScreen()
 }

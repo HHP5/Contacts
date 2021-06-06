@@ -12,6 +12,7 @@ class TextView: UIView {
 	weak var textViewToolBar: ToolBarForKeyboard?
 	
 	let textView = UITextView()
+	
 	private var type: TextViewType
 	private var accessoryView = ToolBarForKeyboard(type: .phone)
 
@@ -51,4 +52,3 @@ class TextView: UIView {
 		self.drawLine()
 	}
 }
-

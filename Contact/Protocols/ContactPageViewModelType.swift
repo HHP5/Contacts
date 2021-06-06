@@ -12,6 +12,7 @@ protocol ContactPageViewModelType {
 	var lastName: String? {get}
 	var fullName: String {get}
 	var phoneNumber: String? {get}
+	var phoneNumberLink: NSMutableAttributedString? {get}
 	var notes: String? {get}
 	var ringtone: String? {get}
 	var image: UIImage? {get}

@@ -35,10 +35,18 @@ class ExistingContactCoordinator: Coordinator {
 		childCoordinators.append(coordinator)
 		coordinator.start()
 	}
+	
+	private func finish() {
+		navigationController.popViewController(animated: true)
+	}
 }
 
 extension ExistingContactCoordinator: ExistContactCoordinatorDelegate {
 	func edit(contact: Person?) {
 		navigationToEditingPage()
+	}
+	
+	func backToMainScreen() {
+		finish()
 	}
 }
