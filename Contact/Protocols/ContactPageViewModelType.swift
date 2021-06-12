@@ -8,17 +8,19 @@
 import UIKit
 
 protocol ContactPageViewModelType {
-	var firstName: String? {get}
-	var lastName: String? {get}
-	var fullName: String {get}
-	var phoneNumber: String? {get}
+
+	var contactModel: ContactModelType? {get}
 	var phoneNumberLink: NSMutableAttributedString? {get}
-	var notes: String? {get}
-	var ringtone: String? {get}
-	var image: UIImage? {get}
 	func deleteContact()
-	func updateContact(firstName: String?, lastName: String?, phone: String?, ringtone: String?, notes: String?, image: Data?)
+	func updateContact()
 	func reloadData()
 	func editContact()
 	func goBack()
+	
+	func addNotes(_ notes: String?)
+	func addPhoneNumber(_ phone: String?)
+	func addFirstName(_ name: String?)
+	func addLastName(_ name: String?)
+	func addRingtone(_ ringtone: String?)
+	func addImage(_ image: Data?)
 }

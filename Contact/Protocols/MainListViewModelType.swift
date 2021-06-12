@@ -17,6 +17,6 @@ protocol MainListViewModelType {
 	func search(for text: String)
 	func cancelSearch()
 	func didSelectContact(at indexPath: IndexPath)
-	func emptyContact() 
+	func createNewContact() 
 	func reloadData()
 }

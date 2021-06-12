@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol DeleteButtonDelegate: class {
-	func pressed()
+protocol ExistingContactPageViewDelegate: class {
+	func existingContactPageViewDeleteButtonPressed(_ view: ExistingContactPageView)
 }

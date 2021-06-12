@@ -17,13 +17,6 @@ class EditingContactViewContoller: UIViewController, UINavigationControllerDeleg
 	private var imagePicker: UIImagePickerController?
 	private let screenView: EditContactView
 	
-	private var firstName: String?
-	private var lastName: String?
-	private var phoneNumber: String?
-	private var ringtone: String?
-	private var notes: String?
-	private var image: Data?
-	
 	private var isDonePressed: Bool = false
 	
 	// MARK: - Init
@@ -32,6 +25,7 @@ class EditingContactViewContoller: UIViewController, UINavigationControllerDeleg
 		self.viewModel = viewModel
 		self.ringtoneModel = RingtoneViewModel()
 		self.screenView = EditContactView()
+
 		super.init(nibName: nil, bundle: nil)
 		
 		self.screenView.setupModel(viewModel: viewModel)
@@ -59,18 +53,14 @@ class EditingContactViewContoller: UIViewController, UINavigationControllerDeleg
 		
 		self.isDonePressed = false
 	}
+
 	// MARK: - Actions (@ojbc + @IBActions)
 	
 	@objc
 	private func donePressed() {
 		screenView.endEditing(true)
 		if !isDonePressed {
-			viewModel.updateContact(firstName: self.firstName,
-									 lastName: self.lastName,
-									 phone: self.phoneNumber,
-									 ringtone: self.ringtone,
-									 notes: self.notes,
-									 image: self.image)
+			viewModel.updateContact()
 			self.isDonePressed = true
 		}
 	}
@@ -117,14 +107,13 @@ extension EditingContactViewContoller: UITextViewDelegate {
 		if let type = textView.textContentType {
 			switch type {
 			case .username:
-				self.notes = textView.text
+				self.viewModel.addNotes(textView.text)
 			case .telephoneNumber:
-				self.phoneNumber = textView.text
+				self.viewModel.addPhoneNumber(textView.text)
 			default:
 				return
 			}
 		}
-		
 	}
 	
 }
@@ -149,9 +138,9 @@ extension EditingContactViewContoller: UITextFieldDelegate {
 		if let type = textField.textContentType {
 			switch type {
 			case .familyName:
-				self.lastName = textField.text
+				self.viewModel.addLastName(textField.text)
 			case .name:
-				self.firstName = textField.text
+				self.viewModel.addFirstName(textField.text)
 			default:
 				return
 			}
@@ -176,15 +165,14 @@ extension EditingContactViewContoller: UIPickerViewDelegate, UIPickerViewDataSou
 	
 	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 		screenView.setRingtone(ringtoneModel.row(at: row))
-		self.ringtone = ringtoneModel.row(at: row)
+		self.viewModel.addRingtone(ringtoneModel.row(at: row))
 	}
 }
 
 // MARK: - ProfileImageDelegate
 
-extension EditingContactViewContoller: ContactImageDelegate, UIImagePickerControllerDelegate {
-	
-	func press() {
+extension EditingContactViewContoller: EditContactViewDelegate, UIImagePickerControllerDelegate {
+	func editContactViewImageViewPressed(_ view: EditContactView) {
 		let alert = UIAlertController(title: "Photo", message: nil, preferredStyle: .actionSheet)
 		let fromGallery = UIAlertAction(title: "Choose photo", style: .default, handler: { [weak self] _ in
 			self?.setupImagePicker(for: .photoLibrary)
@@ -215,7 +203,7 @@ extension EditingContactViewContoller: ContactImageDelegate, UIImagePickerContro
 	func imagePickerController(_ picker: UIImagePickerController,
 							   didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 		if let userPickedImage = info[.originalImage] as? UIImage {
-			self.image = userPickedImage.jpegData(compressionQuality: 0.5)
+			self.viewModel.addImage(userPickedImage.jpegData(compressionQuality: 0.5))
 			screenView.setImage(image: userPickedImage)
 		}
 		picker.dismiss(animated: true, completion: nil)

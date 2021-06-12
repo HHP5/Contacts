@@ -8,103 +8,78 @@
 import UIKit
 
 class ContactPageViewModel: ContactPageViewModelType {
-	weak var existCoordinator: ExistContactCoordinatorDelegate?
-	weak var editCoordinator: EditContactCoordinatorDelegate?
-	
-	private var contact: Person?
-	private var model = ContactList()
-	
-	var firstName: String? {
-		return contact?.firstName
-	}
-	
-	var lastName: String? {
-		return contact?.lastName
-	}
-	
-	var fullName: String {
-		let result = "\(String(describing: self.firstName ?? "")) \(String(describing: self.lastName ?? ""))"
-		return result
-	}
-	
-	var phoneNumber: String? {
-		if let phone = contact?.phone {
-			return phoneNumberFormat(with: "+X (XXX) XXX-XXXX", phone: phone)
-		}
-		return nil
-	}
+
+	weak var delegate: ContactPageViewModelDelegate?
+
+	var contactModel: ContactModelType?
+	private var editingContact: Contact
 	
 	var phoneNumberLink: NSMutableAttributedString? {
-		guard let phone = phoneNumber else { return nil }
+		guard let phone = contactModel?.contact.phoneNumber else { return nil }
 		let attributedString = NSMutableAttributedString(string: phone)
 		attributedString.setAsLink(text: phone, linkURL: "tel://" + phone)
 		return attributedString
 	}
-	
-	var notes: String? {
-		return contact?.notes
-	}
-	
-	var ringtone: String? {
-		return contact?.ringtone
-	}
-	
-	var image: UIImage? {
-		guard let data = contact?.image, let img = UIImage(data: data) else { return nil }
-		return img
-	}
-	
-	init(contact: Person?) {
-		self.contact = contact
+
+	init(contact: ContactModelType?) {
+		self.contactModel = contact
+		self.editingContact = Contact(person: contact?.contact.person,
+									  firstName: nil, lastName: nil,
+									  phoneNumber: nil, notes: nil,
+									  ringtone: nil, image: nil)
 	}
 	
 	func deleteContact() {
-		guard let person = contact else { return  }
-		model.deleteObject(person)
-		existCoordinator?.backToMainScreen()
+		if let contact = contactModel {
+			contact.delete(contact.contact)
+			delegate?.сontactPageViewModelDidRequestGoBack(self)
+		}
 	}
 	
 	func goBack() {
-		editCoordinator?.backToPreviousScreen()
+		delegate?.сontactPageViewModelDidRequestGoBack(self)
 	}
 	
-	func updateContact(firstName: String?, lastName: String?, phone: String?, ringtone: String?, notes: String?, image: Data?) {
-		
-		model.updateContact(person: contact ?? nil,
-							firstName: firstName ?? contact?.firstName,
-							lastName: lastName ?? contact?.lastName,
-							phone: phone ?? contact?.phone,
-							ringtone: ringtone ?? contact?.ringtone,
-							notes: notes ?? contact?.notes,
-							image: image ?? contact?.image)
-		
-		editCoordinator?.backToPreviousScreen()
+	func updateContact() {
+		if contactModel == nil {
+			let contact = ContactModel(contact: editingContact)
+			contact.updateContact(with: editingContact)
+		} else {
+			contactModel?.updateContact(with: editingContact)
+
+		}
+		delegate?.сontactPageViewModelDidRequestGoBack(self)
 	}
-	
+
 	func reloadData() {
-		guard let contact = contact else { return }
-		self.contact = model.getUpdatedInformation(for: contact)
+		guard let contactModel = contactModel else { return }
+		
+		if let updatedContact = contactModel.getUpdatedInformation(for: contactModel.contact) {
+			self.contactModel?.contact = updatedContact
+		}
+		
 	}
 	
 	func editContact() {
-		existCoordinator?.edit(contact: contact)
+		delegate?.сontactPageViewModel(self)
 	}
 	
-	private func phoneNumberFormat(with mask: String, phone: String) -> String {
-		let numbers = phone.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
-		var result = ""
-		var index = numbers.startIndex 
-		
-		for char in mask where index < numbers.endIndex {
-			if char == "X" {
-				result.append(numbers[index])
-				
-				index = numbers.index(after: index)
-				
-			} else {
-				result.append(char)
-			}
-		}
-		return result
+	func addNotes(_ notes: String?) {
+		self.editingContact.notes = notes
+	}
+	func addPhoneNumber(_ phone: String?) {
+		self.editingContact.phoneNumber = phone
+	}
+	func addFirstName(_ name: String?) {
+		self.editingContact.firstName = name
+	}
+	func addLastName(_ name: String?) {
+		self.editingContact.lastName = name
+	}
+	func addRingtone(_ ringtone: String?) {
+		self.editingContact.ringtone = ringtone
+	}
+	func addImage(_ image: Data?) {
+		self.editingContact.image = image
 	}
 }

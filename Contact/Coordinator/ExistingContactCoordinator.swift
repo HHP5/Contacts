@@ -9,12 +9,13 @@ import UIKit
 
 class ExistingContactCoordinator: Coordinator {
 	
-	var childCoordinators: [Coordinator] = []
+	var childCoordinators = [Coordinator]()
 	
-	private var contact: Person?
+	private var contact: ContactModelType?
 	var navigationController: UINavigationController
+	weak var parentCoordinator: Coordinator?
 	
-	init(contact: Person?, navigationController: UINavigationController) {
+	init(contact: ContactModelType?, navigationController: UINavigationController) {
 		self.contact = contact
 		self.navigationController = navigationController
 	}
@@ -25,28 +26,25 @@ class ExistingContactCoordinator: Coordinator {
 	
 	private func showContact() {
 		let viewModel = ContactPageViewModel(contact: contact)
-		viewModel.existCoordinator = self
+		viewModel.delegate = self
 		let viewController = ExistingContactPageController(viewModel: viewModel)
 		navigationController.pushViewController(viewController, animated: true)
 	}
 	
 	private func navigationToEditingPage() {
 		let coordinator = EditingContactCoordinator(contact: contact, navigationController: navigationController)
-		childCoordinators.append(coordinator)
+		coordinator.parentCoordinator = self
 		coordinator.start()
-	}
-	
-	private func finish() {
-		navigationController.popViewController(animated: true)
+		childCoordinators.append(coordinator)
 	}
 }
 
-extension ExistingContactCoordinator: ExistContactCoordinatorDelegate {
-	func edit(contact: Person?) {
+extension ExistingContactCoordinator: ContactPageViewModelDelegate {
+	func сontactPageViewModel(_ viewModel: ContactPageViewModel) {
 		navigationToEditingPage()
 	}
 	
-	func backToMainScreen() {
-		finish()
+	func сontactPageViewModelDidRequestGoBack(_ viewModel: ContactPageViewModel) {
+		parentCoordinator?.childDidFinish(self)
 	}
 }

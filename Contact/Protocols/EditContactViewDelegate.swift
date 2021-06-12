@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol ContactImageDelegate: class {
-	func press()
+protocol EditContactViewDelegate: class {
+	func editContactViewImageViewPressed(_ view: EditContactView)
 }

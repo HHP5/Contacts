@@ -9,12 +9,12 @@ import UIKit
 import SnapKit
 
 class TextView: UIView {
-	weak var textViewToolBar: ToolBarForKeyboard?
+	weak var textViewToolBar: KeyboardToolBar?
 	
 	let textView = UITextView()
 	
 	private var type: TextViewType
-	private var accessoryView = ToolBarForKeyboard(type: .phone)
+	private var accessoryView = KeyboardToolBar(type: .phone)
 
 	init(type: TextViewType) {
 		self.type = type

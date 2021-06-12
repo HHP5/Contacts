@@ -23,7 +23,6 @@ class SceneCoordinator: Coordinator {
 	func start() {
 		let coordinator = MainCoordinator(navigationController: navigationController)
 		childCoordinators.append(coordinator)
-		coordinator.start()
-		
+		coordinator.start()		
 	}
 }

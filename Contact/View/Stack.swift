@@ -16,11 +16,20 @@ class Stack: UIView {
 	var axis: NSLayoutConstraint.Axis
 	private var stack = UIStackView()
 	
-	init(arrangedSubviews: [UIView], axis: NSLayoutConstraint.Axis, spacing: CGFloat, height: Int?) {
+	init(arrangedSubviews: [UIView], axis: NSLayoutConstraint.Axis, spacing: CGFloat, height: PersonalInfoType?) {
 		self.arrangedSubviews = arrangedSubviews
 		self.spacing = spacing
 		self.axis = axis
-		self.height = height
+		
+		switch height {
+		case .detail:
+			self.height = 70
+		case .fullName:
+			self.height = 50
+		default:
+			break
+		}
+		
 		super.init(frame: .zero)
 		
 		self.setupStack()

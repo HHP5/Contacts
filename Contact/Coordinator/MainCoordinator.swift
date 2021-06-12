@@ -21,32 +21,32 @@ class MainCoordinator: Coordinator {
 	
 	private func showContactList() {
 		let viewModel = MainListViewModel()
-		viewModel.coordinator = self
+		viewModel.delegate = self
 		let viewController = MainListController(viewModel: viewModel)
 		navigationController.viewControllers = [viewController]
 	}
 
-	private func navigateToExistingContact(_ contact: Person?) {
-		let coordinator = ExistingContactCoordinator(contact: contact, navigationController: navigationController)
+	private func navigateToExistingContact(_ contact: Contact) {
+		let coordinator = ExistingContactCoordinator(contact:  ContactModel(contact: contact), navigationController: navigationController)
+		coordinator.parentCoordinator = self
 		childCoordinators.append(coordinator)
 		coordinator.start()
 
 	}
 	
-	private func navigateToEditingContact(_ contact: Person?) {
-		let coordinator = EditingContactCoordinator(contact: contact, navigationController: navigationController)
+	private func navigateToEditingContact() {
+		let coordinator = EditingContactCoordinator(contact: nil, navigationController: navigationController)
+		coordinator.parentCoordinator = self
 		childCoordinators.append(coordinator)
 		coordinator.start()
 	}
 }
 
-extension MainCoordinator: MainCoordinatorDelegate {
-	func contactsListViewModel(didSelect contact: Person?, type: ContactDetailPageType) {
-		switch type {
-		case .existing:
-			navigateToExistingContact(contact)
-		case .editing:
-			navigateToEditingContact(contact)
-		}
+extension MainCoordinator: MainListViewModelDelegate {
+	func mainListViewModel(_ viewModel: MainListViewModel, didSelect contact: Contact) {
+		navigateToExistingContact(contact)
+	}
+	func сontactPageViewModelDidRequestCreateContact(_ viewModel: MainListViewModel) {
+		navigateToEditingContact()
 	}
 }

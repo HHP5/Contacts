@@ -33,7 +33,9 @@ class ExistingContactPageController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
+		self.viewModel.reloadData()
 		self.screenView.setupModel(viewModel: viewModel)
+
 	}
     
 	override func loadView() {
@@ -53,8 +55,9 @@ class ExistingContactPageController: UIViewController {
 	}
 }
 
-extension ExistingContactPageController: DeleteButtonDelegate {
-	func pressed() {
+extension ExistingContactPageController: ExistingContactPageViewDelegate {
+	func existingContactPageViewDeleteButtonPressed(_ view: ExistingContactPageView) {
 		viewModel.deleteContact()
 	}
+
 }

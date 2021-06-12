@@ -7,8 +7,10 @@
 
 import UIKit
 
-class ProfileImage: UIImageView {
+class ProfileImageView: UIImageView {
 
+	let height: CGFloat = 50
+	
 	init() {
 		super.init(frame: .zero)
 		
@@ -16,8 +18,8 @@ class ProfileImage: UIImageView {
 		self.clipsToBounds = true
 		self.layer.borderWidth = 1
 		self.layer.borderColor = UIColor.gray.cgColor
-		self.snp.makeConstraints {$0.width.height.equalTo(Constant.heightOfCell(type: .fullName) * 2)}
-		self.layer.cornerRadius = CGFloat((Constant.heightOfCell(type: .fullName) ))
+		self.snp.makeConstraints {$0.width.height.equalTo( height * 2)}
+		self.layer.cornerRadius = height
 		self.image = UIImage(named: "icon")
 	}
 	

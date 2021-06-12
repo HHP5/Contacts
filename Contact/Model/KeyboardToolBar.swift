@@ -7,12 +7,18 @@
 
 import UIKit
 
-class ToolBarForKeyboard {
-	weak var toolBar: TextViewButtonPressedDelegate?
+class KeyboardToolBar: UIToolbar {
+	weak var toolBarDelegate: ToolBarForKeyboardDelegate?
 	private var type: ToolBarViewType
 	
 	init(type: ToolBarViewType) {
 		self.type = type
+		
+		super.init(frame: .zero)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
 	}
 	
 	func setToolBar() -> UIToolbar {
@@ -39,9 +45,9 @@ class ToolBarForKeyboard {
 		if let title = sender.title {
 			switch title { 
 			case TextViewButton.done.rawValue:
-				self.toolBar?.didPressButton(button: .done, toolBarFor: type)
+				toolBarDelegate?.toolBarForKeyboard(self, didPress: .done, with: type)
 			case TextViewButton.next.rawValue:
-				self.toolBar?.didPressButton(button: .next, toolBarFor: type)
+				toolBarDelegate?.toolBarForKeyboard(self, didPress: .next, with: type)
 			default:
 				return
 			}

@@ -12,14 +12,14 @@ import TPKeyboardAvoiding
 class EditContactView: UIView {
 	
 	var textFields: (firstName: UITextField, lastName: UITextField) {
-		return (firstName: firstName.textField, lastName: lastName.textField)
+		return (firstName: firstNameTextField.textField, lastName: lastNameTextField.textField)
 	}
 	
 	weak var phoneNumber: UITextView?
 	weak var notes: UITextView?
 	weak var ringtone: RingtoneCell?
 	weak var ringtonePicker: UIPickerView?
-	weak var contactImage: ContactImageDelegate?
+	weak var contactImage: EditContactViewDelegate?
 
 	// MARK: - IBOutlets (всегда приватные)
 	private let scroll: TPKeyboardAvoidingScrollView = {
@@ -30,13 +30,13 @@ class EditContactView: UIView {
 		return scroll
 	}()
 	
-	private let firstName = TextField(type: .default, textField: .firstName)
-	private let lastName = TextField(type: .default, textField: .lastName)
+	private let firstNameTextField = TextField(type: .default, textField: .firstName)
+	private let lastNameTextField = TextField(type: .default, textField: .lastName)
 	private let phoneNumberTextView = TextView(type: .phone)
 	private let ringtoneCell = RingtoneCell()
 	private let notesTextView = TextView(type: .note)
 	
-	private let profileImage = ProfileImage()
+	private let profileImage = ProfileImageView()
 	// MARK: - Init
 	
 	init() {
@@ -57,7 +57,7 @@ class EditContactView: UIView {
 	
 	@objc
 	private func profileImageTapped(sender: UITapGestureRecognizer) {
-		self.contactImage?.press()
+		contactImage?.editContactViewImageViewPressed(self)
 	}
 	
 	@objc
@@ -77,15 +77,19 @@ class EditContactView: UIView {
 	}
 	
 	func setupModel(viewModel: ContactPageViewModelType) {
-		
-		firstName.textField.text = viewModel.firstName
-		lastName.textField.text = viewModel.lastName
-		phoneNumberTextView.textView.text = viewModel.phoneNumber
-		notesTextView.textView.text = viewModel.notes
-		if let ringtone = viewModel.ringtone {
+		guard let contact = viewModel.contactModel?.contact else { return }
+
+		firstNameTextField.textField.text = contact.firstName
+		lastNameTextField.textField.text = contact.lastName
+		phoneNumberTextView.textView.text = contact.phoneNumber
+		notesTextView.textView.text = contact.notes
+		if let ringtone = contact.ringtone {
 			ringtoneCell.setName(ringtone)
 		}
-		setImage(image: viewModel.image)
+		if let image = contact.image {
+			setImage(image: UIImage(data: image))
+		}
+		
 	}
 
 	// MARK: - Private Methods
@@ -95,8 +99,8 @@ class EditContactView: UIView {
 		self.ringtone = ringtoneCell
 		self.ringtonePicker = ringtoneCell.picker
 		
-		self.phoneNumberTextView.textViewToolBar?.toolBar = self
-		self.ringtoneCell.textViewToolBar?.toolBar = self
+		self.phoneNumberTextView.textViewToolBar?.toolBarDelegate = self
+		self.ringtoneCell.textViewToolBar?.toolBarDelegate = self
 		
 		profileImage.isUserInteractionEnabled = true
 	}
@@ -107,7 +111,8 @@ class EditContactView: UIView {
 		
 		scroll.snp.makeConstraints { $0.edges.equalToSuperview() }
 		
-		let nameStackForNewContact = Stack(arrangedSubviews: [firstName, lastName], axis: .vertical, spacing: 20, height: nil)
+		let nameStackForNewContact = Stack(arrangedSubviews: [firstNameTextField, lastNameTextField],
+										   axis: .vertical, spacing: 20, height: nil)
 		let topStackForNewContact = Stack(arrangedSubviews: [profileImage, nameStackForNewContact],
 										  axis: .horizontal, spacing: 20, height: nil)
 		nameStackForNewContact.arrangedSubviews.forEach {$0.drawLine()}
@@ -121,18 +126,20 @@ class EditContactView: UIView {
 		}
 		
 		let phoneLabel = UILabel(); phoneLabel.text = " "
-		let phoneStack = Stack(arrangedSubviews: [phoneLabel, phoneNumberTextView], axis: .vertical, spacing: 10, height: nil)
+		let phoneStack = Stack(arrangedSubviews: [phoneLabel, phoneNumberTextView],
+							   axis: .vertical, spacing: 10, height: nil)
 		let notesLabel = UILabel(); notesLabel.text = "Notes"
-		let notesStack = Stack(arrangedSubviews: [notesLabel, notesTextView], axis: .vertical, spacing: 10, height: nil)
+		let notesStack = Stack(arrangedSubviews: [notesLabel, notesTextView],
+							   axis: .vertical, spacing: 10, height: nil)
 		
 		let stack = Stack(arrangedSubviews: [phoneStack, ringtoneCell, notesStack],
 						  axis: .vertical, spacing: 20.0,
-						  height: Constant.heightOfCell(type: .detail))
+						  height: .detail)
 
 		scroll.addSubview(stack)
 
 		stack.snp.makeConstraints { make in
-			make.top.equalTo(lastName.snp.bottom).offset(20)
+			make.top.equalTo(lastNameTextField.snp.bottom).offset(20)
 			make.leading.equalToSuperview().offset(20)
 			make.width.equalTo(scroll).inset(20)
 		}
@@ -153,13 +160,13 @@ class EditContactView: UIView {
 	
 }
 
-extension EditContactView: TextViewButtonPressedDelegate {
-	func didPressButton(button: TextViewButton, toolBarFor: ToolBarViewType) {
+extension EditContactView: ToolBarForKeyboardDelegate {
+	func toolBarForKeyboard(_ toolBar: KeyboardToolBar, didPress button: TextViewButton, with type: ToolBarViewType) {
 		switch button {
 		case .done:
 			self.endEditing(true)
 		case .next:
-			switch toolBarFor {
+			switch type {
 			case .phone:
 				ringtoneCell.openPicker()
 			case .ringtone:

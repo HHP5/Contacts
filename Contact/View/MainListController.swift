@@ -9,7 +9,6 @@ import SnapKit
 
 class MainListController: UIViewController, UISearchControllerDelegate {
 	// MARK: - Properties
-//	weak var coordinator: MainCoordinator?
 
 	private var viewModel: MainListViewModelType
 	private let table: UITableView = {
@@ -56,7 +55,6 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 		setupNavigationBar()
 		setupTable()
 		
-//		print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -66,13 +64,11 @@ class MainListController: UIViewController, UISearchControllerDelegate {
 		table.reloadData()
 		
 	}
-	
-	// MARK: - Public Methods
-	
+		
 	// MARK: - Actions (@ojbc + @IBActions)
 	@objc
 	private func plusPressed() {
-		viewModel.emptyContact()
+		viewModel.createNewContact()
 	}
 	// MARK: - Private Methods
 	

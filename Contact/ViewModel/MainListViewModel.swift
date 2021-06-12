@@ -9,7 +9,7 @@ import UIKit
 
 class MainListViewModel: MainListViewModelType {
 	// MARK: - Properties
-	weak var coordinator: MainCoordinatorDelegate?
+	weak var delegate: MainListViewModelDelegate?
 	
 	var numberOfSections: Int {
 		return collation.sectionTitles.count
@@ -19,21 +19,18 @@ class MainListViewModel: MainListViewModelType {
 		return collation.sectionIndexTitles
 	}
 	
-	private var contactList: [Person] = []
+	private var contactList: [Contact] = []
 	
-	private var fullContactList: [Person] = []
+	private var fullContactList: [Contact] = []
 	
-	private var model = ContactList()
 	private let collation = UILocalizedIndexedCollation.current()
-	private var sections: [[Person]] = []
+	private var sections: [[Contact]] = []
 	// MARK: - Init
 
 	init() {
-		self.fullContactList = model.getContactList()
+		self.fullContactList = FullContactList().fullContactList
 		self.contactList = self.fullContactList
 		self.setupSection(with: fullContactList)
-		
-//		self.model.deleteAllData()
 	}
 	// MARK: - Public Methods
 
@@ -59,7 +56,7 @@ class MainListViewModel: MainListViewModelType {
 	}
 	
 	func search(for text: String) {
-		let result: [Person] = fullContactList.filter { contact in
+		let result: [Contact] = fullContactList.filter { contact in
 			let byFirstName = contact.firstName?.lowercased().contains(text) ?? false
 			let byLastName = contact.lastName?.lowercased().contains(text) ?? false
 			return byLastName || byFirstName
@@ -74,26 +71,26 @@ class MainListViewModel: MainListViewModelType {
 	func didSelectContact(at indexPath: IndexPath) {
 		let section = sections[indexPath.section]
 		let contact = section[indexPath.row]
-		coordinator?.contactsListViewModel(didSelect: contact, type: .existing)
+		delegate?.mainListViewModel(self, didSelect: contact)
 	}
 
-	func emptyContact() {
-		coordinator?.contactsListViewModel(didSelect: nil, type: .editing)
+	func createNewContact() {
+
+		delegate?.сontactPageViewModelDidRequestCreateContact(self)
 	}
 	
 	func reloadData() {
-		self.fullContactList = model.getContactList()
+		self.fullContactList = FullContactList().fullContactList
 		self.setupSection(with: fullContactList)
 	}
 	// MARK: - Private Methods
 
-	private func setupSection(with contactList: [Person]) {
-		let selector: Selector = Selector(Constant.selectorForSection)
-		self.sections = [[Person]](repeating: [], count: collation.sectionTitles.count)
-		
-		for name in contactList {
-			let sectionNumber = collation.section(for: name, collationStringSelector: selector)
-			sections[sectionNumber].append(name)
+	private func setupSection(with contactList: [Contact]) {
+		self.sections = [[Contact]](repeating: [], count: collation.sectionTitles.count)
+
+		for contact in contactList {
+			let sectionNumber = collation.section(for: contact, collationStringSelector: #selector(getter: Contact.lastName))
+			sections[sectionNumber].append(contact)
 		}
 	}
 }

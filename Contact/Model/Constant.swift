@@ -7,23 +7,6 @@
 
 import Foundation
 
-struct Constant {
-	static let selectorForSection = "lastName"
+class Constant {
 	static let identifierForCell = "cell"
-	static func heightOfCell(type: PersonalInfoType) -> Int {
-		switch type {
-		case .detail:
-			return 70
-		case .fullName:
-			return 50
-		}
-	}
-	static func tableCell(type: PersonalInfoType) -> String {
-		switch type {
-		case .detail:
-			return "detailCell"
-		case .fullName:
-			return "fullNameCell"
-		}
-	}
 }

@@ -11,9 +11,9 @@ import SnapKit
 class RingtoneCell: UIView {
 	weak var ringtone: UITextField?
 	weak var picker: UIPickerView?
-	weak var textViewToolBar: ToolBarForKeyboard?
+	weak var textViewToolBar: KeyboardToolBar?
 
-	private var accessoryView = ToolBarForKeyboard(type: .ringtone)
+	private var accessoryView = KeyboardToolBar(type: .ringtone)
 
 	private let name = UILabel()
 	private let ringtoneTextField = UITextField()

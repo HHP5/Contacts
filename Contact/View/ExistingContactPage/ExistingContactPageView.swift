@@ -10,9 +10,9 @@ import SnapKit
 
 class ExistingContactPageView: UIView {
 	
-	weak var deleteContactButton: DeleteButtonDelegate?
+	weak var deleteContactButton: ExistingContactPageViewDelegate?
 
-	private let name: UILabel = {
+	private let nameLabel: UILabel = {
 		let label = UILabel()
 		label.textAlignment = .center
 		label.adjustsFontSizeToFitWidth = true
@@ -21,7 +21,7 @@ class ExistingContactPageView: UIView {
 		return label
 	}()
 	
-	private let profileImage = ProfileImage()
+	private let profileImageView = ProfileImageView()
 
 	private let phoneNumberTextView = TextView(type: .phone)
 	private let phoneNumberLabel = UILabel()
@@ -37,7 +37,7 @@ class ExistingContactPageView: UIView {
 										axis: .vertical, spacing: 10, height: nil)
 	private lazy var detailStack = Stack(arrangedSubviews: [phoneNumberStack, ringtoneCell, notesStack],
 										 axis: .vertical, spacing: 10,
-										 height: Constant.heightOfCell(type: .detail))
+										 height: .detail)
 
 	private let deleteButton: UIButton = {
 		let button = UIButton(frame: .zero)
@@ -67,7 +67,6 @@ class ExistingContactPageView: UIView {
 		self.notesLabel.text = "Notes"
 		
 		self.tapGestureRecognizerOnPhoneNumber()
-				
 	}
 	
 	required init?(coder: NSCoder) {
@@ -78,7 +77,7 @@ class ExistingContactPageView: UIView {
 	
 	@objc
 	private func deleteButtonPressed() {
-		self.deleteContactButton?.pressed()
+		deleteContactButton?.existingContactPageViewDeleteButtonPressed(self)
 	}
 	
 	@objc
@@ -97,26 +96,30 @@ class ExistingContactPageView: UIView {
 	// MARK: - Public Method
 	
 	func setupModel(viewModel: ContactPageViewModelType) {
+		guard let contact = viewModel.contactModel?.contact else { return }
 		
-		name.text = viewModel.fullName
-		
+		nameLabel.text = viewModel.contactModel?.fullName()
 		phoneNumberTextView.textView.attributedText = viewModel.phoneNumberLink
 		
-		notesTextView.textView.text = viewModel.notes
-		if let ringtone = viewModel.ringtone {
+		notesTextView.textView.text = contact.notes
+		if let ringtone = contact.ringtone {
 			self.ringtoneCell.setName(ringtone)
 		}
-		self.profileImage.image = viewModel.image == nil ? UIImage(named: "icon") : viewModel.image
+		guard let image = contact.image else {
+			self.profileImageView.image = UIImage(named: "icon")
+			return
+		}
+		self.profileImageView.image = UIImage(data: image)
 	}
 	
 	// MARK: - Private Methods
 	
 	private func setupUserInteractionEnabledForElement() {
-		name.isUserInteractionEnabled = false
+		nameLabel.isUserInteractionEnabled = false
 		phoneNumberTextView.textView.isUserInteractionEnabled = false
 		notesTextView.textView.isUserInteractionEnabled = false
 		ringtoneCell.makeUserUnenabled()
-		profileImage.isUserInteractionEnabled = false
+		profileImageView.isUserInteractionEnabled = false
 	}
 	
 	private func setupView() {
@@ -129,21 +132,21 @@ class ExistingContactPageView: UIView {
 			make.top.leading.trailing.equalToSuperview()
 		}
 		
-		newView.addSubview(profileImage)
+		newView.addSubview(profileImageView)
 		
-		profileImage.snp.makeConstraints { make in
+		profileImageView.snp.makeConstraints { make in
 			make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
 			make.centerX.equalToSuperview()
 		}
 		
-		newView.addSubview(name)
+		newView.addSubview(nameLabel)
 		
-		name.snp.makeConstraints { make in
-			make.top.equalTo(profileImage.snp.bottom).offset(20)
-			make.height.equalTo(Constant.heightOfCell(type: .fullName))
+		nameLabel.snp.makeConstraints { make in
+			make.top.equalTo(profileImageView.snp.bottom).offset(20)
+			make.height.equalTo(profileImageView.height)
 			make.leading.trailing.equalToSuperview().inset(20)
 		}
-		newView.snp.makeConstraints { $0.bottom.equalTo(name.snp.bottom) }
+		newView.snp.makeConstraints { $0.bottom.equalTo(nameLabel.snp.bottom) }
 	}
 	
 	private func setupDetailStack() {
@@ -151,7 +154,7 @@ class ExistingContactPageView: UIView {
 		self.addSubview(detailStack)
 		
 		detailStack.snp.makeConstraints { make in
-			make.top.equalTo(name.snp.bottom).offset(20)
+			make.top.equalTo(nameLabel.snp.bottom).offset(20)
 			make.trailing.equalToSuperview()
 			make.leading.equalToSuperview().offset(20)
 		}
