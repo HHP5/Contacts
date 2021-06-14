@@ -51,10 +51,10 @@ class Stack: UIView {
 		stack.axis = axis
 		stack.distribution = .fill
 		
-		if height != nil {
+		if let height = height {
 			stack.arrangedSubviews.forEach { view in
 				view.snp.makeConstraints { make in
-					make.height.equalTo(height!)
+					make.height.equalTo(height)
 				}
 			}
 		}

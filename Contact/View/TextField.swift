@@ -45,5 +45,4 @@ class TextField: UIView {
 		textField.returnKeyType = UIReturnKeyType.next
 	}
 
-	
 }
