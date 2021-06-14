@@ -8,7 +8,7 @@
 import UIKit
 
 class KeyboardToolBar: UIToolbar {
-	weak var toolBarDelegate: ToolBarForKeyboardDelegate?
+	weak var toolBarDelegate: ToolBarForKeyboardDelegate? // если наследоваться от UIToolbar то нельзя назвать delegate
 	private var type: ToolBarViewType
 	
 	init(type: ToolBarViewType) {
