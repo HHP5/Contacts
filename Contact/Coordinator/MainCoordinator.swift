@@ -46,7 +46,7 @@ extension MainCoordinator: MainListViewModelDelegate {
 	func mainListViewModel(_ viewModel: MainListViewModel, didSelect contact: Contact) {
 		navigateToExistingContact(contact)
 	}
-	func сontactPageViewModelCreateContact(_ viewModel: MainListViewModel) {
+	func mainListViewModelCreateContact(_ viewModel: MainListViewModel) {
 		navigateToEditingContact()
 	}
 }
