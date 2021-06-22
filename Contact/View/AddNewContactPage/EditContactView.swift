@@ -14,11 +14,6 @@ class EditContactView: UIView {
 	var textFields: (firstName: UITextField, lastName: UITextField) {
 		return (firstName: firstNameTextField.textField, lastName: lastNameTextField.textField)
 	}
-	
-	weak var phoneNumber: UITextView?
-	weak var notes: UITextView?
-	weak var ringtone: RingtoneCell?
-	weak var ringtonePicker: UIPickerView?
 	weak var contactImage: EditContactViewDelegate?
 
 	// MARK: - IBOutlets (всегда приватные)
@@ -30,11 +25,11 @@ class EditContactView: UIView {
 		return scroll
 	}()
 	
-	private let firstNameTextField = TextField(type: .default, textField: .firstName)
-	private let lastNameTextField = TextField(type: .default, textField: .lastName)
-	private let phoneNumberTextView = TextView(type: .phone)
-	private let ringtoneCell = RingtoneCell()
-	private let notesTextView = TextView(type: .note)
+	 let firstNameTextField = TextField(type: .default, textField: .firstName)
+	 let lastNameTextField = TextField(type: .default, textField: .lastName)
+	 let phoneNumberTextView = TextView(type: .phone)
+	 let ringtoneCell = RingtoneCell()
+	 let notesTextView = TextView(type: .note)
 	
 	private let profileImage = ProfileImageView()
 	// MARK: - Init
@@ -94,10 +89,6 @@ class EditContactView: UIView {
 
 	// MARK: - Private Methods
 	private func setupDelegates() {
-		self.phoneNumber = phoneNumberTextView.textView
-		self.notes = notesTextView.textView
-		self.ringtone = ringtoneCell
-		self.ringtonePicker = ringtoneCell.picker
 		
 		self.phoneNumberTextView.textViewToolBar?.toolBarDelegate = self
 		self.ringtoneCell.textViewToolBar?.toolBarDelegate = self
@@ -170,7 +161,7 @@ extension EditContactView: ToolBarForKeyboardDelegate {
 			case .phone:
 				ringtoneCell.openPicker()
 			case .ringtone:
-				notes?.becomeFirstResponder()
+				notesTextView.becomeFirstResponder()
 			}
 		}
 	}

@@ -9,5 +9,5 @@ import Foundation
 
 protocol MainListViewModelDelegate: class {
 	func mainListViewModel(_ viewModel: MainListViewModel, didSelect contact: Contact)
-	func сontactPageViewModelDidRequestCreateContact(_ viewModel: MainListViewModel)
+	func сontactPageViewModelCreateContact(_ viewModel: MainListViewModel)
 }

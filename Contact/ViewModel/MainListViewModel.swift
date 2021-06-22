@@ -76,7 +76,7 @@ class MainListViewModel: MainListViewModelType {
 
 	func createNewContact() {
 
-		delegate?.сontactPageViewModelDidRequestCreateContact(self)
+		delegate?.сontactPageViewModelCreateContact(self)
 	}
 	
 	func reloadData() {

@@ -89,11 +89,11 @@ class EditingContactViewContoller: UIViewController, UINavigationControllerDeleg
 	private func setupDelegates() {
 		[screenView.textFields.0, screenView.textFields.1].forEach { $0.delegate = self }
 		
-		screenView.notes?.delegate = self
-		screenView.phoneNumber?.delegate = self
+		screenView.notesTextView.textView.delegate = self
+		screenView.phoneNumberTextView.textView.delegate = self
 		
-		screenView.ringtonePicker?.delegate = self
-		screenView.ringtonePicker?.dataSource = self
+		screenView.ringtoneCell.picker?.delegate = self
+		screenView.ringtoneCell.picker?.dataSource = self
 		
 		screenView.contactImage = self
 				
@@ -128,7 +128,7 @@ extension EditingContactViewContoller: UITextFieldDelegate {
 			textFields[selectedTextFieldIndex + 1].becomeFirstResponder()
 		} else {
 			textField.resignFirstResponder()
-			screenView.phoneNumber?.becomeFirstResponder()
+			screenView.phoneNumberTextView.textView.becomeFirstResponder()
 		}
 		return true
 	}
